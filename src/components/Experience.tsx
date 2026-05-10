@@ -119,9 +119,7 @@ const Experience = (props?: ExperienceProps) => {
                   <button
                     aria-controls={`experience-step-panel-${role.id}`}
                     aria-expanded={isExpanded}
-                    className={`flex w-full cursor-pointer items-center gap-3 rounded-lg text-start transition-colors sm:gap-4 ${
-                      isExpanded ? "-m-2 p-2" : "-m-2 p-2 hover:bg-slate-100"
-                    } ${linkFocusClasses}`}
+                    className={`flex w-full cursor-pointer items-center gap-3 rounded-lg text-start transition-colors sm:gap-4 -m-2 p-2 ${linkFocusClasses}`}
                     id={`experience-step-summary-${role.id}`}
                     onClick={() => toggle(role.id)}
                     type="button"
