@@ -26,19 +26,22 @@ describe("Experience", () => {
 
     const titles = screen.getAllByRole("heading", { level: 3 }).map((el) => el.textContent);
     expect(titles).toEqual([
-      "Senior Product Manager",
       "Product Manager",
-      "Ergonomics Engineer · CAD Specialist",
+      "Application Engineer — Human Factors & Ergonomics",
+      "Technical Designer",
+      "CAD Designer",
+      "CAD Design Intern",
     ]);
   });
 
-  it("highlights technologies and renders supplementary links", () => {
+  it("highlights technologies from Confluence-sourced Humanetics roles", () => {
     render(<Experience />);
 
-    expect(screen.getByText("Python prototyping")).toBeInTheDocument();
-
-    const gh = screen.getByRole("link", { name: "GitHub profile" });
-    expect(gh).toHaveAttribute("href", "https://github.com/MattGlsn");
+    expect(screen.getByText("Cursor AI")).toBeInTheDocument();
+    expect(screen.getByText("GitLab")).toBeInTheDocument();
+    expect(screen.getByText("RAMSIS")).toBeInTheDocument();
+    expect(screen.getAllByRole("heading", { name: "Technologies", level: 4 })).toHaveLength(2);
+    expect(screen.getAllByRole("heading", { name: "Skills", level: 4 })).toHaveLength(2);
   });
 
   it("links the company name when companyUrl is provided", () => {

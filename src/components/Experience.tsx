@@ -42,8 +42,8 @@ const Experience = (props?: ExperienceProps) => {
         Experience
       </h2>
       <p className="mt-3 max-w-2xl text-muted-foreground">
-        Product management delivery, AI-enhanced workflows, and earlier depth in ergonomics engineering
-        and CAD—often across international teams.
+        From CAD and ergonomics engineering into product management—international clients, AI/ML initiatives,
+        and cross-functional delivery.
       </p>
 
       <ol className="mt-12 flex flex-col gap-8 lg:gap-10">
@@ -95,30 +95,34 @@ const Experience = (props?: ExperienceProps) => {
                       ))}
                     </ul>
                   </div>
-                  <div>
+                  {role.achievements.length > 0 ? (
+                    <div>
+                      <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                        Skills
+                      </h4>
+                      <ul className="mt-2 list-disc space-y-2 ps-5 text-pretty leading-relaxed text-muted-foreground">
+                        {role.achievements.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+                </div>
+
+                {role.technologies.length > 0 ? (
+                  <div className="mt-6">
                     <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                      Achievements
+                      Technologies
                     </h4>
-                    <ul className="mt-2 list-disc space-y-2 ps-5 text-pretty leading-relaxed text-muted-foreground">
-                      {role.achievements.map((item) => (
-                        <li key={item}>{item}</li>
+                    <ul className="mt-2 flex flex-wrap gap-2" role="list">
+                      {role.technologies.map((tech) => (
+                        <li className={techPillClasses} key={tech}>
+                          {tech}
+                        </li>
                       ))}
                     </ul>
                   </div>
-                </div>
-
-                <div className="mt-6">
-                  <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                    Technologies &amp; tools
-                  </h4>
-                  <ul className="mt-2 flex flex-wrap gap-2" role="list">
-                    {role.technologies.map((tech) => (
-                      <li className={techPillClasses} key={tech}>
-                        {tech}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                ) : null}
 
                 {role.links && role.links.length > 0 ? (
                   <nav
