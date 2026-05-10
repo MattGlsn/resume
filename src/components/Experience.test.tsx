@@ -34,24 +34,26 @@ describe("Experience", () => {
     ]);
   });
 
-  it("stepper exposes one role panel at a time with Humanetics-era technologies", () => {
+  it("starts with all panels expanded so Humanetics-era technologies appear together", () => {
     render(<Experience />);
 
     expect(screen.getByText("Cursor AI")).toBeInTheDocument();
     expect(screen.getByText("GitLab")).toBeInTheDocument();
-    expect(screen.queryByText("RAMSIS")).not.toBeInTheDocument();
-
-    fireEvent.click(screen.getByRole("button", { name: "Continue" }));
-
-    expect(screen.queryByText("Cursor AI")).not.toBeInTheDocument();
     expect(screen.getByText("RAMSIS")).toBeInTheDocument();
+  });
 
-    fireEvent.click(screen.getByRole("button", { name: "Continue" }));
+  it("each role collapses independently when toggled", () => {
+    render(<Experience />);
 
-    expect(screen.queryByText("RAMSIS")).not.toBeInTheDocument();
-    expect(screen.queryByRole("heading", { name: "Skills", level: 4 })).toBeNull();
+    const pmSummary = screen.getByRole("button", { expanded: true, name: /^Product Manager/ });
+    fireEvent.click(pmSummary);
 
-    fireEvent.click(screen.getByRole("button", { name: "Back" }));
+    expect(pmSummary).toHaveAttribute("aria-expanded", "false");
+    expect(screen.queryByText("Cursor AI")).not.toBeInTheDocument();
+
+    fireEvent.click(pmSummary);
+
+    expect(screen.getByText("Cursor AI")).toBeInTheDocument();
     expect(screen.getByText("RAMSIS")).toBeInTheDocument();
   });
 

@@ -23,6 +23,11 @@ function formatEmploymentDates(startDate: string, endDate: string | null): strin
   return `${start} – ${end}`;
 }
 
+/** Initial expanded set for `items`; each id starts open. */
+function allExpandedIds(items: readonly ExperienceRole[]): Set<string> {
+  return new Set(items.map((r) => r.id));
+}
+
 const linkFocusClasses =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
 
@@ -32,15 +37,18 @@ const companyLinkClasses =
 const techPillClasses =
   "inline-flex items-center rounded-md border border-primary/25 bg-primary/5 px-2 py-1 text-xs font-medium text-accent-foreground";
 
-const stepActionClasses =
-  "inline-flex min-h-11 min-w-[44px] items-center justify-center rounded-md px-5 py-2.5 text-xs font-semibold uppercase tracking-wide transition-colors disabled:pointer-events-none disabled:opacity-40";
-
 const Experience = (props?: ExperienceProps) => {
   const items = props?.roles ?? experienceRolesSorted;
-  const [openId, setOpenId] = useState(() => items[0]?.id ?? "");
+  const [expandedIds, setExpandedIds] = useState(() => allExpandedIds(items));
 
-  const openIndex = items.findIndex((r) => r.id === openId);
-  const safeIndex = openIndex >= 0 ? openIndex : 0;
+  const toggle = (id: string) => {
+    setExpandedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
 
   return (
     <>
@@ -57,7 +65,7 @@ const Experience = (props?: ExperienceProps) => {
 
       <ol className="mt-12 space-y-0">
         {items.map((role, index) => {
-          const isActive = role.id === openId;
+          const isExpanded = expandedIds.has(role.id);
           const isLast = index === items.length - 1;
           const stepNumber = index + 1;
 
@@ -71,18 +79,18 @@ const Experience = (props?: ExperienceProps) => {
                   />
                 ) : null}
                 <button
-                  aria-current={isActive ? "step" : undefined}
-                  aria-expanded={isActive}
+                  aria-controls={`experience-step-panel-${role.id}`}
+                  aria-expanded={isExpanded}
+                  aria-label={`Step ${stepNumber}: ${role.title} at ${role.company}. ${isExpanded ? "Collapse" : "Expand"}`}
                   className={`relative z-10 flex size-10 shrink-0 items-center justify-center rounded-full border border-transparent text-sm font-semibold tracking-tight transition-colors sm:size-11 sm:text-[0.95rem] ${
-                    isActive
+                    isExpanded
                       ? "bg-primary text-primary-foreground shadow-sm"
                       : "border-border bg-background text-muted-foreground"
                   } ${linkFocusClasses}`}
                   id={`experience-step-trigger-${role.id}`}
-                  onClick={() => setOpenId(role.id)}
+                  onClick={() => toggle(role.id)}
                   type="button"
                 >
-                  <span className="sr-only">Step {stepNumber}, </span>
                   {stepNumber}
                 </button>
               </div>
@@ -91,22 +99,22 @@ const Experience = (props?: ExperienceProps) => {
                 <article aria-labelledby={`${role.id}-title`}>
                   <button
                     aria-controls={`experience-step-panel-${role.id}`}
-                    aria-expanded={isActive}
+                    aria-expanded={isExpanded}
                     className={`flex w-full flex-col gap-1 rounded-lg text-start transition-colors sm:gap-1.5 ${
-                      isActive ? "-m-2 p-2" : "-m-2 p-2 hover:bg-muted/30"
+                      isExpanded ? "-m-2 p-2" : "-m-2 p-2 hover:bg-muted/30"
                     } ${linkFocusClasses}`}
                     id={`experience-step-summary-${role.id}`}
-                    onClick={() => setOpenId(role.id)}
+                    onClick={() => toggle(role.id)}
                     type="button"
                   >
                     <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
                       <h3
-                        className={`text-[1.05rem] tracking-tight sm:text-lg ${isActive ? "font-semibold text-foreground" : "font-medium text-muted-foreground"}`}
+                        className={`text-[1.05rem] tracking-tight sm:text-lg ${isExpanded ? "font-semibold text-foreground" : "font-medium text-muted-foreground"}`}
                         id={`${role.id}-title`}
                       >
                         {role.title}
                       </h3>
-                      {isActive ? (
+                      {isExpanded ? (
                         <>
                           <span aria-hidden="true" className="text-border">
                             —
@@ -128,7 +136,7 @@ const Experience = (props?: ExperienceProps) => {
                         </>
                       ) : null}
                     </div>
-                    {!isActive ? (
+                    {!isExpanded ? (
                       <p className="text-sm leading-snug text-muted-foreground">{role.company}</p>
                     ) : (
                       <>
@@ -146,39 +154,37 @@ const Experience = (props?: ExperienceProps) => {
                     )}
                   </button>
 
-                  {isActive ? (
+                  {isExpanded ? (
                     <div
-                      className="mt-6 rounded-xl border border-border bg-muted/20 px-4 py-6 sm:px-5 sm:py-7"
+                      className="mt-6 space-y-5"
                       id={`experience-step-panel-${role.id}`}
                       role="region"
                     >
-                      <div className="space-y-5">
+                      <div>
+                        <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                          Responsibilities
+                        </h4>
+                        <ul className="mt-2 list-disc space-y-2 ps-5 text-pretty leading-relaxed text-muted-foreground">
+                          {role.responsibilities.map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </div>
+                      {role.achievements.length > 0 ? (
                         <div>
                           <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                            Responsibilities
+                            Skills
                           </h4>
                           <ul className="mt-2 list-disc space-y-2 ps-5 text-pretty leading-relaxed text-muted-foreground">
-                            {role.responsibilities.map((item) => (
+                            {role.achievements.map((item) => (
                               <li key={item}>{item}</li>
                             ))}
                           </ul>
                         </div>
-                        {role.achievements.length > 0 ? (
-                          <div>
-                            <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                              Skills
-                            </h4>
-                            <ul className="mt-2 list-disc space-y-2 ps-5 text-pretty leading-relaxed text-muted-foreground">
-                              {role.achievements.map((item) => (
-                                <li key={item}>{item}</li>
-                              ))}
-                            </ul>
-                          </div>
-                        ) : null}
-                      </div>
+                      ) : null}
 
                       {role.technologies.length > 0 ? (
-                        <div className="mt-6">
+                        <div>
                           <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                             Technologies
                           </h4>
@@ -195,7 +201,7 @@ const Experience = (props?: ExperienceProps) => {
                       {role.links && role.links.length > 0 ? (
                         <nav
                           aria-label={`Related links for ${role.company}`}
-                          className="mt-6 flex flex-wrap gap-x-4 gap-y-2 border-t border-border pt-5"
+                          className="flex flex-wrap gap-x-4 gap-y-2 pt-5"
                         >
                           {role.links.map((link) => (
                             <a
@@ -209,31 +215,6 @@ const Experience = (props?: ExperienceProps) => {
                           ))}
                         </nav>
                       ) : null}
-
-                      <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4">
-                        <button
-                          className={`${stepActionClasses} bg-primary text-primary-foreground shadow-sm hover:bg-primary-hover`}
-                          disabled={safeIndex >= items.length - 1}
-                          onClick={() => {
-                            if (safeIndex >= items.length - 1) return;
-                            setOpenId(items[safeIndex + 1]?.id ?? openId);
-                          }}
-                          type="button"
-                        >
-                          Continue
-                        </button>
-                        <button
-                          className={`${stepActionClasses} text-muted-foreground hover:text-foreground`}
-                          disabled={safeIndex <= 0}
-                          onClick={() => {
-                            if (safeIndex <= 0) return;
-                            setOpenId(items[safeIndex - 1]?.id ?? openId);
-                          }}
-                          type="button"
-                        >
-                          Back
-                        </button>
-                      </div>
                     </div>
                   ) : null}
                 </article>
