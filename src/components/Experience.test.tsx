@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import Experience from "./Experience";
 import type { ExperienceRole } from "../content/experience";
@@ -34,14 +34,25 @@ describe("Experience", () => {
     ]);
   });
 
-  it("highlights technologies from Confluence-sourced Humanetics roles", () => {
+  it("stepper exposes one role panel at a time with Humanetics-era technologies", () => {
     render(<Experience />);
 
     expect(screen.getByText("Cursor AI")).toBeInTheDocument();
     expect(screen.getByText("GitLab")).toBeInTheDocument();
+    expect(screen.queryByText("RAMSIS")).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Continue" }));
+
+    expect(screen.queryByText("Cursor AI")).not.toBeInTheDocument();
     expect(screen.getByText("RAMSIS")).toBeInTheDocument();
-    expect(screen.getAllByRole("heading", { name: "Technologies", level: 4 })).toHaveLength(2);
-    expect(screen.getAllByRole("heading", { name: "Skills", level: 4 })).toHaveLength(2);
+
+    fireEvent.click(screen.getByRole("button", { name: "Continue" }));
+
+    expect(screen.queryByText("RAMSIS")).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Skills", level: 4 })).toBeNull();
+
+    fireEvent.click(screen.getByRole("button", { name: "Back" }));
+    expect(screen.getByText("RAMSIS")).toBeInTheDocument();
   });
 
   it("links the company name when companyUrl is provided", () => {
