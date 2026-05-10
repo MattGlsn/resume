@@ -9,6 +9,7 @@ const minimalRole = (
   location: "Remote",
   startDate: "2024-01",
   endDate: null,
+  companyLogoSrc: "/logos/humanetics.png",
   responsibilities: ["Did things"],
   achievements: ["Shipped outcomes"],
   technologies: ["TypeScript"],

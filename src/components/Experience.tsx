@@ -67,7 +67,6 @@ const Experience = (props?: ExperienceProps) => {
         {items.map((role, index) => {
           const isExpanded = expandedIds.has(role.id);
           const isLast = index === items.length - 1;
-          const stepNumber = index + 1;
 
           return (
             <li className="relative flex gap-4 pb-12 last:pb-0 sm:gap-6" key={role.id}>
@@ -81,17 +80,23 @@ const Experience = (props?: ExperienceProps) => {
                 <button
                   aria-controls={`experience-step-panel-${role.id}`}
                   aria-expanded={isExpanded}
-                  aria-label={`Step ${stepNumber}: ${role.title} at ${role.company}. ${isExpanded ? "Collapse" : "Expand"}`}
-                  className={`relative z-10 flex size-10 shrink-0 items-center justify-center rounded-full border border-transparent text-sm font-semibold tracking-tight transition-colors sm:size-11 sm:text-[0.95rem] ${
+                  aria-label={`${isExpanded ? "Collapse" : "Expand"} role: ${role.title} at ${role.company}`}
+                  className={`relative z-10 flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full border p-1.5 transition-colors sm:size-11 sm:p-2 ${
                     isExpanded
-                      ? "bg-primary text-primary-foreground shadow-sm"
-                      : "border-border bg-background text-muted-foreground"
+                      ? "border-primary bg-background shadow-sm ring-2 ring-primary/20"
+                      : "border-border bg-background"
                   } ${linkFocusClasses}`}
                   id={`experience-step-trigger-${role.id}`}
                   onClick={() => toggle(role.id)}
                   type="button"
                 >
-                  {stepNumber}
+                  <img
+                    alt=""
+                    className="h-7 w-7 object-contain object-center sm:h-8 sm:w-8"
+                    decoding="async"
+                    loading="lazy"
+                    src={role.companyLogoSrc}
+                  />
                 </button>
               </div>
 

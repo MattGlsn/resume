@@ -10,6 +10,8 @@ export type ExperienceRole = Readonly<{
   id: string;
   title: string;
   company: string;
+  /** Public URL under `public/logos/` */
+  companyLogoSrc: string;
   /** Shown when no explicit company link is needed */
   location: string;
   startDate: string;
@@ -47,6 +49,7 @@ const rolesRaw = [
     id: "pm-humanetics",
     title: "Product Manager",
     company: "Humanetics",
+    companyLogoSrc: "/logos/humanetics.png",
     location: "Munich, Germany",
     startDate: "2026-01",
     endDate: null,
@@ -70,6 +73,7 @@ const rolesRaw = [
     id: "app-eng-humanetics",
     title: "Application Engineer — Human Factors & Ergonomics",
     company: "Humanetics",
+    companyLogoSrc: "/logos/humanetics.png",
     location: "Munich, Germany",
     startDate: "2023-07",
     endDate: "2026-01",
@@ -91,6 +95,7 @@ const rolesRaw = [
     id: "technical-designer-rotarex",
     title: "Technical Designer",
     company: "ROTAREX",
+    companyLogoSrc: "/logos/rotarex.png",
     location: "Luxembourg",
     startDate: "2021-04",
     endDate: "2023-07",
@@ -106,6 +111,7 @@ const rolesRaw = [
     id: "cad-designer-hutchinson",
     title: "CAD Designer",
     company: "Hutchinson",
+    companyLogoSrc: "/logos/hutchinson.svg",
     location: "France",
     startDate: "2018-01",
     endDate: "2021-04",
@@ -121,6 +127,7 @@ const rolesRaw = [
     id: "cad-intern-ifpen",
     title: "CAD Design Intern",
     company: "IFP Energies nouvelles",
+    companyLogoSrc: "/logos/ifp-energies-nouvelles.png",
     location: "France",
     startDate: "2017-04",
     endDate: "2017-12",
