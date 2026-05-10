@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { HiChevronDown } from "react-icons/hi2";
 import type { ExperienceRole } from "../content/experience";
 import { experienceRolesSorted } from "../content/experience";
 
@@ -45,17 +46,7 @@ function ExpandChevron(props: Readonly<{ expanded: boolean }>) {
         props.expanded ? "-rotate-180" : ""
       }`}
     >
-      <svg
-        className="size-5"
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        viewBox="0 0 24 24"
-      >
-        <path d="m6 9 6 6 6-6" />
-      </svg>
+      <HiChevronDown className="size-5" strokeWidth={2} />
     </span>
   );
 }
