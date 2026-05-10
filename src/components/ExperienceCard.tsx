@@ -1,4 +1,5 @@
 import { HiChevronDown } from "react-icons/hi2";
+import { motion, useReducedMotion } from "motion/react";
 import type { ExperienceRole } from "../content/experience";
 import { formatEmploymentDates } from "../utils/experienceFormat";
 
@@ -18,27 +19,43 @@ export type ExperienceCardProps = Readonly<{
   role: ExperienceRole;
   isExpanded: boolean;
   isLast: boolean;
+  /** 0-based position in the list; drives the on-mount entrance stagger. */
+  index?: number;
   onToggle: () => void;
 }>;
 
-function ExpandChevron(props: Readonly<{ expanded: boolean }>) {
+function ExpandChevron(props: Readonly<{ expanded: boolean; reduceMotion: boolean }>) {
   return (
-    <span
+    <motion.span
       aria-hidden
-      className={`pointer-events-none inline-flex shrink-0 items-center justify-center self-center text-muted-foreground transition-transform duration-200 ease-out motion-reduce:transition-none ${
-        props.expanded ? "-rotate-180" : ""
-      }`}
+      animate={{ rotate: props.expanded ? -180 : 0 }}
+      className="pointer-events-none inline-flex shrink-0 items-center justify-center self-center text-muted-foreground"
+      transition={{ duration: props.reduceMotion ? 0 : 0.2, ease: "easeOut" }}
     >
       <HiChevronDown className="size-5" strokeWidth={2} />
-    </span>
+    </motion.span>
   );
 }
 
 export function ExperienceCard(props: ExperienceCardProps) {
-  const { role, isExpanded, isLast, onToggle } = props;
+  const { role, isExpanded, isLast, index = 0, onToggle } = props;
+  const reduceMotion = useReducedMotion() ?? false;
+
+  const entranceDuration = reduceMotion ? 0 : 0.35;
+  const entranceDelay = reduceMotion ? 0 : Math.min(index * 0.06, 0.3);
+  const panelDuration = reduceMotion ? 0 : 0.2;
 
   return (
-    <li className="relative flex gap-4 pb-12 last:pb-0 sm:gap-6">
+    <motion.li
+      animate={{ opacity: 1, y: 0 }}
+      className="relative flex gap-4 pb-12 last:pb-0 sm:gap-6"
+      initial={{ opacity: 0, y: 8 }}
+      transition={{
+        duration: entranceDuration,
+        delay: entranceDelay,
+        ease: "easeOut",
+      }}
+    >
       <div className="relative flex w-10 shrink-0 justify-center sm:w-11">
         {!isLast ? (
           <div
@@ -126,14 +143,17 @@ export function ExperienceCard(props: ExperienceCardProps) {
                 </>
               )}
             </div>
-            <ExpandChevron expanded={isExpanded} />
+            <ExpandChevron expanded={isExpanded} reduceMotion={reduceMotion} />
           </button>
 
           {isExpanded ? (
-            <div
+            <motion.div
+              animate={{ opacity: 1, y: 0 }}
               className="mt-6 space-y-5"
               id={`experience-step-panel-${role.id}`}
+              initial={{ opacity: 0, y: -4 }}
               role="region"
+              transition={{ duration: panelDuration, ease: "easeOut" }}
             >
               <div>
                 <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
@@ -193,10 +213,10 @@ export function ExperienceCard(props: ExperienceCardProps) {
                   ))}
                 </nav>
               ) : null}
-            </div>
+            </motion.div>
           ) : null}
         </article>
       </div>
-    </li>
+    </motion.li>
   );
 }

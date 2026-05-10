@@ -45,6 +45,7 @@ const Experience = (props?: ExperienceProps) => {
 
           return (
             <ExperienceCard
+              index={index}
               isExpanded={isExpanded}
               isLast={isLast}
               key={role.id}
