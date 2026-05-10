@@ -42,7 +42,7 @@ function ExpandChevron(props: Readonly<{ expanded: boolean }>) {
   return (
     <span
       aria-hidden
-      className={`pointer-events-none mt-1 inline-flex shrink-0 text-muted-foreground transition-transform duration-200 ease-out motion-reduce:transition-none ${
+      className={`pointer-events-none inline-flex shrink-0 items-center justify-center self-center text-muted-foreground transition-transform duration-200 ease-out motion-reduce:transition-none ${
         props.expanded ? "-rotate-180" : ""
       }`}
     >
@@ -119,7 +119,7 @@ const Experience = (props?: ExperienceProps) => {
                   <button
                     aria-controls={`experience-step-panel-${role.id}`}
                     aria-expanded={isExpanded}
-                    className={`flex w-full items-start gap-3 rounded-lg text-start transition-colors sm:gap-4 ${
+                    className={`flex w-full items-center gap-3 rounded-lg text-start transition-colors sm:gap-4 ${
                       isExpanded ? "-m-2 p-2" : "-m-2 p-2 hover:bg-muted/30"
                     } ${linkFocusClasses}`}
                     id={`experience-step-summary-${role.id}`}
