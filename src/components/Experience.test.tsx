@@ -80,4 +80,27 @@ describe("Experience", () => {
     const company = screen.getByRole("link", { name: "Acme Corp" });
     expect(company).toHaveAttribute("href", "https://acme.example");
   });
+
+  it("shows key skills as badge list items when achievements are present", () => {
+    render(
+      <Experience
+        roles={[
+          minimalRole({
+            id: "skill-badges",
+            title: "Engineer",
+            company: "Co",
+            achievements: ["Leadership", "Agile"],
+            technologies: [],
+            responsibilities: ["Ship features"],
+          }),
+        ]}
+      />,
+    );
+
+    expect(screen.getByRole("heading", { name: "Key skills" })).toBeInTheDocument();
+    const list = screen.getByRole("heading", { name: "Key skills" }).nextElementSibling;
+    expect(list?.tagName).toBe("UL");
+    expect(screen.getByText("Leadership")).toBeInTheDocument();
+    expect(screen.getByText("Agile")).toBeInTheDocument();
+  });
 });
