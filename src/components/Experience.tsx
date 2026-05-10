@@ -37,6 +37,29 @@ const companyLinkClasses =
 const techPillClasses =
   "inline-flex items-center rounded-md border border-primary/25 bg-primary/5 px-2 py-1 text-xs font-medium text-accent-foreground";
 
+function ExpandChevron(props: Readonly<{ expanded: boolean }>) {
+  return (
+    <span
+      aria-hidden
+      className={`pointer-events-none mt-1 inline-flex shrink-0 text-muted-foreground transition-transform duration-200 ease-out motion-reduce:transition-none ${
+        props.expanded ? "-rotate-180" : ""
+      }`}
+    >
+      <svg
+        className="size-5"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        viewBox="0 0 24 24"
+      >
+        <path d="m6 9 6 6 6-6" />
+      </svg>
+    </span>
+  );
+}
+
 const Experience = (props?: ExperienceProps) => {
   const items = props?.roles ?? experienceRolesSorted;
   const [expandedIds, setExpandedIds] = useState(() => allExpandedIds(items));
@@ -105,58 +128,61 @@ const Experience = (props?: ExperienceProps) => {
                   <button
                     aria-controls={`experience-step-panel-${role.id}`}
                     aria-expanded={isExpanded}
-                    className={`flex w-full flex-col gap-1 rounded-lg text-start transition-colors sm:gap-1.5 ${
+                    className={`flex w-full items-start gap-3 rounded-lg text-start transition-colors sm:gap-4 ${
                       isExpanded ? "-m-2 p-2" : "-m-2 p-2 hover:bg-muted/30"
                     } ${linkFocusClasses}`}
                     id={`experience-step-summary-${role.id}`}
                     onClick={() => toggle(role.id)}
                     type="button"
                   >
-                    <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                      <h3
-                        className={`text-[1.05rem] tracking-tight sm:text-lg ${isExpanded ? "font-semibold text-foreground" : "font-medium text-muted-foreground"}`}
-                        id={`${role.id}-title`}
-                      >
-                        {role.title}
-                      </h3>
-                      {isExpanded ? (
-                        <>
-                          <span aria-hidden="true" className="text-border">
-                            —
-                          </span>
-                          {role.companyUrl ? (
-                            <a
-                              className={`text-sm font-medium sm:text-[0.95rem] ${companyLinkClasses}`}
-                              href={role.companyUrl}
-                              onClick={(e) => e.stopPropagation()}
-                              rel="noopener noreferrer"
-                            >
-                              {role.company}
-                            </a>
-                          ) : (
-                            <span className="text-sm font-medium text-muted-foreground sm:text-[0.95rem]">
-                              {role.company}
+                    <div className="min-w-0 flex-1 space-y-1 sm:space-y-1.5">
+                      <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                        <h3
+                          className={`text-[1.05rem] tracking-tight sm:text-lg ${isExpanded ? "font-semibold text-foreground" : "font-medium text-muted-foreground"}`}
+                          id={`${role.id}-title`}
+                        >
+                          {role.title}
+                        </h3>
+                        {isExpanded ? (
+                          <>
+                            <span aria-hidden="true" className="text-border">
+                              —
                             </span>
-                          )}
-                        </>
-                      ) : null}
-                    </div>
-                    {!isExpanded ? (
-                      <p className="text-sm leading-snug text-muted-foreground">{role.company}</p>
-                    ) : (
-                      <>
-                        <p className="text-sm text-muted-foreground">
-                          <time>{formatEmploymentDates(role.startDate, role.endDate)}</time>
-                          <span aria-hidden="true"> · </span>
-                          <span>{role.location}</span>
-                        </p>
-                        {isLast ? (
-                          <p className="text-xs uppercase tracking-wide text-muted-foreground">
-                            Last role
-                          </p>
+                            {role.companyUrl ? (
+                              <a
+                                className={`text-sm font-medium sm:text-[0.95rem] ${companyLinkClasses}`}
+                                href={role.companyUrl}
+                                onClick={(e) => e.stopPropagation()}
+                                rel="noopener noreferrer"
+                              >
+                                {role.company}
+                              </a>
+                            ) : (
+                              <span className="text-sm font-medium text-muted-foreground sm:text-[0.95rem]">
+                                {role.company}
+                              </span>
+                            )}
+                          </>
                         ) : null}
-                      </>
-                    )}
+                      </div>
+                      {!isExpanded ? (
+                        <p className="text-sm leading-snug text-muted-foreground">{role.company}</p>
+                      ) : (
+                        <>
+                          <p className="text-sm text-muted-foreground">
+                            <time>{formatEmploymentDates(role.startDate, role.endDate)}</time>
+                            <span aria-hidden="true"> · </span>
+                            <span>{role.location}</span>
+                          </p>
+                          {isLast ? (
+                            <p className="text-xs uppercase tracking-wide text-muted-foreground">
+                              Last role
+                            </p>
+                          ) : null}
+                        </>
+                      )}
+                    </div>
+                    <ExpandChevron expanded={isExpanded} />
                   </button>
 
                   {isExpanded ? (
