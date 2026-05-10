@@ -1,3 +1,4 @@
+import Experience from "./components/Experience";
 import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
 
@@ -19,15 +20,7 @@ const App = () => {
           id="experience"
         >
           <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
-            <h2
-              className="text-2xl font-semibold tracking-tight text-foreground"
-              id="experience-heading"
-            >
-              Experience
-            </h2>
-            <p className="mt-3 max-w-2xl text-muted-foreground">
-              Work history will appear here.
-            </p>
+            <Experience />
           </div>
         </section>
         <section
