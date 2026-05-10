@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { compareExperienceRoles, type ExperienceRole } from "./experience";
+import {
+  compareExperienceRoles,
+  experienceRoles,
+  experienceRolesSorted,
+  sortedExperienceRoles,
+  type ExperienceRole,
+} from "./experience";
 
 function role(
   id: string,
@@ -32,5 +38,25 @@ describe("compareExperienceRoles", () => {
     const a = role("a", "2020-01", "2022-06");
     const b = role("b", "2020-01", null);
     expect(compareExperienceRoles(a, b)).toBeGreaterThan(0);
+  });
+});
+
+describe("experienceRolesSorted (data invariant)", () => {
+  it("equals sortedExperienceRoles(experienceRoles) — pre-sorted at module load", () => {
+    expect(experienceRolesSorted).toEqual(sortedExperienceRoles(experienceRoles));
+  });
+
+  it("is reverse-chronological for every adjacent pair", () => {
+    for (let i = 0; i < experienceRolesSorted.length - 1; i += 1) {
+      const a = experienceRolesSorted[i];
+      const b = experienceRolesSorted[i + 1];
+      expect(compareExperienceRoles(a, b)).toBeLessThanOrEqual(0);
+    }
+  });
+
+  it("contains every role exactly once", () => {
+    expect(experienceRolesSorted).toHaveLength(experienceRoles.length);
+    const ids = experienceRolesSorted.map((r) => r.id);
+    expect(new Set(ids).size).toBe(ids.length);
   });
 });
