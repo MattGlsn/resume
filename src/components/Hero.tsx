@@ -13,7 +13,8 @@ const Hero = () => {
   return (
     <header
       aria-labelledby="hero-heading"
-      className="border-b border-border bg-gradient-to-b from-hero-from to-hero-to"
+      className="scroll-mt-20 border-b border-border bg-gradient-to-b from-hero-from to-hero-to"
+      id="profile"
     >
       <div className="mx-auto flex min-h-[min(100dvh,56rem)] max-w-5xl flex-col justify-center gap-8 px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div className="space-y-4">
