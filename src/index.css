@@ -1,1 +1,46 @@
 @import "tailwindcss";
+
+/* Tokens follow `.cursor/rules/design-guidelines.mdc` (Roboto, primary #6A7CBD) */
+@theme {
+  --font-sans:
+    "Roboto", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji";
+
+  --color-background: #ffffff;
+  --color-foreground: #0a0a0a;
+  --color-muted: #737373;
+  --color-muted-foreground: #525252;
+
+  --color-border: #e5e5e5;
+  --color-ring: #6a7cbd;
+
+  --color-primary: #6a7cbd;
+  --color-primary-foreground: #ffffff;
+  --color-primary-hover: #596bb0;
+
+  --color-secondary: #ffffff;
+  --color-secondary-foreground: #171717;
+  --color-secondary-border: #d4d4d4;
+
+  --color-accent-foreground: #6a7cbd;
+
+  --color-hero-from: #fafafa;
+  --color-hero-to: #ffffff;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
