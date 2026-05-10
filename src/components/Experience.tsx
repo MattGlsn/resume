@@ -95,7 +95,7 @@ const Experience = (props?: ExperienceProps) => {
                   aria-controls={`experience-step-panel-${role.id}`}
                   aria-expanded={isExpanded}
                   aria-label={`${isExpanded ? "Collapse" : "Expand"} role: ${role.title} at ${role.company}`}
-                  className={`relative z-10 flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full border p-1.5 transition-colors sm:size-11 sm:p-2 ${
+                  className={`relative z-10 flex size-10 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full border p-1.5 transition-colors sm:size-11 sm:p-2 ${
                     isExpanded
                       ? "border-primary bg-background shadow-sm ring-2 ring-primary/20"
                       : "border-border bg-background"
@@ -119,7 +119,7 @@ const Experience = (props?: ExperienceProps) => {
                   <button
                     aria-controls={`experience-step-panel-${role.id}`}
                     aria-expanded={isExpanded}
-                    className={`flex w-full items-center gap-3 rounded-lg text-start transition-colors sm:gap-4 ${
+                    className={`flex w-full cursor-pointer items-center gap-3 rounded-lg text-start transition-colors sm:gap-4 ${
                       isExpanded ? "-m-2 p-2" : "-m-2 p-2 hover:bg-slate-100"
                     } ${linkFocusClasses}`}
                     id={`experience-step-summary-${role.id}`}
