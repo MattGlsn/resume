@@ -6,26 +6,26 @@
     "Roboto", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji";
 
-  --color-background: #ffffff;
-  --color-foreground: #0a0a0a;
-  --color-muted: #737373;
-  --color-muted-foreground: #525252;
+  --color-background: #f4f2ee;
+  --color-foreground: #141414;
+  --color-muted: #6f6a63;
+  --color-muted-foreground: #57524a;
 
-  --color-border: #e5e5e5;
+  --color-border: #e2ddd4;
   --color-ring: #6a7cbd;
 
   --color-primary: #6a7cbd;
   --color-primary-foreground: #ffffff;
   --color-primary-hover: #596bb0;
 
-  --color-secondary: #ffffff;
+  --color-secondary: #fffefc;
   --color-secondary-foreground: #171717;
-  --color-secondary-border: #d4d4d4;
+  --color-secondary-border: #d4cfc4;
 
   --color-accent-foreground: #6a7cbd;
 
-  --color-hero-from: #fafafa;
-  --color-hero-to: #ffffff;
+  --color-hero-from: #efeae2;
+  --color-hero-to: #f7f4ef;
 }
 
 @layer base {
@@ -47,5 +47,41 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
+  }
+}
+
+/* Editorial hero: warm gradient + fine primary-tinted grid */
+@layer components {
+  .hero-editorial-surface {
+    background-color: var(--color-hero-to);
+    background-image:
+      repeating-linear-gradient(
+        90deg,
+        rgb(106 124 189 / 0.055) 0 1px,
+        transparent 1px 1.5rem
+      ),
+      repeating-linear-gradient(
+        0deg,
+        rgb(106 124 189 / 0.055) 0 1px,
+        transparent 1px 1.5rem
+      ),
+      linear-gradient(180deg, var(--color-hero-from) 0%, var(--color-hero-to) 100%);
+    background-size: 1.5rem 1.5rem, 1.5rem 1.5rem, 100% 100%;
+  }
+
+  .animate-section-in {
+    animation: section-in 0.55s ease-out both;
+  }
+}
+
+@keyframes section-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

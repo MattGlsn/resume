@@ -38,7 +38,7 @@ const Experience = (props?: ExperienceProps) => {
         and cross-functional delivery.
       </p>
 
-      <ol className="mt-12 space-y-0">
+      <ol className="mt-12 list-none space-y-5 p-0 sm:space-y-6">
         {items.map((role, index) => {
           const isExpanded = expandedIds.has(role.id);
           const isLast = index === items.length - 1;

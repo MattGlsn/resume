@@ -1,7 +1,7 @@
 import { HiChevronDown } from "react-icons/hi2";
 import { motion, useReducedMotion } from "motion/react";
 import type { ExperienceRole } from "../content/experience";
-import { formatEmploymentDates } from "../utils/experienceFormat";
+import { formatMonthYear } from "../utils/experienceFormat";
 
 const linkFocusClasses =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
@@ -9,11 +9,69 @@ const linkFocusClasses =
 const companyLinkClasses =
   `font-semibold text-foreground underline decoration-primary/40 underline-offset-[3px] transition-colors hover:text-accent-foreground hover:decoration-accent-foreground ${linkFocusClasses}`;
 
-const techPillClasses =
-  "inline-flex items-center rounded-md border border-primary/25 bg-primary/5 px-2 py-1 text-xs font-medium text-accent-foreground transition-colors duration-200 motion-reduce:transition-none hover:border-primary/40 hover:bg-primary/10";
+/** Shared tag chrome for Key skills + Technologies (size, radius, motion) */
+const experienceTagBase =
+  "inline-flex max-w-full items-center rounded-lg border px-3 py-1.5 text-sm font-medium leading-snug transition-colors duration-200 motion-reduce:transition-none";
 
-const skillPillClasses =
-  "inline-flex items-center rounded-md border border-border bg-muted/50 px-2 py-1 text-xs font-medium text-foreground transition-colors duration-200 motion-reduce:transition-none hover:border-primary/30 hover:bg-muted";
+const skillTagClasses = `${experienceTagBase} border-primary bg-primary text-primary-foreground hover:border-primary-hover hover:bg-primary-hover`;
+
+const techTagClasses = `${experienceTagBase} border-primary/25 bg-primary/5 text-accent-foreground hover:border-primary/40`;
+
+type EmploymentMetaProps = Readonly<{
+  endDate: string | null;
+  location: string;
+  /** Collapsed card: one wrapped line. Expanded: labeled rows. */
+  layout: "compact" | "labeled";
+  startDate: string;
+}>;
+
+function EmploymentMeta(props: EmploymentMetaProps) {
+  const { endDate, location, layout, startDate } = props;
+  const startLabel = formatMonthYear(startDate);
+  const endLabel = endDate ? formatMonthYear(endDate) : "Present";
+
+  const dateRange = (
+    <>
+      <time dateTime={startDate}>{startLabel}</time>
+      <span aria-hidden="true" className="text-muted-foreground/75">
+        {" "}
+        –{" "}
+      </span>
+      {endDate ? (
+        <time dateTime={endDate}>{endLabel}</time>
+      ) : (
+        <span className="font-medium text-foreground">{endLabel}</span>
+      )}
+    </>
+  );
+
+  if (layout === "compact") {
+    return (
+      <p className="mt-1 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-xs leading-relaxed text-muted-foreground sm:text-sm">
+        <span className="sr-only">Dates: </span>
+        {dateRange}
+        <span aria-hidden="true" className="text-border">
+          ·
+        </span>
+        <span className="sr-only">Location: </span>
+        <span className="min-w-0 text-pretty">{location}</span>
+      </p>
+    );
+  }
+
+  return (
+    <dl className="mt-0 space-y-2.5 text-sm">
+      <div className="grid grid-cols-1 gap-1 sm:grid-cols-[5.75rem_1fr] sm:items-baseline sm:gap-x-4">
+        <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Dates</dt>
+        <dd className="min-w-0 text-foreground">{dateRange}</dd>
+      </div>
+      <div className="grid grid-cols-1 gap-1 sm:grid-cols-[5.75rem_1fr] sm:items-baseline sm:gap-x-4">
+        <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Location</dt>
+        <dd className="min-w-0 text-pretty text-foreground">{location}</dd>
+      </div>
+    </dl>
+  );
+}
 
 export type ExperienceCardProps = Readonly<{
   role: ExperienceRole;
@@ -48,7 +106,11 @@ export function ExperienceCard(props: ExperienceCardProps) {
   return (
     <motion.li
       animate={{ opacity: 1, y: 0 }}
-      className="relative flex gap-4 pb-12 last:pb-0 sm:gap-6"
+      className={`relative overflow-hidden rounded-xl border border-border bg-secondary/90 shadow-[0_1px_0_rgb(0_0_0_/0.04)] transition-shadow duration-200 motion-reduce:transition-none ${
+        isExpanded
+          ? "shadow-md ring-2 ring-primary/25 ring-offset-2 ring-offset-background"
+          : "hover:shadow-[0_4px_14px_rgb(0_0_0_/0.06)]"
+      }`}
       initial={{ opacity: 0, y: 8 }}
       transition={{
         duration: entranceDuration,
@@ -56,42 +118,37 @@ export function ExperienceCard(props: ExperienceCardProps) {
         ease: "easeOut",
       }}
     >
-      <div className="relative flex w-10 shrink-0 justify-center sm:w-11">
-        {!isLast ? (
-          <div
-            aria-hidden="true"
-            className="absolute start-1/2 top-10 bottom-0 z-0 w-px -translate-x-1/2 bg-border sm:top-11"
-          />
-        ) : null}
-        <button
-          aria-controls={`experience-step-panel-${role.id}`}
-          aria-expanded={isExpanded}
-          aria-label={`${isExpanded ? "Collapse" : "Expand"} role: ${role.title} at ${role.company}`}
-          className={`relative z-10 flex size-10 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full border p-1.5 transition-all duration-200 motion-reduce:transition-none sm:size-11 sm:p-2 ${
-            isExpanded
-              ? "border-primary bg-background shadow-sm ring-2 ring-primary/20"
-              : "border-border bg-background hover:border-primary/40"
-          } ${linkFocusClasses}`}
-          id={`experience-step-trigger-${role.id}`}
-          onClick={onToggle}
-          type="button"
-        >
-          <img
-            alt=""
-            className="h-7 w-7 object-contain object-center sm:h-8 sm:w-8"
-            decoding="async"
-            loading="lazy"
-            src={role.companyLogoSrc}
-          />
-        </button>
-      </div>
-
-      <div className="min-w-0 flex-1 scroll-mt-20">
-        <article aria-labelledby={`${role.id}-title`}>
+      <div className="flex gap-4 p-4 sm:gap-6 sm:p-5">
+        <div className="flex w-10 shrink-0 flex-col items-center justify-start pt-0.5 sm:w-11">
           <button
             aria-controls={`experience-step-panel-${role.id}`}
             aria-expanded={isExpanded}
-            className={`flex w-full cursor-pointer items-center gap-3 rounded-lg text-start -m-2 p-2 transition-colors duration-200 motion-reduce:transition-none sm:gap-4 hover:bg-muted/40 ${linkFocusClasses}`}
+            aria-label={`${isExpanded ? "Collapse" : "Expand"} role: ${role.title} at ${role.company}`}
+            className={`relative z-10 flex size-10 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full border p-1.5 transition-all duration-200 motion-reduce:transition-none sm:size-11 sm:p-2 ${
+              isExpanded
+                ? "border-primary bg-background shadow-sm ring-2 ring-primary/20"
+                : "border-border bg-background hover:border-primary/40"
+            } ${linkFocusClasses}`}
+            id={`experience-step-trigger-${role.id}`}
+            onClick={onToggle}
+            type="button"
+          >
+            <img
+              alt=""
+              className="h-7 w-7 object-contain object-center sm:h-8 sm:w-8"
+              decoding="async"
+              loading="lazy"
+              src={role.companyLogoSrc}
+            />
+          </button>
+        </div>
+
+        <div className="min-w-0 flex-1 scroll-mt-20">
+          <article aria-labelledby={`${role.id}-title`}>
+            <button
+              aria-controls={`experience-step-panel-${role.id}`}
+              aria-expanded={isExpanded}
+              className={`flex w-full cursor-pointer items-center gap-3 rounded-lg text-start -mx-1 px-2 py-2 transition-colors duration-200 motion-reduce:transition-none sm:gap-4 sm:px-3 ${linkFocusClasses}`}
             id={`experience-step-summary-${role.id}`}
             onClick={onToggle}
             type="button"
@@ -129,16 +186,25 @@ export function ExperienceCard(props: ExperienceCardProps) {
                 ) : null}
               </div>
               {!isExpanded ? (
-                <p className="text-sm leading-snug text-muted-foreground">{role.company}</p>
+                <div>
+                  <p className="text-sm leading-snug text-muted-foreground">{role.company}</p>
+                  <EmploymentMeta
+                    endDate={role.endDate}
+                    layout="compact"
+                    location={role.location}
+                    startDate={role.startDate}
+                  />
+                </div>
               ) : (
                 <>
-                  <p className="text-sm text-muted-foreground">
-                    <time>{formatEmploymentDates(role.startDate, role.endDate)}</time>
-                    <span aria-hidden="true"> · </span>
-                    <span>{role.location}</span>
-                  </p>
+                  <EmploymentMeta
+                    endDate={role.endDate}
+                    layout="labeled"
+                    location={role.location}
+                    startDate={role.startDate}
+                  />
                   {isLast ? (
-                    <p className="text-xs uppercase tracking-wide text-muted-foreground">Last role</p>
+                    <p className="mt-2 text-xs uppercase tracking-wide text-muted-foreground">Last role</p>
                   ) : null}
                 </>
               )}
@@ -149,7 +215,7 @@ export function ExperienceCard(props: ExperienceCardProps) {
           {isExpanded ? (
             <motion.div
               animate={{ opacity: 1, y: 0 }}
-              className="mt-6 space-y-5"
+              className="mt-5 space-y-5 border-t border-border/80 pt-5"
               id={`experience-step-panel-${role.id}`}
               initial={{ opacity: 0, y: -4 }}
               role="region"
@@ -171,10 +237,10 @@ export function ExperienceCard(props: ExperienceCardProps) {
                   <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                     Key skills
                   </h4>
-                  <ul className="mt-2 flex flex-wrap gap-2" role="list">
+                  <ul className="mt-3 flex flex-wrap gap-x-2 gap-y-2.5 sm:gap-x-2.5" role="list">
                     {role.achievements.map((item) => (
-                      <li className={skillPillClasses} key={item}>
-                        {item}
+                      <li className={skillTagClasses} key={item}>
+                        <span className="text-pretty">{item}</span>
                       </li>
                     ))}
                   </ul>
@@ -186,10 +252,10 @@ export function ExperienceCard(props: ExperienceCardProps) {
                   <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                     Technologies
                   </h4>
-                  <ul className="mt-2 flex flex-wrap gap-2" role="list">
+                  <ul className="mt-3 flex flex-wrap gap-x-2 gap-y-2.5 sm:gap-x-2.5" role="list">
                     {role.technologies.map((tech) => (
-                      <li className={techPillClasses} key={tech}>
-                        {tech}
+                      <li className={techTagClasses} key={tech}>
+                        <span className="text-pretty">{tech}</span>
                       </li>
                     ))}
                   </ul>
@@ -216,6 +282,7 @@ export function ExperienceCard(props: ExperienceCardProps) {
             </motion.div>
           ) : null}
         </article>
+      </div>
       </div>
     </motion.li>
   );
