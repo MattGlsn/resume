@@ -72,6 +72,50 @@
   .animate-section-in {
     animation: section-in 0.55s ease-out both;
   }
+
+  /** Hero: staggered column entrance */
+  .hero-stagger-root > * {
+    opacity: 0;
+    animation: micro-fade-in-up 0.52s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
+  .hero-stagger-root > *:nth-child(1) {
+    animation-delay: 40ms;
+  }
+
+  .hero-stagger-root > *:nth-child(2) {
+    animation-delay: 125ms;
+  }
+
+  /** Hero: vertical accent draws in */
+  .hero-accent-bar {
+    transform-origin: top center;
+    animation: hero-accent-grow 0.65s cubic-bezier(0.22, 1, 0.36, 1) 80ms both;
+  }
+}
+
+@keyframes micro-fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-accent-grow {
+  from {
+    opacity: 0.35;
+    transform: scaleY(0.32);
+  }
+
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
 }
 
 @keyframes section-in {

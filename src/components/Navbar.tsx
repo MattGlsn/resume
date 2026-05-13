@@ -2,18 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import { navItems, siteName, type NavItem } from "../content/navigation";
 
 const linkBaseClasses =
-  "inline-flex min-h-11 items-center rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+  "inline-flex min-h-11 items-center rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-[color,transform] duration-200 ease-out hover:-translate-y-px hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
 
 const linkActiveClasses = "text-accent-foreground";
 
 const mobileLinkBaseClasses =
-  "flex min-h-11 items-center rounded-md px-3 py-2 text-base font-medium text-muted-foreground transition-colors hover:bg-background hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+  "flex min-h-11 items-center rounded-md px-3 py-2 text-base font-medium text-muted-foreground transition-[color,background-color,transform] duration-200 ease-out hover:-translate-y-px hover:bg-background hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
 
 const toggleButtonClasses =
-  "inline-flex min-h-11 min-w-[44px] items-center justify-center rounded-md border border-secondary-border bg-secondary text-secondary-foreground transition-colors hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:hidden";
+  "inline-flex min-h-11 min-w-[44px] items-center justify-center rounded-md border border-secondary-border bg-secondary text-secondary-foreground transition-[color,background-color,transform] duration-200 ease-out hover:-translate-y-px hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:hidden";
 
 const brandClasses =
-  "inline-flex min-h-11 items-center rounded-md px-2 py-2 text-sm font-semibold text-foreground transition-colors hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+  "inline-flex min-h-11 items-center rounded-md px-2 py-2 text-sm font-semibold text-foreground transition-[color,transform] duration-200 ease-out hover:-translate-y-px hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
 
 const useActiveSection = (items: readonly NavItem[]): string | null => {
   const [activeId, setActiveId] = useState<string | null>(null);

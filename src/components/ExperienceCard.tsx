@@ -60,14 +60,20 @@ function EmploymentMeta(props: EmploymentMetaProps) {
   }
 
   return (
-    <dl className="mt-0 space-y-2.5 text-sm">
-      <div className="grid grid-cols-1 gap-1 sm:grid-cols-[5.75rem_1fr] sm:items-baseline sm:gap-x-4">
-        <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Dates</dt>
-        <dd className="min-w-0 text-foreground">{dateRange}</dd>
+    <dl className="mt-3 space-y-1 text-xs leading-tight">
+      <div className="grid grid-cols-1 gap-0.5 sm:grid-cols-[5.25rem_1fr] sm:items-baseline sm:gap-x-3">
+        <dt className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground sm:text-[11px]">
+          Dates
+        </dt>
+        <dd className="min-w-0 text-xs text-foreground">{dateRange}</dd>
       </div>
-      <div className="grid grid-cols-1 gap-1 sm:grid-cols-[5.75rem_1fr] sm:items-baseline sm:gap-x-4">
-        <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Location</dt>
-        <dd className="min-w-0 text-pretty text-foreground">{location}</dd>
+      <div className="grid grid-cols-1 gap-0.5 sm:grid-cols-[5.25rem_1fr] sm:items-baseline sm:gap-x-3">
+        <dt className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground sm:text-[11px]">
+          Location
+        </dt>
+        <dd className="min-w-0 text-xs text-foreground">
+          <span className="text-pretty">{location}</span>
+        </dd>
       </div>
     </dl>
   );
@@ -106,7 +112,7 @@ export function ExperienceCard(props: ExperienceCardProps) {
   return (
     <motion.li
       animate={{ opacity: 1, y: 0 }}
-      className={`relative overflow-hidden rounded-xl border border-border bg-secondary/90 shadow-[0_1px_0_rgb(0_0_0_/0.04)] transition-shadow duration-200 motion-reduce:transition-none ${
+      className={`relative overflow-hidden rounded-xl border border-border bg-secondary/90 shadow-[0_1px_0_rgb(0_0_0_/0.04)] transition-[transform,box-shadow] duration-300 ease-out motion-reduce:transition-none hover:-translate-y-0.5 ${
         isExpanded
           ? "shadow-md ring-2 ring-primary/25 ring-offset-2 ring-offset-background"
           : "hover:shadow-[0_4px_14px_rgb(0_0_0_/0.06)]"
@@ -124,7 +130,7 @@ export function ExperienceCard(props: ExperienceCardProps) {
             aria-controls={`experience-step-panel-${role.id}`}
             aria-expanded={isExpanded}
             aria-label={`${isExpanded ? "Collapse" : "Expand"} role: ${role.title} at ${role.company}`}
-            className={`relative z-10 flex size-10 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full border p-1.5 transition-all duration-200 motion-reduce:transition-none sm:size-11 sm:p-2 ${
+            className={`relative z-10 flex size-10 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full border p-1.5 transition-[transform,border-color,box-shadow,background-color] duration-200 ease-out motion-reduce:transition-none hover:scale-105 active:scale-100 sm:size-11 sm:p-2 ${
               isExpanded
                 ? "border-primary bg-background shadow-sm ring-2 ring-primary/20"
                 : "border-border bg-background hover:border-primary/40"
