@@ -81,17 +81,16 @@ describe("Experience", () => {
     expect(company).toHaveAttribute("href", "https://acme.example");
   });
 
-  it("keeps responsive Tailwind utilities on key timeline elements", () => {
+  it("wraps each role in a stacked card surface", () => {
     const { container } = render(<Experience />);
 
-    // Each role is a list item with the responsive gap utility.
     const items = container.querySelectorAll("ol > li");
     expect(items.length).toBeGreaterThan(0);
     items.forEach((li) => {
-      expect(li.className).toMatch(/sm:gap-6/);
+      expect(li.className).toMatch(/rounded-xl/);
+      expect(li.className).toMatch(/border-border/);
     });
 
-    // The logo trigger uses a responsive size at the sm breakpoint.
     const logoButtons = container.querySelectorAll(
       'button[id^="experience-step-trigger-"]',
     );
@@ -100,14 +99,13 @@ describe("Experience", () => {
       expect(button.className).toMatch(/sm:size-11/);
     });
 
-    // Role titles step up to sm:text-lg above the breakpoint.
     const titles = screen.getAllByRole("heading", { level: 3 });
     titles.forEach((heading) => {
       expect(heading.className).toMatch(/sm:text-lg/);
     });
   });
 
-  it("shows key skills as badge list items when achievements are present", () => {
+  it("shows key skills as tags when achievements are present", () => {
     render(
       <Experience
         roles={[

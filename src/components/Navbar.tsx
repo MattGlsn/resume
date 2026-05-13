@@ -1,19 +1,20 @@
+import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { navItems, siteName, type NavItem } from "../content/navigation";
 
 const linkBaseClasses =
-  "inline-flex min-h-11 items-center rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+  "inline-flex min-h-11 items-center rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-[color,transform] duration-200 ease-out hover:-translate-y-px hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
 
 const linkActiveClasses = "text-accent-foreground";
 
 const mobileLinkBaseClasses =
-  "flex min-h-11 items-center rounded-md px-3 py-2 text-base font-medium text-muted-foreground transition-colors hover:bg-background hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+  "flex min-h-11 items-center rounded-md px-3 py-2 text-base font-medium text-muted-foreground transition-[color,background-color,transform] duration-200 ease-out hover:-translate-y-px hover:bg-background hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
 
 const toggleButtonClasses =
-  "inline-flex min-h-11 min-w-[44px] items-center justify-center rounded-md border border-secondary-border bg-secondary text-secondary-foreground transition-colors hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:hidden";
+  "inline-flex min-h-11 min-w-[44px] items-center justify-center rounded-md border border-secondary-border bg-secondary text-secondary-foreground transition-[color,background-color,transform] duration-200 ease-out hover:-translate-y-px hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:hidden";
 
 const brandClasses =
-  "inline-flex min-h-11 items-center rounded-md px-2 py-2 text-sm font-semibold text-foreground transition-colors hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+  "inline-flex min-h-11 items-center rounded-md px-2 py-2 text-sm font-semibold text-foreground transition-[color,transform] duration-200 ease-out hover:-translate-y-px hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
 
 const useActiveSection = (items: readonly NavItem[]): string | null => {
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -90,6 +91,7 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const toggleRef = useRef<HTMLButtonElement | null>(null);
   const activeId = useActiveSection(navItems);
+  const reduceMotion = useReducedMotion() ?? false;
 
   useEffect(() => {
     if (!open) return;
@@ -106,9 +108,14 @@ const Navbar = () => {
   const closeMenu = () => setOpen(false);
 
   return (
-    <nav
+    <motion.nav
+      animate={{ opacity: 1, y: 0 }}
       aria-label="Primary"
       className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur"
+      initial={reduceMotion ? false : { opacity: 0, y: -8 }}
+      transition={
+        reduceMotion ? { duration: 0 } : { duration: 0.38, ease: [0.22, 1, 0.36, 1] }
+      }
     >
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <a className={brandClasses} href="#profile" onClick={closeMenu}>
@@ -174,7 +181,7 @@ const Navbar = () => {
           ))}
         </ul>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 

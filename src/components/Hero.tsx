@@ -1,50 +1,127 @@
+import { motion, useReducedMotion, type Variants } from "motion/react";
 import { heroProfile } from "../content/hero";
 
+const easeMicro = [0.25, 0.46, 0.45, 0.94] as const;
+
 const primaryButtonClasses =
-  "inline-flex min-h-11 min-w-[44px] items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+  "inline-flex min-h-11 min-w-[44px] items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-[color,background-color,transform,box-shadow] duration-200 ease-out hover:-translate-y-px hover:bg-primary-hover hover:shadow-md active:translate-y-0 active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
 
 const secondaryButtonClasses =
-  "inline-flex min-h-11 min-w-[44px] items-center justify-center rounded-lg border border-secondary-border bg-secondary px-5 py-2.5 text-sm font-semibold text-secondary-foreground shadow-sm transition-colors hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+  "inline-flex min-h-11 min-w-[44px] items-center justify-center rounded-lg border border-secondary-border bg-secondary px-5 py-2.5 text-sm font-semibold text-secondary-foreground shadow-sm transition-[color,background-color,border-color,transform,box-shadow] duration-200 ease-out hover:-translate-y-px hover:bg-background hover:shadow-md active:translate-y-0 active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
 
 const tertiaryLinkClasses =
-  "inline-flex min-h-11 min-w-[44px] items-center justify-center rounded-lg px-5 py-2.5 text-sm font-semibold text-accent-foreground underline-offset-4 transition-colors hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+  "inline-flex min-h-11 min-w-[44px] items-center justify-center rounded-lg px-5 py-2.5 text-sm font-semibold text-accent-foreground underline-offset-4 transition-[color,text-decoration-color,transform] duration-200 ease-out hover:-translate-y-px hover:underline active:translate-y-0 active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+
+function heroVariants(reduceMotion: boolean): {
+  column: Variants;
+  ctaList: Variants;
+  ctaItem: Variants;
+  grid: Variants;
+} {
+  const none = { duration: 0 };
+  return {
+    grid: {
+      hidden: {},
+      show: {
+        transition: reduceMotion
+          ? { staggerChildren: 0 }
+          : { staggerChildren: 0.1, delayChildren: 0.04 },
+      },
+    },
+    column: {
+      hidden: { opacity: 0, y: reduceMotion ? 0 : 14 },
+      show: {
+        opacity: 1,
+        y: 0,
+        transition: reduceMotion ? none : { duration: 0.48, ease: easeMicro },
+      },
+    },
+    ctaList: {
+      hidden: {},
+      show: {
+        transition: reduceMotion
+          ? { staggerChildren: 0 }
+          : { staggerChildren: 0.07, delayChildren: 0.1 },
+      },
+    },
+    ctaItem: {
+      hidden: { opacity: 0, y: reduceMotion ? 0 : 8 },
+      show: {
+        opacity: 1,
+        y: 0,
+        transition: reduceMotion ? none : { duration: 0.34, ease: easeMicro },
+      },
+    },
+  };
+}
 
 const Hero = () => {
+  const reduceMotion = useReducedMotion() ?? false;
+  const v = heroVariants(reduceMotion);
+
   return (
     <header
       aria-labelledby="hero-heading"
-      className="scroll-mt-20 border-b border-border bg-gradient-to-b from-hero-from to-hero-to"
+      className="hero-editorial-surface scroll-mt-20 border-b border-border"
       id="profile"
     >
-      <div className="mx-auto flex min-h-[min(100dvh,56rem)] max-w-5xl flex-col justify-center gap-8 px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
-        <div className="space-y-4">
-          <p className="text-sm font-medium uppercase tracking-wide text-accent-foreground">
-            {heroProfile.professionalTitle}
-          </p>
-          <h1
-            className="text-balance text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl"
-            id="hero-heading"
-          >
-            {heroProfile.fullName}
-          </h1>
-          <p className="max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground sm:text-xl">
-            {heroProfile.summary}
-          </p>
-        </div>
-        <nav
-          aria-label="Primary actions"
-          className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
+      <div className="mx-auto flex min-h-[min(100dvh,56rem)] max-w-5xl flex-col justify-center gap-10 px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+        <motion.div
+          animate="show"
+          className="grid items-start gap-10 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-10"
+          initial="hidden"
+          variants={v.grid}
         >
-          <a className={primaryButtonClasses} href="#contact">
-            Contact
-          </a>
-          <a className={secondaryButtonClasses} href="#projects">
-            View projects
-          </a>
-          <a className={tertiaryLinkClasses} href="/resume.pdf" download>
-            Download resume
-          </a>
-        </nav>
+          <motion.div className="flex gap-6 lg:col-span-5" variants={v.column}>
+            <motion.div
+              aria-hidden="true"
+              className="mt-1 hidden w-0.5 shrink-0 rounded-full bg-primary/35 sm:block sm:min-h-[4.5rem]"
+              initial={
+                reduceMotion
+                  ? { scaleY: 1, opacity: 1 }
+                  : { scaleY: 0.32, opacity: 0.4, transformOrigin: "top center" }
+              }
+              animate={{ scaleY: 1, opacity: 1 }}
+              style={{ transformOrigin: "top center" }}
+              transition={
+                reduceMotion
+                  ? { duration: 0 }
+                  : { delay: 0.08, duration: 0.55, ease: [0.22, 1, 0.36, 1] as const }
+              }
+            />
+            <div className="min-w-0 w-full max-w-2xl space-y-4 lg:max-w-none">
+              <p className="text-sm font-medium uppercase tracking-[0.2em] text-accent-foreground">
+                {heroProfile.professionalTitle}
+              </p>
+              <h1
+                className="text-nowrap text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl"
+                id="hero-heading"
+              >
+                {heroProfile.fullName}
+              </h1>
+            </div>
+          </motion.div>
+          <motion.div className="flex min-w-0 flex-col gap-8 lg:col-span-7 lg:pt-2" variants={v.column}>
+            <p className="max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground sm:text-xl lg:max-w-none">
+              {heroProfile.summary}
+            </p>
+            <motion.nav
+              aria-label="Primary actions"
+              className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
+              variants={v.ctaList}
+            >
+              <motion.a className={primaryButtonClasses} href="#contact" variants={v.ctaItem}>
+                Contact
+              </motion.a>
+              <motion.a className={secondaryButtonClasses} href="#projects" variants={v.ctaItem}>
+                View projects
+              </motion.a>
+              <motion.a className={tertiaryLinkClasses} href="/resume.pdf" download variants={v.ctaItem}>
+                Download resume
+              </motion.a>
+            </motion.nav>
+          </motion.div>
+        </motion.div>
       </div>
     </header>
   );
