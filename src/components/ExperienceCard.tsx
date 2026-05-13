@@ -105,24 +105,29 @@ export function ExperienceCard(props: ExperienceCardProps) {
   const { role, isExpanded, isLast, index = 0, onToggle } = props;
   const reduceMotion = useReducedMotion() ?? false;
 
-  const entranceDuration = reduceMotion ? 0 : 0.35;
   const entranceDelay = reduceMotion ? 0 : Math.min(index * 0.06, 0.3);
-  const panelDuration = reduceMotion ? 0 : 0.2;
 
   return (
     <motion.li
-      animate={{ opacity: 1, y: 0 }}
-      className={`relative overflow-hidden rounded-xl border border-border bg-secondary/90 shadow-[0_1px_0_rgb(0_0_0_/0.04)] transition-[transform,box-shadow] duration-300 ease-out motion-reduce:transition-none hover:-translate-y-0.5 ${
+      className={`relative overflow-hidden rounded-xl border border-border bg-secondary/90 shadow-[0_1px_0_rgb(0_0_0_/0.04)] transition-shadow duration-200 motion-reduce:transition-none ${
         isExpanded
           ? "shadow-md ring-2 ring-primary/25 ring-offset-2 ring-offset-background"
-          : "hover:shadow-[0_4px_14px_rgb(0_0_0_/0.06)]"
+          : ""
       }`}
-      initial={{ opacity: 0, y: 8 }}
-      transition={{
-        duration: entranceDuration,
-        delay: entranceDelay,
-        ease: "easeOut",
-      }}
+      initial={{ opacity: 0, y: 14 }}
+      transition={
+        reduceMotion
+          ? { duration: 0 }
+          : {
+              type: "spring",
+              stiffness: 420,
+              damping: 32,
+              delay: entranceDelay,
+              mass: 0.85,
+            }
+      }
+      viewport={{ once: true, amount: 0.22, margin: "0px 0px -10% 0px" }}
+      whileInView={{ opacity: 1, y: 0 }}
     >
       <div className="flex gap-4 p-4 sm:gap-6 sm:p-5">
         <div className="flex w-10 shrink-0 flex-col items-center justify-start pt-0.5 sm:w-11">
@@ -130,7 +135,7 @@ export function ExperienceCard(props: ExperienceCardProps) {
             aria-controls={`experience-step-panel-${role.id}`}
             aria-expanded={isExpanded}
             aria-label={`${isExpanded ? "Collapse" : "Expand"} role: ${role.title} at ${role.company}`}
-            className={`relative z-10 flex size-10 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full border p-1.5 transition-[transform,border-color,box-shadow,background-color] duration-200 ease-out motion-reduce:transition-none hover:scale-105 active:scale-100 sm:size-11 sm:p-2 ${
+            className={`relative z-10 flex size-10 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full border p-1.5 transition-all duration-200 motion-reduce:transition-none sm:size-11 sm:p-2 ${
               isExpanded
                 ? "border-primary bg-background shadow-sm ring-2 ring-primary/20"
                 : "border-border bg-background hover:border-primary/40"
@@ -225,7 +230,11 @@ export function ExperienceCard(props: ExperienceCardProps) {
               id={`experience-step-panel-${role.id}`}
               initial={{ opacity: 0, y: -4 }}
               role="region"
-              transition={{ duration: panelDuration, ease: "easeOut" }}
+              transition={
+                reduceMotion
+                  ? { duration: 0 }
+                  : { type: "spring", stiffness: 480, damping: 34, mass: 0.75 }
+              }
             >
               <div>
                 <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">

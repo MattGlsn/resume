@@ -1,3 +1,4 @@
+import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { navItems, siteName, type NavItem } from "../content/navigation";
 
@@ -90,6 +91,7 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const toggleRef = useRef<HTMLButtonElement | null>(null);
   const activeId = useActiveSection(navItems);
+  const reduceMotion = useReducedMotion() ?? false;
 
   useEffect(() => {
     if (!open) return;
@@ -106,9 +108,14 @@ const Navbar = () => {
   const closeMenu = () => setOpen(false);
 
   return (
-    <nav
+    <motion.nav
+      animate={{ opacity: 1, y: 0 }}
       aria-label="Primary"
       className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur"
+      initial={reduceMotion ? false : { opacity: 0, y: -8 }}
+      transition={
+        reduceMotion ? { duration: 0 } : { duration: 0.38, ease: [0.22, 1, 0.36, 1] }
+      }
     >
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <a className={brandClasses} href="#profile" onClick={closeMenu}>
@@ -174,7 +181,7 @@ const Navbar = () => {
           ))}
         </ul>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 
