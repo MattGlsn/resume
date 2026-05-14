@@ -1,6 +1,7 @@
 import Experience from "./components/Experience";
 import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
+import Skills from "./components/Skills";
 
 const skipLinkClasses =
   "sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2";
@@ -49,17 +50,7 @@ const App = () => {
                   className="hidden h-px flex-1 translate-y-[-0.35rem] bg-gradient-to-r from-primary/35 to-transparent sm:ms-10 sm:block"
                 />
               </div>
-              <p className="mt-3 max-w-2xl text-muted-foreground">
-                Skills and expertise will appear here.
-              </p>
-              <div aria-hidden="true" className="mt-10 flex flex-wrap gap-2">
-                {Array.from({ length: 6 }).map((_, index) => (
-                  <span
-                    className="h-9 min-w-[4.5rem] rounded-full border border-dashed border-primary/35 bg-primary/[0.06]"
-                    key={index}
-                  />
-                ))}
-              </div>
+              <Skills />
             </div>
           </section>
           <section
