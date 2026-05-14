@@ -1,5 +1,6 @@
 import Experience from "./components/Experience";
 import Hero from "./components/Hero";
+import Languages from "./components/Languages";
 import Navbar from "./components/Navbar";
 import Skills from "./components/Skills";
 
@@ -52,10 +53,30 @@ const App = () => {
             </div>
           </section>
           <section
+            aria-labelledby="languages-heading"
+            className="animate-section-in scroll-mt-20 border-b border-border bg-[color-mix(in_srgb,var(--color-secondary)_40%,transparent)]"
+            id="languages"
+            style={{ animationDelay: "140ms" }}
+          >
+            <div className={sectionShell}>
+              <h2
+                className="text-2xl font-semibold tracking-tight text-foreground"
+                id="languages-heading"
+              >
+                Languages
+              </h2>
+              <p className="mt-3 max-w-2xl text-muted-foreground">
+                Levels use the European CEFR scale (A1–C2). The bar is a coarse visual along that scale, not an
+                exam score.
+              </p>
+              <Languages />
+            </div>
+          </section>
+          <section
             aria-labelledby="projects-heading"
             className="animate-section-in scroll-mt-20 border-b border-border"
             id="projects"
-            style={{ animationDelay: "140ms" }}
+            style={{ animationDelay: "210ms" }}
           >
             <div className={sectionShell}>
               <h2
@@ -93,7 +114,7 @@ const App = () => {
         aria-labelledby="contact-heading"
         className="animate-section-in mt-auto scroll-mt-20 bg-[color-mix(in_srgb,var(--color-foreground)_88%,var(--color-hero-from)))] text-background shadow-[inset_0_1px_0_rgb(255_252_248_/0.08)]"
         id="contact"
-        style={{ animationDelay: "210ms" }}
+        style={{ animationDelay: "280ms" }}
       >
         <div className={footerShell}>
           <h2
