@@ -86,7 +86,7 @@ export function SkillSlide(props: SkillSlideProps) {
         >
           {skillIcon(skill.icon)}
         </motion.span>
-        <h3 className="min-w-0 flex-1 text-sm font-medium tracking-tight text-foreground">{skill.name}</h3>
+        <h4 className="min-w-0 flex-1 text-sm font-medium tracking-tight text-foreground">{skill.name}</h4>
         <motion.span
           aria-label={`${yearsLabel} years of experience`}
           className="shrink-0 tabular-nums text-sm text-muted-foreground"

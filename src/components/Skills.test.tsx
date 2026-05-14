@@ -9,6 +9,7 @@ const fixtureSkill: Skill = {
   startDate: "2020-01",
   endDate: "2021-12",
   icon: "react",
+  categoryId: "software-development",
 };
 
 describe("Skills", () => {
@@ -22,7 +23,8 @@ describe("Skills", () => {
 
     render(<Skills skills={[fixtureSkill]} />);
 
-    expect(screen.getByRole("heading", { name: "Fixture React", level: 3 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Software development", level: 3 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Fixture React", level: 4 })).toBeInTheDocument();
     expect(screen.getByLabelText("2 years of experience")).toBeInTheDocument();
     expect(screen.queryByText("Proficient")).not.toBeInTheDocument();
     expect(screen.queryByText("Expert")).not.toBeInTheDocument();
@@ -32,8 +34,8 @@ describe("Skills", () => {
   it("exposes a progress bar for relative experience", () => {
     render(<Skills skills={[fixtureSkill]} />);
 
-    const list = screen.getByRole("list", { name: "Skills" });
-    const bar = within(list).getByRole("progressbar");
+    const region = screen.getByRole("region", { name: "Skills" });
+    const bar = within(region).getByRole("progressbar");
     expect(bar).toHaveAttribute("aria-valuenow", "2");
   });
 
