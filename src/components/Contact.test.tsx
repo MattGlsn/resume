@@ -8,14 +8,12 @@ function expectedMailtoHref(): string {
 }
 
 describe("Contact", () => {
-  it("renders heading, CTA, mailto controls, LinkedIn, and location", () => {
+  it("renders heading, mailto controls, social links, phone, and location", () => {
     render(<Contact />);
 
-    expect(screen.getByRole("heading", { level: 2, name: "Contact" })).toBeInTheDocument();
-    expect(screen.getByText(contactProfile.ctaMessage)).toBeInTheDocument();
-
     const href = expectedMailtoHref();
-    expect(screen.getByRole("link", { name: "Email me" })).toHaveAttribute("href", href);
+
+    expect(screen.getByText("Email")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: contactProfile.email })).toHaveAttribute("href", href);
 
     const linkedIn = screen.getByRole("link", { name: contactProfile.linkedInLabel });
@@ -25,14 +23,19 @@ describe("Contact", () => {
       expect.arrayContaining(["noopener", "noreferrer"]),
     );
 
-    expect(screen.getByText(contactProfile.location)).toBeInTheDocument();
-  });
+    const github = screen.getByRole("link", { name: contactProfile.githubLabel });
+    expect(github).toHaveAttribute("href", contactProfile.githubUrl);
+    expect(github).toHaveAttribute("target", "_blank");
+    expect(github.getAttribute("rel")?.split(/\s+/)).toEqual(
+      expect.arrayContaining(["noopener", "noreferrer"]),
+    );
 
-  it("does not render phone row when phone is omitted", () => {
+    expect(screen.getByText(contactProfile.location)).toBeInTheDocument();
+
     if (contactProfile.phone) {
-      return;
+      expect(screen.getByText("Phone")).toBeInTheDocument();
+      const tel = screen.getByRole("link", { name: contactProfile.phone });
+      expect(tel).toHaveAttribute("href", "tel:+4917680042448");
     }
-    render(<Contact />);
-    expect(screen.queryByText("Phone")).not.toBeInTheDocument();
   });
 });
