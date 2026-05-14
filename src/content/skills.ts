@@ -6,23 +6,27 @@
 /** Section order and labels for the Skills area. */
 export const skillCategories = [
   { id: "product-management", title: "Product management" },
+  { id: "human-factors", title: "Human factors" },
   { id: "software-development", title: "Software development" },
-  { id: "cad-human-factors", title: "CAD & human factors" },
+  { id: "mechanical-engineer", title: "Mechanical engineer" },
 ] as const;
 
 export type SkillCategoryId = (typeof skillCategories)[number]["id"];
 
 /** Keys mapped to icons in `SkillSlide`. */
 export type SkillIconKey =
-  | "react"
-  | "tailwind"
-  | "typescript"
-  | "cad"
   | "ergonomics"
-  | "gitlab"
   | "jira"
-  | "confluence"
-  | "ai";
+  | "ai"
+  | "users"
+  | "github"
+  | "gitlab"
+  | "react"
+  | "typescript"
+  | "tailwind"
+  | "sql"
+  | "cad"
+  | "simulation";
 
 export type Skill = Readonly<{
   id: string;
@@ -35,76 +39,124 @@ export type Skill = Readonly<{
 
 const skillsRaw = [
   {
-    id: "jira",
-    name: "Jira",
-    startDate: "2018-01",
-    endDate: null,
+    id: "atlassian-suite",
+    name: "Atlassian suite (JIRA, JPD, Confluence)",
+    startDate: "2025-06",
+    endDate: "2026-05",
     icon: "jira",
     categoryId: "product-management",
   },
   {
-    id: "confluence",
-    name: "Confluence",
-    startDate: "2019-03",
-    endDate: null,
-    icon: "confluence",
+    id: "agentic-ai-coding",
+    name: "Agentic AI coding",
+    startDate: "2025-12",
+    endDate: "2026-05",
+    icon: "ai",
     categoryId: "product-management",
   },
   {
-    id: "typescript",
-    name: "TypeScript",
-    startDate: "2019-09",
-    endDate: null,
-    icon: "typescript",
+    id: "customer-discovery",
+    name: "Customer discovery",
+    startDate: "2025-11",
+    endDate: "2026-04",
+    icon: "users",
+    categoryId: "product-management",
+  },
+  {
+    id: "ramsis",
+    name: "RAMSIS",
+    startDate: "2023-06",
+    endDate: "2026-05",
+    icon: "ergonomics",
+    categoryId: "human-factors",
+  },
+  {
+    id: "human-factors-engineering",
+    name: "Human factors engineering",
+    startDate: "2023-06",
+    endDate: "2026-05",
+    icon: "ergonomics",
+    categoryId: "human-factors",
+  },
+  {
+    id: "github",
+    name: "GitHub",
+    startDate: "2024-06",
+    endDate: "2026-05",
+    icon: "github",
     categoryId: "software-development",
   },
   {
     id: "react",
     name: "React",
-    startDate: "2021-01",
-    endDate: null,
+    startDate: "2024-06",
+    endDate: "2026-05",
     icon: "react",
     categoryId: "software-development",
   },
   {
-    id: "tailwind",
-    name: "Tailwind CSS",
-    startDate: "2022-04",
-    endDate: null,
-    icon: "tailwind",
+    id: "typescript",
+    name: "TypeScript",
+    startDate: "2024-06",
+    endDate: "2026-05",
+    icon: "typescript",
+    categoryId: "software-development",
+  },
+  {
+    id: "sql",
+    name: "SQL",
+    startDate: "2024-06",
+    endDate: "2026-05",
+    icon: "sql",
     categoryId: "software-development",
   },
   {
     id: "gitlab",
     name: "GitLab",
-    startDate: "2020-06",
-    endDate: null,
+    startDate: "2025-12",
+    endDate: "2026-05",
     icon: "gitlab",
     categoryId: "software-development",
   },
   {
-    id: "ai-tooling",
-    name: "AI-assisted development",
-    startDate: "2023-10",
-    endDate: null,
-    icon: "ai",
+    id: "tailwind",
+    name: "Tailwind CSS",
+    startDate: "2024-06",
+    endDate: "2026-05",
+    icon: "tailwind",
     categoryId: "software-development",
   },
   {
-    id: "catia",
-    name: "CATIA V5",
-    startDate: "2016-02",
-    endDate: "2023-06",
+    id: "conception-produit",
+    name: "Conception produit",
+    startDate: "2021-06",
+    endDate: "2026-05",
     icon: "cad",
-    categoryId: "cad-human-factors",
+    categoryId: "mechanical-engineer",
   },
   {
-    id: "ramsis",
-    name: "RAMSIS",
-    startDate: "2020-03",
-    endDate: "2026-01",
-    icon: "ergonomics",
-    categoryId: "cad-human-factors",
+    id: "computing-simulation",
+    name: "Computing / simulation",
+    startDate: "2025-06",
+    endDate: "2026-05",
+    icon: "simulation",
+    categoryId: "mechanical-engineer",
+  },
+  {
+    id: "catia-v5",
+    name: "CATIA V5",
+    startDate: "2020-06",
+    endDate: "2026-05",
+    icon: "cad",
+    categoryId: "mechanical-engineer",
+  },
+  {
+    id: "creo",
+    name: "Creo",
+    startDate: "2024-06",
+    endDate: "2026-05",
+    icon: "cad",
+    categoryId: "mechanical-engineer",
   },
 ] as const satisfies readonly Skill[];
 

@@ -46,6 +46,10 @@ const App = () => {
               >
                 Skills
               </h2>
+              <p className="mt-3 text-pretty text-sm text-muted-foreground">
+                Each skill shows how many years of professional experience you have with it. Progress bars use one
+                shared scale across all categories, so you can compare bar length from one group to another.
+              </p>
               <Skills />
             </div>
           </section>

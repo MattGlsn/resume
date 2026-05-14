@@ -1,32 +1,46 @@
 import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
-import { HiCpuChip } from "react-icons/hi2";
-import { MdArchitecture, MdPrecisionManufacturing } from "react-icons/md";
-import { SiConfluence, SiGitlab, SiJira, SiReact, SiTailwindcss, SiTypescript } from "react-icons/si";
+import { HiCpuChip, HiUserGroup } from "react-icons/hi2";
+import { MdArchitecture, MdPrecisionManufacturing, MdSpeed } from "react-icons/md";
+import {
+  SiGithub,
+  SiGitlab,
+  SiJira,
+  SiPostgresql,
+  SiReact,
+  SiTailwindcss,
+  SiTypescript,
+} from "react-icons/si";
 import type { Skill, SkillIconKey } from "../content/skills";
 import { skillYearsBetween } from "../utils/skillYears";
 
 function skillIcon(key: SkillIconKey): ReactNode {
   const className = "size-5 shrink-0 text-primary";
   switch (key) {
-    case "react":
-      return <SiReact aria-hidden className={className} title="" />;
-    case "tailwind":
-      return <SiTailwindcss aria-hidden className={className} title="" />;
-    case "typescript":
-      return <SiTypescript aria-hidden className={className} title="" />;
-    case "cad":
-      return <MdPrecisionManufacturing aria-hidden className={className} title="" />;
     case "ergonomics":
       return <MdArchitecture aria-hidden className={className} title="" />;
-    case "gitlab":
-      return <SiGitlab aria-hidden className={className} title="" />;
     case "jira":
       return <SiJira aria-hidden className={className} title="" />;
-    case "confluence":
-      return <SiConfluence aria-hidden className={className} title="" />;
     case "ai":
       return <HiCpuChip aria-hidden className={className} title="" />;
+    case "users":
+      return <HiUserGroup aria-hidden className={className} title="" />;
+    case "github":
+      return <SiGithub aria-hidden className={className} title="" />;
+    case "gitlab":
+      return <SiGitlab aria-hidden className={className} title="" />;
+    case "react":
+      return <SiReact aria-hidden className={className} title="" />;
+    case "typescript":
+      return <SiTypescript aria-hidden className={className} title="" />;
+    case "tailwind":
+      return <SiTailwindcss aria-hidden className={className} title="" />;
+    case "sql":
+      return <SiPostgresql aria-hidden className={className} title="" />;
+    case "cad":
+      return <MdPrecisionManufacturing aria-hidden className={className} title="" />;
+    case "simulation":
+      return <MdSpeed aria-hidden className={className} title="" />;
     default: {
       const _exhaustive: never = key;
       return _exhaustive;
@@ -37,6 +51,11 @@ function skillIcon(key: SkillIconKey): ReactNode {
 function formatYearsValue(years: number): string {
   const rounded = Math.round(years * 10) / 10;
   return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1);
+}
+
+function yearsWordForDisplay(yearsNumeric: number): "year" | "years" {
+  if (yearsNumeric < 1 || yearsNumeric === 1) return "year";
+  return "years";
 }
 
 export type SkillSlideProps = Readonly<{
@@ -65,6 +84,8 @@ export function SkillSlide(props: SkillSlideProps) {
   const yearsInitial = reduceMotion ? { opacity: 1 } : { opacity: 0 };
   const barInitial = reduceMotion ? { width: `${fillPct}%` } : { width: "0%" };
   const ariaYears = Number.parseFloat(yearsLabel);
+  const yearWord = yearsWordForDisplay(ariaYears);
+  const yearsWithUnit = `${yearsLabel} ${yearWord}`;
 
   return (
     <motion.article
@@ -88,14 +109,14 @@ export function SkillSlide(props: SkillSlideProps) {
         </motion.span>
         <h4 className="min-w-0 flex-1 text-sm font-medium tracking-tight text-foreground">{skill.name}</h4>
         <motion.span
-          aria-label={`${yearsLabel} years of experience`}
+          aria-label={`${yearsWithUnit} of experience`}
           className="shrink-0 tabular-nums text-sm text-muted-foreground"
           initial={yearsInitial}
           transition={{ ...barTransition, duration: reduceMotion ? 0 : 0.42 }}
           viewport={{ once: true }}
           whileInView={{ opacity: 1 }}
         >
-          {yearsLabel}
+          {yearsWithUnit}
         </motion.span>
       </div>
 

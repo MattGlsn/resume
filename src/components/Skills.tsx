@@ -26,6 +26,7 @@ function Skills(props?: SkillsProps) {
   const reduceMotion = useReducedMotion() ?? false;
 
   const sections = useMemo(() => {
+    const globalYearsMax = maxYearsAcross(items);
     return skillCategories
       .map((cat) => {
         const list = skillsInCategory(items, cat.id);
@@ -33,7 +34,7 @@ function Skills(props?: SkillsProps) {
         return {
           ...cat,
           skills: list,
-          yearsMax: maxYearsAcross(list),
+          globalYearsMax,
         };
       })
       .filter((s): s is NonNullable<typeof s> => s !== null);
@@ -66,7 +67,7 @@ function Skills(props?: SkillsProps) {
             role="list"
           >
             {section.skills.map((skill, index) => (
-              <SkillSlide index={index} key={skill.id} skill={skill} yearsMax={section.yearsMax} />
+              <SkillSlide index={index} key={skill.id} skill={skill} yearsMax={section.globalYearsMax} />
             ))}
           </div>
         </motion.section>
