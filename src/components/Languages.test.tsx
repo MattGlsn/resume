@@ -25,7 +25,11 @@ describe("Languages", () => {
     expect(screen.getByText("Native / bilingual")).toBeInTheDocument();
     expect(screen.getAllByText("C1").length).toBe(2);
     expect(screen.getByText("C2")).toBeInTheDocument();
-    expect(screen.getAllByText(/Effective operational proficiency/i).length).toBe(2);
+
+    const englishMeter = screen.getByRole("meter", {
+      name: /Proficiency for English:.*Effective operational proficiency/i,
+    });
+    expect(englishMeter).toBeInTheDocument();
   });
 
   it("exposes a meter aligned to the six-step CEFR scale", () => {

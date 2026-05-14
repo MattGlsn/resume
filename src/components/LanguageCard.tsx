@@ -49,7 +49,6 @@ export function LanguageCard({ language, index }: LanguageCardProps) {
             </abbr>{" "}
             <span className="text-primary">{language.cefrLevel}</span>
           </p>
-          <p className="text-sm text-muted-foreground">{descriptor}</p>
           {language.notes ? (
             <p className="text-xs text-muted-foreground">{language.notes}</p>
           ) : null}
