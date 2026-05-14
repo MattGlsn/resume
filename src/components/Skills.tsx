@@ -40,61 +40,38 @@ function Skills(props?: SkillsProps) {
   }, [items]);
 
   return (
-    <>
-      <motion.div
-        className="mx-auto max-w-2xl"
-        initial={{ opacity: 0, y: 12 }}
-        transition={
-          reduceMotion ? { duration: 0 } : { duration: 0.4, ease: [0.22, 1, 0.36, 1] }
-        }
-        viewport={{ once: true, amount: 0.35 }}
-        whileInView={{ opacity: 1, y: 0 }}
-      >
-        <p className="mt-3 text-pretty text-sm text-muted-foreground sm:text-center">
-          Grouped by practice area. Bars compare skills within each category (longest in the group fills the
-          track).
-        </p>
-      </motion.div>
-
-      <div
-        aria-label="Skills"
-        className="mt-6 mx-auto grid w-full max-w-5xl grid-cols-1 gap-x-10 gap-y-10 lg:mt-8 lg:grid-cols-2 lg:gap-x-14 lg:gap-y-12"
-        role="region"
-      >
-        {sections.map((section, sectionIndex) => (
-          <motion.section
-            aria-labelledby={`skills-cat-${section.id}`}
-            className="space-y-1"
-            initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-            key={section.id}
-            transition={
-              reduceMotion
-                ? { duration: 0 }
-                : { duration: 0.4, ease: [0.22, 1, 0.36, 1], delay: sectionIndex * 0.06 }
-            }
-            viewport={{ once: true, amount: 0.15 }}
-            whileInView={{ opacity: 1, y: 0 }}
+    <div aria-label="Skills" className="mt-8 w-full space-y-10 lg:mt-10" role="region">
+      {sections.map((section, sectionIndex) => (
+        <motion.section
+          aria-labelledby={`skills-cat-${section.id}`}
+          className="space-y-1"
+          initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+          key={section.id}
+          transition={
+            reduceMotion
+              ? { duration: 0 }
+              : { duration: 0.4, ease: [0.22, 1, 0.36, 1], delay: sectionIndex * 0.06 }
+          }
+          viewport={{ once: true, amount: 0.15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+        >
+          <h3
+            className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground"
+            id={`skills-cat-${section.id}`}
           >
-            <h3
-              className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground"
-              id={`skills-cat-${section.id}`}
-            >
-              {section.title}
-            </h3>
-            <div className="mt-3 border-t border-border/80 pt-1" role="list">
-              {section.skills.map((skill, index) => (
-                <SkillSlide
-                  index={index}
-                  key={skill.id}
-                  skill={skill}
-                  yearsMax={section.yearsMax}
-                />
-              ))}
-            </div>
-          </motion.section>
-        ))}
-      </div>
-    </>
+            {section.title}
+          </h3>
+          <div
+            className="mt-3 grid grid-cols-1 gap-x-10 gap-y-0 border-t border-border/80 pt-1 lg:grid-cols-2 lg:gap-y-1"
+            role="list"
+          >
+            {section.skills.map((skill, index) => (
+              <SkillSlide index={index} key={skill.id} skill={skill} yearsMax={section.yearsMax} />
+            ))}
+          </div>
+        </motion.section>
+      ))}
+    </div>
   );
 }
 

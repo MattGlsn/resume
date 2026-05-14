@@ -68,7 +68,7 @@ export function SkillSlide(props: SkillSlideProps) {
 
   return (
     <motion.article
-      className="flex flex-col gap-2 border-b border-border/80 py-3 last:border-b-0"
+      className="flex flex-col gap-2 border-b border-border/80 py-3 last:border-b-0 lg:border-b-0 lg:py-2.5"
       initial={rowInitial}
       role="listitem"
       transition={rowTransition}
