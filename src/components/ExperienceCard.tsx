@@ -82,7 +82,6 @@ function EmploymentMeta(props: EmploymentMetaProps) {
 export type ExperienceCardProps = Readonly<{
   role: ExperienceRole;
   isExpanded: boolean;
-  isLast: boolean;
   /** 0-based position in the list; drives the on-mount entrance stagger. */
   index?: number;
   onToggle: () => void;
@@ -102,7 +101,7 @@ function ExpandChevron(props: Readonly<{ expanded: boolean; reduceMotion: boolea
 }
 
 export function ExperienceCard(props: ExperienceCardProps) {
-  const { role, isExpanded, isLast, index = 0, onToggle } = props;
+  const { role, isExpanded, index = 0, onToggle } = props;
   const reduceMotion = useReducedMotion() ?? false;
 
   const entranceDelay = reduceMotion ? 0 : Math.min(index * 0.06, 0.3);
@@ -214,9 +213,6 @@ export function ExperienceCard(props: ExperienceCardProps) {
                     location={role.location}
                     startDate={role.startDate}
                   />
-                  {isLast ? (
-                    <p className="mt-2 text-xs uppercase tracking-wide text-muted-foreground">Last role</p>
-                  ) : null}
                 </>
               )}
             </div>

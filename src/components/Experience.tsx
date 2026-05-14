@@ -52,13 +52,11 @@ const Experience = (props?: ExperienceProps) => {
       <ol className="mt-12 list-none space-y-5 p-0 sm:space-y-6">
         {items.map((role, index) => {
           const isExpanded = expandedIds.has(role.id);
-          const isLast = index === items.length - 1;
 
           return (
             <ExperienceCard
               index={index}
               isExpanded={isExpanded}
-              isLast={isLast}
               key={role.id}
               onToggle={() => toggle(role.id)}
               role={role}

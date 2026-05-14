@@ -18,7 +18,7 @@ const baseRole = (
 
 function renderCard(
   overrides: Parameters<typeof baseRole>[0],
-  cardProps: Partial<{ isExpanded: boolean; isLast: boolean; onToggle: () => void }> = {},
+  cardProps: Partial<{ isExpanded: boolean; onToggle: () => void }> = {},
 ) {
   const role = baseRole(overrides);
   const onToggle = cardProps.onToggle ?? vi.fn();
@@ -26,7 +26,6 @@ function renderCard(
     <ul>
       <ExperienceCard
         isExpanded={cardProps.isExpanded ?? true}
-        isLast={cardProps.isLast ?? false}
         onToggle={onToggle}
         role={role}
       />
@@ -128,34 +127,5 @@ describe("ExperienceCard", () => {
 
     expect(screen.queryByText("Hidden responsibility")).not.toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Responsibilities" })).not.toBeInTheDocument();
-  });
-
-  it("marks the last card with the 'Last role' caption only when isLast is true", () => {
-    const { unmount } = render(
-      <ul>
-        <ExperienceCard
-          isExpanded
-          isLast
-          onToggle={() => {}}
-          role={baseRole({ id: "last", title: "Intern", company: "Co" })}
-        />
-      </ul>,
-    );
-
-    expect(screen.getByText("Last role")).toBeInTheDocument();
-    unmount();
-
-    render(
-      <ul>
-        <ExperienceCard
-          isExpanded
-          isLast={false}
-          onToggle={() => {}}
-          role={baseRole({ id: "not-last", title: "Intern", company: "Co" })}
-        />
-      </ul>,
-    );
-
-    expect(screen.queryByText("Last role")).not.toBeInTheDocument();
   });
 });
