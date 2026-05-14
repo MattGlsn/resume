@@ -1,3 +1,4 @@
+import Contact from "./components/Contact";
 import Experience from "./components/Experience";
 import Hero from "./components/Hero";
 import Languages from "./components/Languages";
@@ -117,15 +118,7 @@ const App = () => {
         style={{ animationDelay: "280ms" }}
       >
         <div className={footerShell}>
-          <h2
-            className="text-xl font-semibold tracking-tight sm:text-2xl"
-            id="contact-heading"
-          >
-            Contact
-          </h2>
-          <p className="mt-2 max-w-2xl text-pretty text-sm leading-relaxed text-background/80 sm:text-base">
-            Contact details and form will appear here.
-          </p>
+          <Contact />
         </div>
       </footer>
     </div>
