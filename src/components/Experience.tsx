@@ -43,7 +43,7 @@ const Experience = (props?: ExperienceProps) => {
         >
           Experience
         </h2>
-        <p className="mt-3 max-w-2xl text-muted-foreground">
+        <p className="mt-3 text-pretty text-muted-foreground">
           From CAD and ergonomics engineering into product management—international clients, AI/ML initiatives,
           and cross-functional delivery.
         </p>

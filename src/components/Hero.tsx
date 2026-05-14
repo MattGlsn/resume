@@ -68,11 +68,11 @@ const Hero = () => {
       <div className="mx-auto flex min-h-[min(100dvh,56rem)] max-w-5xl flex-col justify-center gap-10 px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <motion.div
           animate="show"
-          className="grid items-start gap-10 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-10"
+          className="flex w-full flex-col items-start gap-10"
           initial="hidden"
           variants={v.grid}
         >
-          <motion.div className="flex gap-6 lg:col-span-5" variants={v.column}>
+          <motion.div className="flex w-full gap-6" variants={v.column}>
             <motion.div
               aria-hidden="true"
               className="mt-1 hidden w-0.5 shrink-0 rounded-full bg-primary/35 sm:block sm:min-h-[4.5rem]"
@@ -89,20 +89,20 @@ const Hero = () => {
                   : { delay: 0.08, duration: 0.55, ease: [0.22, 1, 0.36, 1] as const }
               }
             />
-            <div className="min-w-0 w-full max-w-2xl space-y-4 lg:max-w-none">
+            <div className="min-w-0 w-full space-y-4">
               <p className="text-sm font-medium uppercase tracking-[0.2em] text-accent-foreground">
                 {heroProfile.professionalTitle}
               </p>
               <h1
-                className="text-nowrap text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl"
+                className="text-nowrap text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-wrap"
                 id="hero-heading"
               >
                 {heroProfile.fullName}
               </h1>
             </div>
           </motion.div>
-          <motion.div className="flex min-w-0 flex-col gap-8 lg:col-span-7 lg:pt-2" variants={v.column}>
-            <p className="max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground sm:text-xl lg:max-w-none">
+          <motion.div className="flex w-full min-w-0 flex-col gap-8" variants={v.column}>
+            <p className="text-pretty text-lg leading-relaxed text-muted-foreground sm:text-xl">
               {heroProfile.summary}
             </p>
             <motion.nav

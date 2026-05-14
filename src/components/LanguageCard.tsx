@@ -39,7 +39,7 @@ export function LanguageCard({ language, index }: LanguageCardProps) {
         <div className="flex min-w-0 flex-1 flex-col items-start gap-1 text-left">
           <h3 className="text-base font-semibold tracking-tight text-foreground">{language.name}</h3>
           {language.notes ? (
-            <p className="max-w-md text-xs leading-snug text-muted-foreground">{language.notes}</p>
+            <p className="text-xs leading-snug text-muted-foreground">{language.notes}</p>
           ) : null}
         </div>
         <div className="flex shrink-0 flex-col items-end text-right">

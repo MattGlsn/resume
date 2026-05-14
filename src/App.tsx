@@ -46,7 +46,7 @@ const App = () => {
               >
                 Skills
               </h2>
-              <p className="mt-3 max-w-2xl text-muted-foreground">
+              <p className="mt-3 text-pretty text-muted-foreground">
                 Grouped by practice area. Bars compare skills within each category (longest in the group fills
                 the track).
               </p>
@@ -66,7 +66,7 @@ const App = () => {
               >
                 Languages
               </h2>
-              <p className="mt-3 max-w-2xl text-muted-foreground">
+              <p className="mt-3 text-pretty text-muted-foreground">
                 Levels use the European CEFR scale (A1–C2). The bar is a coarse visual along that scale, not an
                 exam score.
               </p>
@@ -86,7 +86,7 @@ const App = () => {
               >
                 Projects
               </h2>
-              <p className="mt-3 max-w-2xl text-muted-foreground">
+              <p className="mt-3 text-pretty text-muted-foreground">
                 Project highlights will appear here.
               </p>
               <div aria-hidden="true" className="mt-10 grid gap-4 sm:grid-cols-2">
@@ -118,7 +118,15 @@ const App = () => {
         style={{ animationDelay: "280ms" }}
       >
         <div className={footerShell}>
-          <Contact />
+          <h2
+            className="text-xl font-semibold tracking-tight sm:text-2xl"
+            id="contact-heading"
+          >
+            Contact
+          </h2>
+          <p className="mt-2 text-pretty text-sm leading-relaxed text-background/80 sm:text-base">
+            Contact details and form will appear here.
+          </p>
         </div>
       </footer>
     </div>
