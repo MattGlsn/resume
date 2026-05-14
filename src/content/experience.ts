@@ -12,6 +12,8 @@ export type ExperienceRole = Readonly<{
   company: string;
   /** Public URL under `public/logos/` */
   companyLogoSrc: string;
+  /** Optional extra classes on the company logo `<img>` (e.g. padded mark assets). */
+  companyLogoImgClassName?: string;
   /** Shown when no explicit company link is needed */
   location: string;
   startDate: string;
@@ -111,7 +113,8 @@ const rolesRaw = [
     id: "cad-designer-hutchinson",
     title: "CAD Designer",
     company: "Hutchinson",
-    companyLogoSrc: "/logos/hutchinson.svg",
+    companyLogoSrc: "/logos/hutchinson.png",
+    companyLogoImgClassName: "scale-110",
     location: "France",
     startDate: "2018-01",
     endDate: "2021-04",

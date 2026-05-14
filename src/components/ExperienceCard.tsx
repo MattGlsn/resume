@@ -2,6 +2,7 @@ import { HiChevronDown } from "react-icons/hi2";
 import { motion, useReducedMotion } from "motion/react";
 import type { ExperienceRole } from "../content/experience";
 import { formatMonthYear } from "../utils/experienceFormat";
+import { publicUrl } from "../utils/publicUrl";
 
 const linkFocusClasses =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
@@ -136,8 +137,8 @@ export function ExperienceCard(props: ExperienceCardProps) {
             aria-label={`${isExpanded ? "Collapse" : "Expand"} role: ${role.title} at ${role.company}`}
             className={`relative z-10 flex size-10 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full border p-1.5 transition-all duration-200 motion-reduce:transition-none sm:size-11 sm:p-2 ${
               isExpanded
-                ? "border-primary bg-background shadow-sm ring-2 ring-primary/20"
-                : "border-border bg-background hover:border-primary/40"
+                ? "border-primary bg-white shadow-sm ring-2 ring-primary/20"
+                : "border-border bg-white hover:border-primary/40"
             } ${linkFocusClasses}`}
             id={`experience-step-trigger-${role.id}`}
             onClick={onToggle}
@@ -145,10 +146,12 @@ export function ExperienceCard(props: ExperienceCardProps) {
           >
             <img
               alt=""
-              className="h-7 w-7 object-contain object-center sm:h-8 sm:w-8"
+              className={`h-7 w-7 shrink-0 object-contain object-center sm:h-8 sm:w-8 ${role.companyLogoImgClassName ?? ""}`}
               decoding="async"
+              height={180}
               loading="lazy"
-              src={role.companyLogoSrc}
+              src={publicUrl(role.companyLogoSrc)}
+              width={180}
             />
           </button>
         </div>
