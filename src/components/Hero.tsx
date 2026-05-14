@@ -2,12 +2,12 @@ import { motion, useReducedMotion, type Variants } from "motion/react";
 import { FiGithub, FiLinkedin } from "react-icons/fi";
 import { HiChevronDown } from "react-icons/hi2";
 import { contactProfile } from "../content/contact";
-import { heroProfile } from "../content/hero";
+import { heroProfile, HeroSummary } from "../content/hero";
 
 const easeMicro = [0.25, 0.46, 0.45, 0.94] as const;
 
 const primaryButtonClasses =
-  "inline-flex min-h-11 min-w-[44px] items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-[color,background-color,transform,box-shadow] duration-200 ease-out hover:-translate-y-px hover:bg-primary-hover hover:shadow-md active:translate-y-0 active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+  "inline-flex min-h-11 min-w-[44px] w-full sm:w-fit items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-[color,background-color,transform,box-shadow] duration-200 ease-out hover:-translate-y-px hover:bg-primary-hover hover:shadow-md active:translate-y-0 active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
 
 const heroSocialIconClasses =
   "inline-flex size-11 shrink-0 items-center justify-center rounded-lg border border-border bg-background/45 text-foreground shadow-sm backdrop-blur-sm transition-[color,background-color,border-color,transform,box-shadow] duration-200 ease-out hover:-translate-y-px hover:bg-background hover:shadow-md active:translate-y-0 active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-hero-from)]";
@@ -102,12 +102,12 @@ const Hero = () => {
             </div>
           </motion.div>
           <motion.div className="flex w-full min-w-0 flex-col gap-8" variants={v.column}>
-            <p className="text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
-              {heroProfile.summary}
+            <p className="text-pretty text-sm leading-relaxed text-muted-foreground">
+              <HeroSummary />
             </p>
             <motion.nav
               aria-label="Primary actions"
-              className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
+              className="flex w-full flex-row items-center gap-3"
               variants={v.ctaList}
             >
               <motion.a

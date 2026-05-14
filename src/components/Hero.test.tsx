@@ -11,8 +11,13 @@ describe("Hero", () => {
     expect(
       screen.getByRole("heading", { level: 1, name: heroProfile.fullName }),
     ).toBeInTheDocument();
-    expect(screen.getByText(heroProfile.professionalTitle)).toBeInTheDocument();
-    expect(screen.getByText(heroProfile.summary)).toBeInTheDocument();
+    expect(
+      screen.getByText(heroProfile.professionalTitle, {
+        selector: "p.text-sm.font-medium.uppercase",
+      }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Toulouse, France/)).toBeInTheDocument();
+    expect(screen.getByText(/intelligent systems/)).toBeInTheDocument();
 
     const resume = screen.getByRole("link", { name: "Download resume" });
     expect(resume).toHaveAttribute("href", "/resume.pdf");

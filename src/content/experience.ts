@@ -19,6 +19,8 @@ export type ExperienceRole = Readonly<{
   startDate: string;
   /** `null` = current role */
   endDate: string | null;
+  /** Optional short paragraph above Responsibilities when expanded */
+  roleOverview?: string;
   responsibilities: readonly string[];
   achievements: readonly string[];
   technologies: readonly string[];
@@ -55,6 +57,8 @@ const rolesRaw = [
     location: "Munich, Germany",
     startDate: "2026-01",
     endDate: null,
+    roleOverview:
+      "Product Manager focused on AI-driven product development in the automotive industry, leading customer discovery activities and supporting strategic innovation initiatives with international stakeholders. Collaborating across engineering, sales, and management teams to transform business needs into actionable product opportunities and rapid AI-powered prototypes.",
     responsibilities: [
       "Conduct customer discovery interviews with international clients",
       "Support AI/ML product initiatives",
@@ -79,6 +83,8 @@ const rolesRaw = [
     location: "Munich, Germany",
     startDate: "2023-07",
     endDate: "2026-01",
+    roleOverview:
+      "Application Engineer specialized in human factors and ergonomics, supporting automotive product development through RAMSIS analyses and 1:1 mockup design in CATIA V5. Worked closely with international clients and design teams to deliver ergonomic solutions in a fast-paced engineering environment.",
     responsibilities: [
       "Conduct ergonomics analyses using RAMSIS",
       "Create 1:1 scale mockups with CATIA V5",
