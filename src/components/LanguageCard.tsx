@@ -23,7 +23,8 @@ export function LanguageCard({ language, index }: LanguageCardProps) {
   const barInitial = reduceMotion ? { width: `${fillPct}%` } : { width: "0%" };
 
   const descriptor = cefrDescriptors[language.cefrLevel];
-  const meterLabel = `Proficiency for ${language.name}: CEFR ${language.cefrLevel} — ${descriptor} (step ${step} of ${max} on the CEFR scale).`;
+  const summaryPrefix = language.notes ? `${language.notes}. ` : "";
+  const meterLabel = `Proficiency for ${language.name}: ${summaryPrefix}CEFR ${language.cefrLevel} — ${descriptor} (step ${step} of ${max} on the CEFR scale).`;
 
   return (
     <motion.article
@@ -34,24 +35,26 @@ export function LanguageCard({ language, index }: LanguageCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
     >
       <div className="flex flex-wrap items-start justify-between gap-3">
-        <div className="flex min-w-0 items-center gap-2">
-          {language.flagEmoji ? (
-            <span aria-hidden className="select-none text-lg leading-none">
-              {language.flagEmoji}
-            </span>
+        <div className="flex min-w-0 flex-1 flex-col items-start gap-1 text-left">
+          <div className="flex items-center gap-2">
+            {language.flagEmoji ? (
+              <span aria-hidden className="select-none text-lg leading-none">
+                {language.flagEmoji}
+              </span>
+            ) : null}
+            <h3 className="text-base font-semibold tracking-tight text-foreground">{language.name}</h3>
+          </div>
+          {language.notes ? (
+            <p className="max-w-md text-xs leading-snug text-muted-foreground">{language.notes}</p>
           ) : null}
-          <h3 className="text-base font-semibold tracking-tight text-foreground">{language.name}</h3>
         </div>
-        <div className="flex max-w-full flex-col items-end gap-1 text-right sm:max-w-[min(100%,22rem)]">
+        <div className="flex shrink-0 flex-col items-end text-right">
           <p className="text-sm font-medium tabular-nums tracking-tight text-foreground">
             <abbr className="no-underline" title="Common European Framework of Reference for Languages">
               CEFR
             </abbr>{" "}
             <span className="text-primary">{language.cefrLevel}</span>
           </p>
-          {language.notes ? (
-            <p className="text-xs text-muted-foreground">{language.notes}</p>
-          ) : null}
         </div>
       </div>
 

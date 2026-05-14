@@ -27,7 +27,7 @@ export type Language = Readonly<{
   id: string;
   name: string;
   cefrLevel: CefrLevel;
-  /** Optional nuance (e.g. native speaker) shown under the CEFR line. */
+  /** Short proficiency line (left column under the language name). */
   notes?: string;
   certification?: string;
   context?: string;
@@ -47,12 +47,14 @@ const languagesRaw = [
     id: "en",
     name: "English",
     cefrLevel: "C1",
+    notes: "Full Professional Proficiency",
     flagEmoji: "🇬🇧",
   },
   {
     id: "de",
     name: "German",
     cefrLevel: "C1",
+    notes: "Full Professional Proficiency",
     flagEmoji: "🇩🇪",
   },
 ] as const satisfies readonly Language[];

@@ -23,11 +23,12 @@ describe("Languages", () => {
     expect(screen.getByRole("heading", { name: "German", level: 3 })).toBeInTheDocument();
 
     expect(screen.getByText("Native / bilingual")).toBeInTheDocument();
+    expect(screen.getAllByText("Full Professional Proficiency").length).toBe(2);
     expect(screen.getAllByText("C1").length).toBe(2);
     expect(screen.getByText("C2")).toBeInTheDocument();
 
     const englishMeter = screen.getByRole("meter", {
-      name: /Proficiency for English:.*Effective operational proficiency/i,
+      name: /Proficiency for English:.*Full Professional Proficiency.*Effective operational proficiency/i,
     });
     expect(englishMeter).toBeInTheDocument();
   });
@@ -39,7 +40,7 @@ describe("Languages", () => {
     const meters = within(region).getAllByRole("meter");
     expect(meters).toHaveLength(3);
 
-    const frenchMeter = screen.getByLabelText(/Proficiency for French:.*CEFR C2/i);
+    const frenchMeter = screen.getByLabelText(/Proficiency for French:.*Native \/ bilingual.*CEFR C2/i);
     expect(frenchMeter).toHaveAttribute("aria-valuenow", "6");
     expect(frenchMeter).toHaveAttribute("aria-valuemax", "6");
   });
