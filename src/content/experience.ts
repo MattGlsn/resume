@@ -104,7 +104,7 @@ const rolesRaw = [
     title: "Technical Designer",
     company: "ROTAREX",
     companyLogoSrc: "/logos/rotarex.png",
-    location: "Luxembourg",
+    location: "Lintgen, Luxembourg",
     startDate: "2021-04",
     endDate: "2023-07",
     responsibilities: [
@@ -121,7 +121,7 @@ const rolesRaw = [
     company: "Hutchinson",
     companyLogoSrc: "/logos/hutchinson.png",
     companyLogoImgClassName: "scale-110",
-    location: "France",
+    location: "Montargis, France",
     startDate: "2018-01",
     endDate: "2021-04",
     responsibilities: [
@@ -137,7 +137,7 @@ const rolesRaw = [
     title: "CAD Design Intern",
     company: "IFP Energies nouvelles",
     companyLogoSrc: "/logos/ifp-energies-nouvelles.png",
-    location: "France",
+    location: "Rueil-Malmaison, France",
     startDate: "2017-04",
     endDate: "2017-12",
     responsibilities: [
