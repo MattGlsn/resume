@@ -18,7 +18,7 @@ describe("Skills", () => {
     vi.useRealTimers();
   });
 
-  it("renders fixture skill name and timeline from props", () => {
+  it("renders fixture skill name and timeline inside the skills region", () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date("2026-01-01"));
 
@@ -27,15 +27,15 @@ describe("Skills", () => {
     expect(screen.getByRole("heading", { name: "Fixture React", level: 3 })).toBeInTheDocument();
     expect(screen.getByText("UI")).toBeInTheDocument();
 
-    const carousel = screen.getByRole("region", { name: "Skill cards" });
-    expect(within(carousel).getByText(/Jan 2020/)).toBeInTheDocument();
-    expect(within(carousel).getByText(/Dec 2021/)).toBeInTheDocument();
+    const region = screen.getByRole("region", { name: "Skill cards" });
+    expect(within(region).getByText(/Jan 2020/)).toBeInTheDocument();
+    expect(within(region).getByText(/Dec 2021/)).toBeInTheDocument();
   });
 
-  it("exposes carousel navigation controls on small layouts", () => {
+  it("does not render horizontal carousel controls", () => {
     render(<Skills skills={[fixtureSkill]} />);
 
-    expect(screen.getByRole("button", { name: "Show previous skills" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Show next skills" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Show previous skills" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Show next skills" })).not.toBeInTheDocument();
   });
 });

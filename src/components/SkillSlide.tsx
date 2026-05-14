@@ -60,7 +60,7 @@ export function SkillSlide(props: SkillSlideProps) {
 
   return (
     <motion.article
-      className="flex h-full min-h-[13.5rem] w-[min(22rem,calc(100vw-2.75rem))] shrink-0 snap-start flex-col rounded-xl border border-border bg-secondary/90 p-5 shadow-[0_1px_0_rgb(0_0_0_/0.04)] transition-shadow duration-200 hover:shadow-md lg:w-full lg:min-w-0 lg:snap-none"
+      className="flex min-h-[12rem] w-full flex-col rounded-xl border border-border bg-secondary/90 p-5 shadow-[0_1px_0_rgb(0_0_0_/0.04)] transition-shadow duration-200 hover:shadow-md"
       transition={reduceMotion ? { duration: 0 } : { duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
       whileHover={reduceMotion ? {} : { y: -2 }}
     >
