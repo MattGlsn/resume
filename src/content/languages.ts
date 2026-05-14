@@ -31,8 +31,6 @@ export type Language = Readonly<{
   notes?: string;
   certification?: string;
   context?: string;
-  /** Decorative; paired with visible language name — keep `aria-hidden` in UI. */
-  flagEmoji?: string;
 }>;
 
 const languagesRaw = [
@@ -41,21 +39,18 @@ const languagesRaw = [
     name: "French",
     cefrLevel: "C2",
     notes: "Native / bilingual",
-    flagEmoji: "🇫🇷",
   },
   {
     id: "en",
     name: "English",
     cefrLevel: "C1",
     notes: "Full Professional Proficiency",
-    flagEmoji: "🇬🇧",
   },
   {
     id: "de",
     name: "German",
     cefrLevel: "C1",
     notes: "Full Professional Proficiency",
-    flagEmoji: "🇩🇪",
   },
 ] as const satisfies readonly Language[];
 

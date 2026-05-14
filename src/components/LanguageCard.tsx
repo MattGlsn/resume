@@ -36,14 +36,7 @@ export function LanguageCard({ language, index }: LanguageCardProps) {
     >
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="flex min-w-0 flex-1 flex-col items-start gap-1 text-left">
-          <div className="flex items-center gap-2">
-            {language.flagEmoji ? (
-              <span aria-hidden className="select-none text-lg leading-none">
-                {language.flagEmoji}
-              </span>
-            ) : null}
-            <h3 className="text-base font-semibold tracking-tight text-foreground">{language.name}</h3>
-          </div>
+          <h3 className="text-base font-semibold tracking-tight text-foreground">{language.name}</h3>
           {language.notes ? (
             <p className="max-w-md text-xs leading-snug text-muted-foreground">{language.notes}</p>
           ) : null}
