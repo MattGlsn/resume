@@ -1,16 +1,11 @@
 import { motion, useReducedMotion, type Variants } from "motion/react";
+import { HiChevronDown } from "react-icons/hi2";
 import { heroProfile } from "../content/hero";
 
 const easeMicro = [0.25, 0.46, 0.45, 0.94] as const;
 
 const primaryButtonClasses =
   "inline-flex min-h-11 min-w-[44px] items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-[color,background-color,transform,box-shadow] duration-200 ease-out hover:-translate-y-px hover:bg-primary-hover hover:shadow-md active:translate-y-0 active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
-
-const secondaryButtonClasses =
-  "inline-flex min-h-11 min-w-[44px] items-center justify-center rounded-lg border border-secondary-border bg-secondary px-5 py-2.5 text-sm font-semibold text-secondary-foreground shadow-sm transition-[color,background-color,border-color,transform,box-shadow] duration-200 ease-out hover:-translate-y-px hover:bg-background hover:shadow-md active:translate-y-0 active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
-
-const tertiaryLinkClasses =
-  "inline-flex min-h-11 min-w-[44px] items-center justify-center rounded-lg px-5 py-2.5 text-sm font-semibold text-accent-foreground underline-offset-4 transition-[color,text-decoration-color,transform] duration-200 ease-out hover:-translate-y-px hover:underline active:translate-y-0 active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
 
 function heroVariants(reduceMotion: boolean): {
   column: Variants;
@@ -65,10 +60,10 @@ const Hero = () => {
       className="hero-editorial-surface scroll-mt-20 border-b border-border"
       id="profile"
     >
-      <div className="mx-auto flex min-h-[min(100dvh,56rem)] max-w-5xl flex-col justify-center gap-10 px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+      <div className="mx-auto flex min-h-[min(100dvh,56rem)] max-w-5xl flex-col gap-10 px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <motion.div
           animate="show"
-          className="flex w-full flex-col items-start gap-10"
+          className="flex w-full flex-1 flex-col items-start justify-center gap-10"
           initial="hidden"
           variants={v.grid}
         >
@@ -110,17 +105,38 @@ const Hero = () => {
               className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
               variants={v.ctaList}
             >
-              <motion.a className={primaryButtonClasses} href="#contact" variants={v.ctaItem}>
-                Contact
-              </motion.a>
-              <motion.a className={secondaryButtonClasses} href="#projects" variants={v.ctaItem}>
-                View projects
-              </motion.a>
-              <motion.a className={tertiaryLinkClasses} href="/resume.pdf" download variants={v.ctaItem}>
+              <motion.a
+                className={primaryButtonClasses}
+                download
+                href="/resume.pdf"
+                variants={v.ctaItem}
+              >
                 Download resume
               </motion.a>
             </motion.nav>
           </motion.div>
+        </motion.div>
+        <motion.div
+          animate="show"
+          className="flex w-full flex-col items-center gap-1.5"
+          initial="hidden"
+          variants={v.column}
+        >
+          <p className="text-center text-sm text-muted-foreground">
+            Scroll to learn more about me
+          </p>
+          <motion.span
+            animate={reduceMotion ? { y: 0 } : { y: [0, 5, 0] }}
+            aria-hidden
+            className="text-muted-foreground"
+            transition={
+              reduceMotion
+                ? { duration: 0 }
+                : { duration: 1.6, repeat: Infinity, ease: [0.45, 0, 0.55, 1] as const }
+            }
+          >
+            <HiChevronDown className="size-4 opacity-90" />
+          </motion.span>
         </motion.div>
       </div>
     </header>

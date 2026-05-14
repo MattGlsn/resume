@@ -13,12 +13,8 @@ describe("Hero", () => {
     expect(screen.getByText(heroProfile.professionalTitle)).toBeInTheDocument();
     expect(screen.getByText(heroProfile.summary)).toBeInTheDocument();
 
-    const contact = screen.getByRole("link", { name: "Contact" });
-    const projects = screen.getByRole("link", { name: "View projects" });
     const resume = screen.getByRole("link", { name: "Download resume" });
-
-    expect(contact).toHaveAttribute("href", "#contact");
-    expect(projects).toHaveAttribute("href", "#projects");
     expect(resume).toHaveAttribute("href", "/resume.pdf");
+    expect(screen.getByText("Scroll to learn more about me")).toBeInTheDocument();
   });
 });
