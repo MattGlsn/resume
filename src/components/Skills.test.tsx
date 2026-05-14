@@ -6,10 +6,8 @@ import type { Skill } from "../content/skills";
 const fixtureSkill: Skill = {
   id: "fixture-react",
   name: "Fixture React",
-  tool: "UI",
   startDate: "2020-01",
   endDate: "2021-12",
-  proficiency: "proficient",
   icon: "react",
 };
 
@@ -18,18 +16,25 @@ describe("Skills", () => {
     vi.useRealTimers();
   });
 
-  it("renders fixture skill name and timeline inside the skills region", () => {
+  it("renders skill name and years without proficiency or tool", () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date("2026-01-01"));
 
     render(<Skills skills={[fixtureSkill]} />);
 
     expect(screen.getByRole("heading", { name: "Fixture React", level: 3 })).toBeInTheDocument();
-    expect(screen.getByText("UI")).toBeInTheDocument();
+    expect(screen.getByLabelText("2 years of experience")).toBeInTheDocument();
+    expect(screen.queryByText("Proficient")).not.toBeInTheDocument();
+    expect(screen.queryByText("Expert")).not.toBeInTheDocument();
+    expect(screen.queryByText("UI")).not.toBeInTheDocument();
+  });
 
-    const region = screen.getByRole("region", { name: "Skill cards" });
-    expect(within(region).getByText(/Jan 2020/)).toBeInTheDocument();
-    expect(within(region).getByText(/Dec 2021/)).toBeInTheDocument();
+  it("exposes a progress bar for relative experience", () => {
+    render(<Skills skills={[fixtureSkill]} />);
+
+    const list = screen.getByRole("list", { name: "Skills" });
+    const bar = within(list).getByRole("progressbar");
+    expect(bar).toHaveAttribute("aria-valuenow", "2");
   });
 
   it("does not render horizontal carousel controls", () => {

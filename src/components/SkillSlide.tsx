@@ -3,12 +3,11 @@ import type { ReactNode } from "react";
 import { HiCpuChip } from "react-icons/hi2";
 import { MdArchitecture, MdPrecisionManufacturing } from "react-icons/md";
 import { SiConfluence, SiGitlab, SiJira, SiReact, SiTailwindcss, SiTypescript } from "react-icons/si";
-import type { Skill, SkillIconKey, SkillProficiency } from "../content/skills";
-import { formatEmploymentDates } from "../utils/experienceFormat";
-import { formatSkillYears, skillYearsBetween } from "../utils/skillYears";
+import type { Skill, SkillIconKey } from "../content/skills";
+import { skillYearsBetween } from "../utils/skillYears";
 
 function skillIcon(key: SkillIconKey): ReactNode {
-  const className = "size-9 shrink-0 text-primary sm:size-10";
+  const className = "size-5 shrink-0 text-primary";
   switch (key) {
     case "react":
       return <SiReact aria-hidden className={className} title="" />;
@@ -35,70 +34,87 @@ function skillIcon(key: SkillIconKey): ReactNode {
   }
 }
 
-const proficiencyLabel: Record<SkillProficiency, string> = {
-  learning: "Growing",
-  proficient: "Proficient",
-  expert: "Expert",
-};
-
-const proficiencyChip: Record<SkillProficiency, string> = {
-  learning: "border-border bg-muted/40 text-muted-foreground",
-  proficient: "border-primary/30 bg-primary/8 text-accent-foreground",
-  expert: "border-primary bg-primary text-primary-foreground",
-};
+function formatYearsValue(years: number): string {
+  const rounded = Math.round(years * 10) / 10;
+  return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1);
+}
 
 export type SkillSlideProps = Readonly<{
   skill: Skill;
+  yearsMax: number;
+  index: number;
 }>;
 
 export function SkillSlide(props: SkillSlideProps) {
-  const { skill } = props;
+  const { skill, yearsMax, index } = props;
   const reduceMotion = useReducedMotion() ?? false;
   const years = skillYearsBetween(skill.startDate, skill.endDate);
-  const yearsText = formatSkillYears(years);
-  const timeline = formatEmploymentDates(skill.startDate, skill.endDate);
+  const denom = Math.max(yearsMax, 0.1);
+  const fillPct = Math.min(100, Math.round((years / denom) * 1000) / 10);
+  const yearsLabel = formatYearsValue(years);
+
+  const ease = [0.22, 1, 0.36, 1] as const;
+  const barTransition = reduceMotion
+    ? { duration: 0 }
+    : { duration: 0.75, ease, delay: index * 0.05 };
+  const rowTransition = reduceMotion
+    ? { duration: 0 }
+    : { duration: 0.35, ease, delay: index * 0.05 };
+
+  const rowInitial = reduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: -6 };
+  const yearsInitial = reduceMotion ? { opacity: 1 } : { opacity: 0 };
+  const barInitial = reduceMotion ? { width: `${fillPct}%` } : { width: "0%" };
+  const ariaYears = Number.parseFloat(yearsLabel);
 
   return (
     <motion.article
-      className="flex min-h-[12rem] w-full flex-col rounded-xl border border-border bg-secondary/90 p-5 shadow-[0_1px_0_rgb(0_0_0_/0.04)] transition-shadow duration-200 hover:shadow-md"
-      transition={reduceMotion ? { duration: 0 } : { duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={reduceMotion ? {} : { y: -2 }}
+      className="flex flex-col gap-2 border-b border-border/80 py-3 last:border-b-0"
+      initial={rowInitial}
+      role="listitem"
+      transition={rowTransition}
+      viewport={{ once: true, amount: 0.2 }}
+      whileInView={{ opacity: 1, x: 0 }}
     >
-      <div className="flex items-start gap-4">
-        <div className="rounded-lg border border-border bg-background/80 p-2 shadow-sm">
+      <div className="flex items-center gap-3">
+        <motion.span
+          aria-hidden
+          className="flex shrink-0"
+          initial={reduceMotion ? { scale: 1 } : { scale: 0.94 }}
+          transition={reduceMotion ? { duration: 0 } : { duration: 0.32, ease }}
+          viewport={{ once: true }}
+          whileInView={{ scale: 1 }}
+        >
           {skillIcon(skill.icon)}
-        </div>
-        <div className="min-w-0 flex-1 space-y-1">
-          <div className="flex flex-wrap items-center gap-2">
-            <h3 className="text-lg font-semibold tracking-tight text-foreground">{skill.name}</h3>
-            {skill.proficiency ? (
-              <span
-                className={`inline-flex rounded-md border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${proficiencyChip[skill.proficiency]}`}
-              >
-                {proficiencyLabel[skill.proficiency]}
-              </span>
-            ) : null}
-          </div>
-          <p className="text-sm text-muted-foreground">{skill.tool}</p>
-        </div>
+        </motion.span>
+        <h3 className="min-w-0 flex-1 text-sm font-medium tracking-tight text-foreground">{skill.name}</h3>
+        <motion.span
+          aria-label={`${yearsLabel} years of experience`}
+          className="shrink-0 tabular-nums text-sm text-muted-foreground"
+          initial={yearsInitial}
+          transition={{ ...barTransition, duration: reduceMotion ? 0 : 0.42 }}
+          viewport={{ once: true }}
+          whileInView={{ opacity: 1 }}
+        >
+          {yearsLabel}
+        </motion.span>
       </div>
 
-      <dl className="mt-4 grid gap-2 text-sm sm:grid-cols-2">
-        <div className="rounded-lg border border-border/80 bg-background/50 px-3 py-2">
-          <dt className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
-            Experience
-          </dt>
-          <dd className="mt-0.5 font-semibold tabular-nums text-foreground">{yearsText}</dd>
-        </div>
-        <div className="rounded-lg border border-border/80 bg-background/50 px-3 py-2">
-          <dt className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
-            Timeline
-          </dt>
-          <dd className="mt-0.5 text-foreground">
-            <span className="tabular-nums">{timeline}</span>
-          </dd>
-        </div>
-      </dl>
+      <div
+        aria-valuemax={Math.round(denom * 10) / 10}
+        aria-valuemin={0}
+        aria-valuenow={ariaYears}
+        className="relative h-1 w-full overflow-hidden rounded-full bg-border"
+        role="progressbar"
+      >
+        <motion.div
+          aria-hidden
+          className="h-full rounded-full bg-primary"
+          initial={barInitial}
+          transition={barTransition}
+          viewport={{ once: true, amount: 0.1 }}
+          whileInView={{ width: `${fillPct}%` }}
+        />
+      </div>
     </motion.article>
   );
 }
