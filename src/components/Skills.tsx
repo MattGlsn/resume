@@ -42,6 +42,7 @@ function Skills(props?: SkillsProps) {
   return (
     <>
       <motion.div
+        className="mx-auto max-w-2xl"
         initial={{ opacity: 0, y: 12 }}
         transition={
           reduceMotion ? { duration: 0 } : { duration: 0.4, ease: [0.22, 1, 0.36, 1] }
@@ -49,13 +50,17 @@ function Skills(props?: SkillsProps) {
         viewport={{ once: true, amount: 0.35 }}
         whileInView={{ opacity: 1, y: 0 }}
       >
-        <p className="mt-3 max-w-2xl text-pretty text-sm text-muted-foreground">
+        <p className="mt-3 text-pretty text-sm text-muted-foreground sm:text-center">
           Grouped by practice area. Bars compare skills within each category (longest in the group fills the
           track).
         </p>
       </motion.div>
 
-      <div aria-label="Skills" className="mt-6 max-w-xl space-y-10 lg:mt-8" role="region">
+      <div
+        aria-label="Skills"
+        className="mt-6 mx-auto grid w-full max-w-5xl grid-cols-1 gap-x-10 gap-y-10 lg:mt-8 lg:grid-cols-2 lg:gap-x-14 lg:gap-y-12"
+        role="region"
+      >
         {sections.map((section, sectionIndex) => (
           <motion.section
             aria-labelledby={`skills-cat-${section.id}`}

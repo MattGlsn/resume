@@ -38,7 +38,7 @@ const App = () => {
             style={{ animationDelay: "70ms" }}
           >
             <div className={sectionShell}>
-              <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+              <div className="flex flex-col items-center gap-3 text-center">
                 <h2
                   className="text-2xl font-semibold tracking-tight text-foreground"
                   id="skills-heading"
@@ -47,7 +47,7 @@ const App = () => {
                 </h2>
                 <span
                   aria-hidden="true"
-                  className="hidden h-px flex-1 translate-y-[-0.35rem] bg-gradient-to-r from-primary/35 to-transparent sm:ms-10 sm:block"
+                  className="h-px w-16 max-w-full bg-gradient-to-r from-transparent via-primary/45 to-transparent sm:w-24"
                 />
               </div>
               <Skills />
