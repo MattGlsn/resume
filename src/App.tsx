@@ -46,10 +46,6 @@ const App = () => {
               >
                 Skills
               </h2>
-              <p className="mt-3 text-pretty text-muted-foreground">
-                Grouped by practice area. Bars compare skills within each category (longest in the group fills
-                the track).
-              </p>
               <Skills />
             </div>
           </section>
@@ -66,10 +62,6 @@ const App = () => {
               >
                 Languages
               </h2>
-              <p className="mt-3 text-pretty text-muted-foreground">
-                Levels use the European CEFR scale (A1–C2). The bar is a coarse visual along that scale, not an
-                exam score.
-              </p>
               <Languages />
             </div>
           </section>
