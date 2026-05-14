@@ -1,15 +1,34 @@
 /**
  * Spoken languages for the Languages section (RPM-17).
- * `proficiencyRank` is a coarse 1–3 scale for the relative meter only (not a CEFR score).
+ * Levels use the European CEFR scale (A1–C2). The meter uses step 1–6 for relative display only.
  */
 
-export type ProficiencyRank = 1 | 2 | 3;
+export const CEFR_LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"] as const;
+
+export type CefrLevel = (typeof CEFR_LEVELS)[number];
+
+/** CEFR illustrative descriptor (Council of Europe wording, English). */
+export const cefrDescriptors: Record<CefrLevel, string> = {
+  A1: "Breakthrough or beginner",
+  A2: "Waystage or elementary",
+  B1: "Threshold or intermediate",
+  B2: "Vantage or upper intermediate",
+  C1: "Effective operational proficiency",
+  C2: "Mastery or proficiency",
+};
+
+export function cefrStep(level: CefrLevel): number {
+  return CEFR_LEVELS.indexOf(level) + 1;
+}
+
+export const cefrStepMax = CEFR_LEVELS.length;
 
 export type Language = Readonly<{
   id: string;
   name: string;
-  proficiencyLabel: string;
-  proficiencyRank: ProficiencyRank;
+  cefrLevel: CefrLevel;
+  /** Optional nuance (e.g. native speaker) shown under the CEFR line. */
+  notes?: string;
   certification?: string;
   context?: string;
   /** Decorative; paired with visible language name — keep `aria-hidden` in UI. */
@@ -20,26 +39,22 @@ const languagesRaw = [
   {
     id: "fr",
     name: "French",
-    proficiencyLabel: "Native / bilingual",
-    proficiencyRank: 3,
+    cefrLevel: "C2",
+    notes: "Native / bilingual",
     flagEmoji: "🇫🇷",
   },
   {
     id: "en",
     name: "English",
-    proficiencyLabel: "Full professional proficiency",
-    proficiencyRank: 2,
+    cefrLevel: "C1",
     flagEmoji: "🇬🇧",
   },
   {
     id: "de",
     name: "German",
-    proficiencyLabel: "Full professional proficiency",
-    proficiencyRank: 2,
+    cefrLevel: "C1",
     flagEmoji: "🇩🇪",
   },
 ] as const satisfies readonly Language[];
 
 export const languages: readonly Language[] = languagesRaw;
-
-export const proficiencyRankMax: ProficiencyRank = 3;

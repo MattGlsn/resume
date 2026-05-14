@@ -6,14 +6,13 @@ import type { Language } from "../content/languages";
 const fixtureWithCert: Language = {
   id: "fixture-es",
   name: "Spanish",
-  proficiencyLabel: "Professional working proficiency",
-  proficiencyRank: 2,
+  cefrLevel: "B2",
   certification: "DELE B2",
   context: "Used daily with suppliers.",
 };
 
 describe("Languages", () => {
-  it("renders default languages with proficiency text", () => {
+  it("renders default languages with CEFR levels", () => {
     render(<Languages />);
 
     const region = screen.getByRole("region", { name: "Languages" });
@@ -24,19 +23,21 @@ describe("Languages", () => {
     expect(screen.getByRole("heading", { name: "German", level: 3 })).toBeInTheDocument();
 
     expect(screen.getByText("Native / bilingual")).toBeInTheDocument();
-    expect(screen.getAllByText("Full professional proficiency").length).toBe(2);
+    expect(screen.getAllByText("C1").length).toBe(2);
+    expect(screen.getByText("C2")).toBeInTheDocument();
+    expect(screen.getAllByText(/Effective operational proficiency/i).length).toBe(2);
   });
 
-  it("exposes a meter for relative proficiency per language", () => {
+  it("exposes a meter aligned to the six-step CEFR scale", () => {
     render(<Languages />);
 
     const region = screen.getByRole("region", { name: "Languages" });
     const meters = within(region).getAllByRole("meter");
     expect(meters).toHaveLength(3);
 
-    const frenchMeter = screen.getByLabelText(/Proficiency for French:/i);
-    expect(frenchMeter).toHaveAttribute("aria-valuenow", "3");
-    expect(frenchMeter).toHaveAttribute("aria-valuemax", "3");
+    const frenchMeter = screen.getByLabelText(/Proficiency for French:.*CEFR C2/i);
+    expect(frenchMeter).toHaveAttribute("aria-valuenow", "6");
+    expect(frenchMeter).toHaveAttribute("aria-valuemax", "6");
   });
 
   it("shows optional certification and context when provided", () => {

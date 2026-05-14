@@ -66,7 +66,8 @@ const App = () => {
                 Languages
               </h2>
               <p className="mt-3 max-w-2xl text-muted-foreground">
-                Spoken languages and proficiency levels—built for quick scanning alongside technical skills.
+                Levels use the European CEFR scale (A1–C2). The bar is a coarse visual along that scale, not an
+                exam score.
               </p>
               <Languages />
             </div>
