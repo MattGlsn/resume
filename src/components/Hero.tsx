@@ -1,11 +1,16 @@
 import { motion, useReducedMotion, type Variants } from "motion/react";
+import { FiGithub, FiLinkedin } from "react-icons/fi";
 import { HiChevronDown } from "react-icons/hi2";
-import { heroProfile } from "../content/hero";
+import { contactProfile } from "../content/contact";
+import { heroProfile, HeroSummary } from "../content/hero";
 
 const easeMicro = [0.25, 0.46, 0.45, 0.94] as const;
 
 const primaryButtonClasses =
-  "inline-flex min-h-11 min-w-[44px] items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-[color,background-color,transform,box-shadow] duration-200 ease-out hover:-translate-y-px hover:bg-primary-hover hover:shadow-md active:translate-y-0 active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+  "inline-flex min-h-11 min-w-[44px] w-full sm:w-fit items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-[color,background-color,transform,box-shadow] duration-200 ease-out hover:-translate-y-px hover:bg-primary-hover hover:shadow-md active:translate-y-0 active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+
+const heroSocialIconClasses =
+  "inline-flex size-11 shrink-0 items-center justify-center rounded-lg border border-border bg-background/45 text-foreground shadow-sm backdrop-blur-sm transition-[color,background-color,border-color,transform,box-shadow] duration-200 ease-out hover:-translate-y-px hover:bg-background hover:shadow-md active:translate-y-0 active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-hero-from)]";
 
 function heroVariants(reduceMotion: boolean): {
   column: Variants;
@@ -97,12 +102,12 @@ const Hero = () => {
             </div>
           </motion.div>
           <motion.div className="flex w-full min-w-0 flex-col gap-8" variants={v.column}>
-            <p className="text-pretty text-lg leading-relaxed text-muted-foreground sm:text-xl">
-              {heroProfile.summary}
+            <p className="text-pretty text-sm leading-relaxed text-muted-foreground">
+              <HeroSummary />
             </p>
             <motion.nav
               aria-label="Primary actions"
-              className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
+              className="flex w-full flex-row items-center gap-3"
               variants={v.ctaList}
             >
               <motion.a
@@ -113,22 +118,43 @@ const Hero = () => {
               >
                 Download resume
               </motion.a>
+              <motion.a
+                aria-label={contactProfile.linkedInLabel}
+                className={heroSocialIconClasses}
+                href={contactProfile.linkedInUrl}
+                rel="noopener noreferrer"
+                target="_blank"
+                variants={v.ctaItem}
+              >
+                <FiLinkedin aria-hidden className="h-6 w-6" strokeWidth={1.75} />
+              </motion.a>
+              <motion.a
+                aria-label={contactProfile.githubLabel}
+                className={heroSocialIconClasses}
+                href={contactProfile.githubUrl}
+                rel="noopener noreferrer"
+                target="_blank"
+                variants={v.ctaItem}
+              >
+                <FiGithub aria-hidden className="h-6 w-6" strokeWidth={1.75} />
+              </motion.a>
             </motion.nav>
           </motion.div>
         </motion.div>
-        <motion.div
+        <motion.a
           animate="show"
-          className="flex w-full flex-col items-center gap-1.5"
+          className="group flex w-full cursor-pointer flex-col items-center gap-1.5 rounded-md outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-hero-from)]"
+          href="#experience"
           initial="hidden"
           variants={v.column}
         >
-          <p className="text-center text-sm text-muted-foreground">
+          <p className="text-center text-sm text-muted-foreground transition-colors group-hover:text-foreground">
             Scroll to learn more about me
           </p>
           <motion.span
             animate={reduceMotion ? { y: 0 } : { y: [0, 5, 0] }}
             aria-hidden
-            className="text-muted-foreground"
+            className="text-muted-foreground transition-colors group-hover:text-foreground"
             transition={
               reduceMotion
                 ? { duration: 0 }
@@ -137,7 +163,7 @@ const Hero = () => {
           >
             <HiChevronDown className="size-4 opacity-90" />
           </motion.span>
-        </motion.div>
+        </motion.a>
       </div>
     </header>
   );

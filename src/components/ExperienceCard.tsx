@@ -109,11 +109,7 @@ export function ExperienceCard(props: ExperienceCardProps) {
 
   return (
     <motion.li
-      className={`relative overflow-hidden rounded-xl border border-border bg-secondary/90 shadow-[0_1px_0_rgb(0_0_0_/0.04)] transition-shadow duration-200 motion-reduce:transition-none ${
-        isExpanded
-          ? "shadow-md ring-2 ring-primary/25 ring-offset-2 ring-offset-background"
-          : ""
-      }`}
+      className="relative overflow-hidden rounded-xl border border-border bg-secondary/90"
       initial={{ opacity: 0, y: 14 }}
       transition={
         reduceMotion
@@ -235,6 +231,11 @@ export function ExperienceCard(props: ExperienceCardProps) {
                   : { type: "spring", stiffness: 480, damping: 34, mass: 0.75 }
               }
             >
+              {role.roleOverview ? (
+                <p className="text-pretty text-sm leading-relaxed text-muted-foreground/70">
+                  {role.roleOverview}
+                </p>
+              ) : null}
               <div>
                 <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                   Responsibilities

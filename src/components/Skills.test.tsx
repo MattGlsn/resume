@@ -4,12 +4,12 @@ import Skills from "./Skills";
 import type { Skill } from "../content/skills";
 
 const fixtureSkill: Skill = {
-  id: "fixture-react",
-  name: "Fixture React",
+  id: "fixture-jira",
+  name: "Fixture skill",
   startDate: "2020-01",
   endDate: "2021-12",
-  icon: "react",
-  categoryId: "software-development",
+  icon: "jira",
+  categoryId: "product-management",
 };
 
 describe("Skills", () => {
@@ -23,8 +23,8 @@ describe("Skills", () => {
 
     render(<Skills skills={[fixtureSkill]} />);
 
-    expect(screen.getByRole("heading", { name: "Software development", level: 3 })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Fixture React", level: 4 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Product management", level: 3 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Fixture skill", level: 4 })).toBeInTheDocument();
     expect(screen.getByLabelText("2 years of experience")).toBeInTheDocument();
     expect(screen.queryByText("Proficient")).not.toBeInTheDocument();
     expect(screen.queryByText("Expert")).not.toBeInTheDocument();
