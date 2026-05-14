@@ -38,18 +38,16 @@ const App = () => {
             style={{ animationDelay: "70ms" }}
           >
             <div className={sectionShell}>
-              <div className="flex flex-col items-center gap-3 text-center">
-                <h2
-                  className="text-2xl font-semibold tracking-tight text-foreground"
-                  id="skills-heading"
-                >
-                  Skills
-                </h2>
-                <span
-                  aria-hidden="true"
-                  className="h-px w-16 max-w-full bg-gradient-to-r from-transparent via-primary/45 to-transparent sm:w-24"
-                />
-              </div>
+              <h2
+                className="text-2xl font-semibold tracking-tight text-foreground"
+                id="skills-heading"
+              >
+                Skills
+              </h2>
+              <p className="mt-3 max-w-2xl text-muted-foreground">
+                Grouped by practice area. Bars compare skills within each category (longest in the group fills
+                the track).
+              </p>
               <Skills />
             </div>
           </section>
