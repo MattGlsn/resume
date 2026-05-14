@@ -47,8 +47,8 @@ describe("Navbar", () => {
     fireEvent.click(toggle);
     expect(toggle).toHaveAttribute("aria-expanded", "true");
 
-    const projectsLinks = screen.getAllByRole("link", { name: "Projects" });
-    fireEvent.click(projectsLinks[projectsLinks.length - 1]);
+    const contactLinks = screen.getAllByRole("link", { name: "Contact" });
+    fireEvent.click(contactLinks[contactLinks.length - 1]);
 
     expect(toggle).toHaveAttribute("aria-expanded", "false");
   });

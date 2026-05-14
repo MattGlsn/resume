@@ -73,49 +73,13 @@ const App = () => {
               <Languages />
             </div>
           </section>
-          <section
-            aria-labelledby="projects-heading"
-            className="animate-section-in scroll-mt-20 border-b border-border"
-            id="projects"
-            style={{ animationDelay: "210ms" }}
-          >
-            <div className={sectionShell}>
-              <h2
-                className="text-2xl font-semibold tracking-tight text-foreground"
-                id="projects-heading"
-              >
-                Projects
-              </h2>
-              <p className="mt-3 text-pretty text-muted-foreground">
-                Project highlights will appear here.
-              </p>
-              <div aria-hidden="true" className="mt-10 grid gap-4 sm:grid-cols-2">
-                <div className="rounded-xl border border-border bg-secondary/90 p-6 shadow-[0_1px_0_rgb(0_0_0_/0.04)]">
-                  <div className="h-3 w-2/5 max-w-[12rem] rounded bg-muted/60" />
-                  <div className="mt-4 space-y-2">
-                    <div className="h-2 w-full rounded bg-muted/40" />
-                    <div className="h-2 w-[92%] rounded bg-muted/35" />
-                    <div className="h-2 w-[78%] rounded bg-muted/30" />
-                  </div>
-                </div>
-                <div className="rounded-xl border border-border bg-secondary/90 p-6 shadow-[0_1px_0_rgb(0_0_0_/0.04)]">
-                  <div className="h-3 w-1/2 max-w-[11rem] rounded bg-muted/60" />
-                  <div className="mt-4 space-y-2">
-                    <div className="h-2 w-full rounded bg-muted/40" />
-                    <div className="h-2 w-[88%] rounded bg-muted/35" />
-                    <div className="h-2 w-[70%] rounded bg-muted/30" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
         </main>
       </div>
       <footer
         aria-labelledby="contact-heading"
         className="animate-section-in mt-auto scroll-mt-20 bg-[color-mix(in_srgb,var(--color-foreground)_88%,var(--color-hero-from)))] text-background shadow-[inset_0_1px_0_rgb(255_252_248_/0.08)]"
         id="contact"
-        style={{ animationDelay: "280ms" }}
+        style={{ animationDelay: "210ms" }}
       >
         <div className={footerShell}>
           <Contact />
