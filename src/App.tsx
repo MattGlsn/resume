@@ -1,6 +1,7 @@
 import Experience from "./components/Experience";
 import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
+import Skills from "./components/Skills";
 
 const skipLinkClasses =
   "sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2";
@@ -37,29 +38,17 @@ const App = () => {
             style={{ animationDelay: "70ms" }}
           >
             <div className={sectionShell}>
-              <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-                <h2
-                  className="text-2xl font-semibold tracking-tight text-foreground"
-                  id="skills-heading"
-                >
-                  Skills
-                </h2>
-                <span
-                  aria-hidden="true"
-                  className="hidden h-px flex-1 translate-y-[-0.35rem] bg-gradient-to-r from-primary/35 to-transparent sm:ms-10 sm:block"
-                />
-              </div>
+              <h2
+                className="text-2xl font-semibold tracking-tight text-foreground"
+                id="skills-heading"
+              >
+                Skills
+              </h2>
               <p className="mt-3 max-w-2xl text-muted-foreground">
-                Skills and expertise will appear here.
+                Grouped by practice area. Bars compare skills within each category (longest in the group fills
+                the track).
               </p>
-              <div aria-hidden="true" className="mt-10 flex flex-wrap gap-2">
-                {Array.from({ length: 6 }).map((_, index) => (
-                  <span
-                    className="h-9 min-w-[4.5rem] rounded-full border border-dashed border-primary/35 bg-primary/[0.06]"
-                    key={index}
-                  />
-                ))}
-              </div>
+              <Skills />
             </div>
           </section>
           <section
