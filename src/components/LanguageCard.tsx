@@ -24,7 +24,8 @@ export function LanguageCard({ language, index }: LanguageCardProps) {
 
   const descriptor = cefrDescriptors[language.cefrLevel];
   const summaryPrefix = language.notes ? `${language.notes}. ` : "";
-  const meterLabel = `Proficiency for ${language.name}: ${summaryPrefix}CEFR ${language.cefrLevel} — ${descriptor} (step ${step} of ${max} on the CEFR scale).`;
+  const levelShown = language.cefrLevelDisplay ?? language.cefrLevel;
+  const meterLabel = `Proficiency for ${language.name}: ${summaryPrefix}CEFR ${levelShown} — ${descriptor} (step ${step} of ${max} on the CEFR scale).`;
 
   return (
     <motion.article
@@ -46,7 +47,7 @@ export function LanguageCard({ language, index }: LanguageCardProps) {
             <abbr className="no-underline" title="Common European Framework of Reference for Languages">
               CEFR
             </abbr>{" "}
-            <span className="text-primary">{language.cefrLevel}</span>
+            <span className="text-primary">{levelShown}</span>
           </p>
         </div>
       </div>

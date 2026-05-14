@@ -24,11 +24,18 @@ describe("Languages", () => {
 
     expect(screen.getByText("Native / bilingual")).toBeInTheDocument();
     expect(screen.getAllByText("Full Professional Proficiency").length).toBe(2);
-    expect(screen.getAllByText("C1").length).toBe(2);
+    expect(screen.getByText("C1/B2")).toBeInTheDocument();
     expect(screen.getByText("C2")).toBeInTheDocument();
 
+    const englishArticle = screen.getByRole("heading", { name: "English", level: 3 }).closest("article");
+    expect(englishArticle).toHaveTextContent("C1/B2");
+
+    const germanArticle = screen.getByRole("heading", { name: "German", level: 3 }).closest("article");
+    expect(germanArticle).toHaveTextContent("C1");
+    expect(germanArticle).not.toHaveTextContent("C1/B2");
+
     const englishMeter = screen.getByRole("meter", {
-      name: /Proficiency for English:.*Full Professional Proficiency.*Effective operational proficiency/i,
+      name: /Proficiency for English:.*CEFR C1\/B2.*Effective operational proficiency/i,
     });
     expect(englishMeter).toBeInTheDocument();
   });

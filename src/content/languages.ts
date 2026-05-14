@@ -27,6 +27,8 @@ export type Language = Readonly<{
   id: string;
   name: string;
   cefrLevel: CefrLevel;
+  /** When set, shown instead of `cefrLevel` after “CEFR ” (meter still uses `cefrLevel`). */
+  cefrLevelDisplay?: string;
   /** Short proficiency line (left column under the language name). */
   notes?: string;
   certification?: string;
@@ -44,6 +46,7 @@ const languagesRaw = [
     id: "en",
     name: "English",
     cefrLevel: "C1",
+    cefrLevelDisplay: "C1/B2",
     notes: "Full Professional Proficiency",
   },
   {
