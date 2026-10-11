@@ -1,7 +1,12 @@
 import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 import { HiCpuChip, HiUserGroup } from "react-icons/hi2";
-import { MdArchitecture, MdPrecisionManufacturing, MdSpeed } from "react-icons/md";
+import {
+  MdArchitecture,
+  MdDesignServices,
+  MdPrecisionManufacturing,
+  MdSpeed,
+} from "react-icons/md";
 import {
   SiGithub,
   SiGitlab,
@@ -25,6 +30,8 @@ function skillIcon(key: SkillIconKey): ReactNode {
       return <HiCpuChip aria-hidden className={className} title="" />;
     case "users":
       return <HiUserGroup aria-hidden className={className} title="" />;
+    case "design":
+      return <MdDesignServices aria-hidden className={className} title="" />;
     case "github":
       return <SiGithub aria-hidden className={className} title="" />;
     case "gitlab":

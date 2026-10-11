@@ -19,6 +19,7 @@ export type SkillIconKey =
   | "jira"
   | "ai"
   | "users"
+  | "design"
   | "github"
   | "gitlab"
   | "react"
@@ -49,16 +50,24 @@ const skillsRaw = [
   {
     id: "agentic-ai-coding",
     name: "Agentic AI coding",
-    startDate: "2025-12",
+    startDate: "2025-06",
     endDate: "2026-05",
     icon: "ai",
     categoryId: "product-management",
   },
   {
+    id: "product-design",
+    name: "Product design",
+    startDate: "2025-12",
+    endDate: "2026-05",
+    icon: "design",
+    categoryId: "product-management",
+  },
+  {
     id: "customer-discovery",
     name: "Customer discovery",
-    startDate: "2025-11",
-    endDate: "2026-04",
+    startDate: "2025-06",
+    endDate: "2026-05",
     icon: "users",
     categoryId: "product-management",
   },

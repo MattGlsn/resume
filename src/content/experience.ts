@@ -69,7 +69,7 @@ const rolesRaw = [
       "Anticipate project risks, identify dependencies early, and propose mitigation strategies to ensure smooth execution and delivery",
       "Work closely with cross-functional teams (engineering, sales, management, and product teams) to support product development, alignment, and execution",
       "Facilitate communication across departments to ensure efficient coordination of initiatives and stakeholder alignment",
-      "Develop early prototypes using AI tools (Cursor, VS Code, GitLab) to explore, validate, and iterate on new product ideas and AI-driven concepts",
+      "Develop early prototypes using AI tools (Claude, Claude Code, Claude Design, VS Code, GitLab) to explore, validate, and iterate on new product ideas and AI-driven concepts",
       "Support Agile project management workflows using Jira and Confluence for sprint planning, documentation, backlog management, and team collaboration",
     ],
     achievements: [
@@ -91,7 +91,7 @@ const rolesRaw = [
       "Customer Discovery",
       "Strategic Planning",
     ],
-    technologies: ["Office 365", "Jira", "Confluence", "Cursor AI", "GitLab"],
+    technologies: ["Office 365", "Jira", "Confluence", "Claude", "Claude Code", "Claude Design", "GitLab"],
   },
   {
     id: "app-eng-humanetics",

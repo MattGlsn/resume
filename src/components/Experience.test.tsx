@@ -38,7 +38,9 @@ describe("Experience", () => {
   it("starts with all panels expanded so Humanetics-era technologies appear together", () => {
     render(<Experience />);
 
-    expect(screen.getByText("Cursor AI")).toBeInTheDocument();
+    expect(screen.getByText("Claude")).toBeInTheDocument();
+    expect(screen.getByText("Claude Code")).toBeInTheDocument();
+    expect(screen.getByText("Claude Design")).toBeInTheDocument();
     expect(screen.getByText("GitLab")).toBeInTheDocument();
     expect(screen.getByText("RAMSIS")).toBeInTheDocument();
   });
@@ -50,11 +52,13 @@ describe("Experience", () => {
     fireEvent.click(pmSummary);
 
     expect(pmSummary).toHaveAttribute("aria-expanded", "false");
-    expect(screen.queryByText("Cursor AI")).not.toBeInTheDocument();
+    expect(screen.queryByText("Claude")).not.toBeInTheDocument();
 
     fireEvent.click(pmSummary);
 
-    expect(screen.getByText("Cursor AI")).toBeInTheDocument();
+    expect(screen.getByText("Claude")).toBeInTheDocument();
+    expect(screen.getByText("Claude Code")).toBeInTheDocument();
+    expect(screen.getByText("Claude Design")).toBeInTheDocument();
     expect(screen.getByText("RAMSIS")).toBeInTheDocument();
   });
 
