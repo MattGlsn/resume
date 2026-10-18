@@ -2,7 +2,7 @@ import Contact from "./components/Contact";
 import Experience from "./components/Experience";
 import Hero from "./components/Hero";
 import Languages from "./components/Languages";
-import Navbar from "./components/Navbar";
+import SideNav from "./components/SideNav";
 import Skills from "./components/Skills";
 
 const skipLinkClasses =
@@ -19,10 +19,10 @@ const App = () => {
       <a className={skipLinkClasses} href="#main-content">
         Skip to main content
       </a>
-      <Navbar />
       <div className="flex flex-1 flex-col">
         <Hero />
-        <main className="flex flex-1 flex-col" id="main-content" tabIndex={-1}>
+        <main className="relative flex flex-1 flex-col" id="main-content" tabIndex={-1}>
+          <SideNav />
           <section
             aria-labelledby="experience-heading"
             className="animate-section-in scroll-mt-20 border-b border-border bg-[color-mix(in_srgb,var(--color-secondary)_65%,transparent)]"

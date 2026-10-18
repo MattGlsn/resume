@@ -101,6 +101,9 @@ function ExpandChevron(props: Readonly<{ expanded: boolean; reduceMotion: boolea
   );
 }
 
+/** DOM id of a role card, used by the page menu to link and track each role. */
+export const experienceRoleAnchorId = (roleId: string) => `experience-${roleId}`;
+
 export function ExperienceCard(props: ExperienceCardProps) {
   const { role, isExpanded, index = 0, onToggle } = props;
   const reduceMotion = useReducedMotion() ?? false;
@@ -109,7 +112,8 @@ export function ExperienceCard(props: ExperienceCardProps) {
 
   return (
     <motion.li
-      className="relative overflow-hidden rounded-xl border border-border bg-secondary/90"
+      className="relative scroll-mt-24 overflow-hidden rounded-xl border border-border bg-secondary/90"
+      id={experienceRoleAnchorId(role.id)}
       initial={{ opacity: 0, y: 14 }}
       transition={
         reduceMotion
