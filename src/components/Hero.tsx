@@ -62,10 +62,10 @@ const Hero = () => {
   return (
     <header
       aria-labelledby="hero-heading"
-      className="hero-editorial-surface scroll-mt-20 border-b border-border"
+      className="hero-editorial-surface flex min-h-dvh scroll-mt-20 flex-col border-b border-border"
       id="profile"
     >
-      <div className="mx-auto flex min-h-[min(100dvh,56rem)] max-w-5xl flex-col gap-10 px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+      <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-10 px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <motion.div
           animate="show"
           className="flex w-full flex-1 flex-col items-start justify-center gap-10"
