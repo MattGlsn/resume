@@ -113,7 +113,7 @@ const Hero = () => {
               <motion.a
                 className={primaryButtonClasses}
                 download
-                href="/resume.pdf"
+                href="/Matthieu_Glaisner_Resume.pdf"
                 variants={v.ctaItem}
               >
                 Download resume

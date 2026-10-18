@@ -20,7 +20,7 @@ describe("Hero", () => {
     expect(screen.getByText(/intelligent systems/)).toBeInTheDocument();
 
     const resume = screen.getByRole("link", { name: "Download resume" });
-    expect(resume).toHaveAttribute("href", "/resume.pdf");
+    expect(resume).toHaveAttribute("href", "/Matthieu_Glaisner_Resume.pdf");
     const linkedIn = screen.getByRole("link", { name: contactProfile.linkedInLabel });
     expect(linkedIn).toHaveAttribute("href", contactProfile.linkedInUrl);
     const github = screen.getByRole("link", { name: contactProfile.githubLabel });
