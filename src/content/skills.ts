@@ -19,6 +19,11 @@ export type SkillIconKey =
   | "jira"
   | "ai"
   | "users"
+  | "roadmap"
+  | "agile"
+  | "docs"
+  | "kpi"
+  | "stakeholders"
   | "design"
   | "github"
   | "gitlab"
@@ -43,7 +48,7 @@ const skillsRaw = [
     id: "atlassian-suite",
     name: "Atlassian suite (JIRA, JPD, Confluence)",
     startDate: "2025-06",
-    endDate: "2026-05",
+    endDate: null,
     icon: "jira",
     categoryId: "product-management",
   },
@@ -51,7 +56,7 @@ const skillsRaw = [
     id: "agentic-ai-coding",
     name: "Agentic AI coding",
     startDate: "2025-06",
-    endDate: "2026-05",
+    endDate: null,
     icon: "ai",
     categoryId: "product-management",
   },
@@ -59,7 +64,7 @@ const skillsRaw = [
     id: "product-design",
     name: "Product design",
     startDate: "2025-12",
-    endDate: "2026-05",
+    endDate: null,
     icon: "design",
     categoryId: "product-management",
   },
@@ -67,8 +72,48 @@ const skillsRaw = [
     id: "customer-discovery",
     name: "Customer discovery",
     startDate: "2025-06",
-    endDate: "2026-05",
+    endDate: null,
     icon: "users",
+    categoryId: "product-management",
+  },
+  {
+    id: "roadmap-prioritization",
+    name: "Roadmap & backlog prioritization",
+    startDate: "2025-06",
+    endDate: null,
+    icon: "roadmap",
+    categoryId: "product-management",
+  },
+  {
+    id: "agile-scrum",
+    name: "Agile / Scrum leadership",
+    startDate: "2025-06",
+    endDate: null,
+    icon: "agile",
+    categoryId: "product-management",
+  },
+  {
+    id: "prds",
+    name: "PRDs & requirements",
+    startDate: "2025-06",
+    endDate: null,
+    icon: "docs",
+    categoryId: "product-management",
+  },
+  {
+    id: "kpis",
+    name: "KPI definition & tracking",
+    startDate: "2025-06",
+    endDate: null,
+    icon: "kpi",
+    categoryId: "product-management",
+  },
+  {
+    id: "stakeholder-management",
+    name: "Stakeholder management",
+    startDate: "2025-06",
+    endDate: null,
+    icon: "stakeholders",
     categoryId: "product-management",
   },
   {

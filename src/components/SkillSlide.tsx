@@ -3,7 +3,11 @@ import type { ReactNode } from "react";
 import { HiCpuChip, HiUserGroup } from "react-icons/hi2";
 import {
   MdArchitecture,
+  MdDescription,
   MdDesignServices,
+  MdInsights,
+  MdLoop,
+  MdMap,
   MdPrecisionManufacturing,
   MdSpeed,
 } from "react-icons/md";
@@ -29,6 +33,16 @@ function skillIcon(key: SkillIconKey): ReactNode {
     case "ai":
       return <HiCpuChip aria-hidden className={className} title="" />;
     case "users":
+      return <HiUserGroup aria-hidden className={className} title="" />;
+    case "roadmap":
+      return <MdMap aria-hidden className={className} title="" />;
+    case "agile":
+      return <MdLoop aria-hidden className={className} title="" />;
+    case "docs":
+      return <MdDescription aria-hidden className={className} title="" />;
+    case "kpi":
+      return <MdInsights aria-hidden className={className} title="" />;
+    case "stakeholders":
       return <HiUserGroup aria-hidden className={className} title="" />;
     case "design":
       return <MdDesignServices aria-hidden className={className} title="" />;
