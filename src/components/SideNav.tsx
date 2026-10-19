@@ -87,7 +87,7 @@ const SideNav = () => {
   const progress = useScrollProgress();
 
   return (
-    <div className="pointer-events-none absolute bottom-8 top-24 left-[calc(50%+32rem+1.5rem)] z-30 hidden w-56 min-[1600px]:block">
+    <div className="pointer-events-none absolute bottom-8 top-24 left-[calc(50%+31rem)] z-30 hidden w-[min(14rem,calc(50%-31.75rem))] min-[1280px]:block min-[1600px]:left-[calc(50%+32rem+1.5rem)] min-[1600px]:w-56">
       <nav
         aria-label="On this page"
         className="pointer-events-auto sticky top-24 flex flex-col items-start"
