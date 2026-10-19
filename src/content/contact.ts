@@ -26,6 +26,6 @@ export const contactProfile: ContactProfile = {
   githubLabel: "Open Matthieu Glaisner's GitHub profile in a new tab",
   location: "Munich, Germany",
   phone: "+49 176 80042448",
-  resumeVersion: "v1.5",
+  resumeVersion: "v1.6",
   resumeDate: "19 October 2026",
 };
