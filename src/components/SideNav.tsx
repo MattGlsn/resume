@@ -86,11 +86,19 @@ const SideNav = () => {
   const activeId = useActiveSection(rows);
   const progress = useScrollProgress();
 
+  useEffect(() => {
+    // Half of (menu width + 1rem gap): 14rem expanded, 3.125rem collapsed (dots + chevron + padding + border).
+    document.documentElement.style.setProperty("--side-nav-shift", collapsed ? "2.0625rem" : "7.5rem");
+    return () => {
+      document.documentElement.style.removeProperty("--side-nav-shift");
+    };
+  }, [collapsed]);
+
   return (
-    <div className="pointer-events-none absolute bottom-8 top-24 left-[calc(50%+31rem)] z-30 hidden w-[min(14rem,calc(50%-31.75rem))] min-[1280px]:block min-[1600px]:left-[calc(50%+32rem+1.5rem)] min-[1600px]:w-56">
+    <div className="pointer-events-none absolute bottom-8 top-24 left-[calc(50%_+_33rem_-_var(--side-nav-shift,7.5rem))] z-30 hidden w-56 min-[1280px]:block min-[1600px]:left-[calc(50%+32rem+1.5rem)]">
       <nav
         aria-label="On this page"
-        className="pointer-events-auto sticky top-24 flex flex-col items-start"
+        className={`pointer-events-auto sticky top-24 flex flex-col items-start rounded-lg border border-border bg-[color-mix(in_srgb,var(--color-secondary)_65%,transparent)] p-4 backdrop-blur-sm ${collapsed ? "w-fit" : ""}`}
       >
         <div className="flex w-full items-center gap-2">
           <button
@@ -114,14 +122,17 @@ const SideNav = () => {
               <path d="M15 6l-6 6 6 6" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
-          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          <p
+            className={`text-xs font-semibold uppercase tracking-wide text-muted-foreground ${
+              collapsed ? "sr-only" : ""
+            }`}
+          >
             On this page
           </p>
         </div>
 
         <ul
           className="relative mt-2 w-full"
-          hidden={collapsed}
           id="side-nav-list"
         >
           <span
@@ -150,16 +161,19 @@ const SideNav = () => {
                 <a
                   aria-current={active ? "location" : undefined}
                   className={`${active ? `${linkClasses} font-medium text-foreground` : linkClasses} ${
-                    item.depth === 0 ? "pl-6" : "pl-9"
+                    collapsed ? "w-4 overflow-hidden pr-0" : item.depth === 0 ? "pl-6" : "pl-9"
                   }`}
+                  title={collapsed ? item.label : undefined}
                   href={item.href}
                 >
                   {item.startDate ? (
-                    <span className="mr-1.5 shrink-0 tabular-nums text-primary">
+                    <span
+                      className={`mr-1.5 shrink-0 tabular-nums text-primary ${collapsed ? "sr-only" : ""}`}
+                    >
                       {item.startDate.slice(0, 4)}
                     </span>
                   ) : null}
-                  <span className="min-w-0 truncate">{item.label}</span>
+                  <span className={`min-w-0 truncate ${collapsed ? "sr-only" : ""}`}>{item.label}</span>
                 </a>
               </li>
             );

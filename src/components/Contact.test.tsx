@@ -31,7 +31,7 @@ describe("Contact", () => {
     );
 
     expect(screen.getByText(contactProfile.location)).toBeInTheDocument();
-    expect(screen.getByText(`Resume ${contactProfile.resumeVersion}`)).toBeInTheDocument();
+    expect(screen.getByText(`Resume ${contactProfile.resumeVersion} · ${contactProfile.resumeDate}`)).toBeInTheDocument();
 
     if (contactProfile.phone) {
       expect(screen.getByText("Phone")).toBeInTheDocument();

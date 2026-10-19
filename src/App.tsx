@@ -4,14 +4,14 @@ import Hero from "./components/Hero";
 import Languages from "./components/Languages";
 import SideNav from "./components/SideNav";
 import Skills from "./components/Skills";
+import { shellShift } from "./components/layoutShift";
 
 const skipLinkClasses =
   "sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2";
 
-const sectionShell = "mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8";
+const sectionShell = `mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 ${shellShift}`;
 
-const footerShell =
-  "mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-14 lg:px-8 lg:py-16";
+const footerShell = `mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-14 lg:px-8 lg:py-16 ${shellShift}`;
 
 const App = () => {
   return (

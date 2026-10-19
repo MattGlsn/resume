@@ -2,6 +2,7 @@ import { motion, useReducedMotion, type Variants } from "motion/react";
 import { FiGithub, FiLinkedin } from "react-icons/fi";
 import { HiChevronDown } from "react-icons/hi2";
 import { contactProfile } from "../content/contact";
+import { shellShift } from "./layoutShift";
 import { heroProfile, HeroSummary } from "../content/hero";
 
 const easeMicro = [0.25, 0.46, 0.45, 0.94] as const;
@@ -65,7 +66,9 @@ const Hero = () => {
       className="hero-editorial-surface flex min-h-dvh scroll-mt-20 flex-col border-b border-border"
       id="profile"
     >
-      <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-10 px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+      <div
+        className={`mx-auto flex w-full max-w-5xl flex-1 flex-col gap-10 px-4 py-16 sm:px-6 sm:py-20 lg:px-8 ${shellShift}`}
+      >
         <motion.div
           animate="show"
           className="flex w-full flex-1 flex-col items-start justify-center gap-10"

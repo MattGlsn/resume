@@ -76,7 +76,7 @@ const Contact = () => {
       </div>
 
       <p className="border-t border-background/15 pt-6 text-center text-xs text-background/70 sm:text-end">
-        Resume {contactProfile.resumeVersion}
+        Resume {contactProfile.resumeVersion} · {contactProfile.resumeDate}
       </p>
     </div>
   );
