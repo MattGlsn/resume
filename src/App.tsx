@@ -11,7 +11,8 @@ const skipLinkClasses =
 
 const sectionShell = `mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 ${shellShift}`;
 
-const footerShell = `mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-14 lg:px-8 lg:py-16 ${shellShift}`;
+const footerShell =
+  "mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-14 lg:px-8 lg:py-16";
 
 const App = () => {
   return (
