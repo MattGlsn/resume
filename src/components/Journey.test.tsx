@@ -8,7 +8,10 @@ const role = (overrides: Partial<ExperienceRole> & Pick<ExperienceRole, "id" | "
   location: "Paris, France",
   startDate: "2019-03",
   endDate: "2021-06",
-  responsibilities: ["Shipped the thing"],
+  headline: "Designed the things.",
+  highlights: ["Led the redesign"],
+  roleOverview: "A longer summary of the role.",
+  responsibilities: ["Shipped the thing", "Wrote the docs"],
   achievements: [],
   technologies: ["CATIA V5", "Creo"],
   ...overrides,
@@ -31,7 +34,7 @@ describe("Journey", () => {
     expect(headings[0]).toHaveTextContent("2026 – Present");
   });
 
-  it("shows the year range, company and location in each row", () => {
+  it("shows the year range, headline, company and location in each closed row", () => {
     render(
       <Journey
         roles={[role({ id: "a", title: "Designer" }), role({ id: "b", title: "Intern", startDate: "2017-04", endDate: "2017-12" })]}
@@ -40,21 +43,30 @@ describe("Journey", () => {
 
     expect(screen.getByText("2019 – 2021")).toBeInTheDocument();
     expect(screen.getByText("2017")).toBeInTheDocument();
+    expect(screen.getAllByText("Designed the things.")).toHaveLength(2);
     expect(screen.getAllByText("Acme Corp · Paris, France")).toHaveLength(2);
   });
 
-  it("starts collapsed and opens a role on click", () => {
+  it("opens a role on its highlights and tools, with the full responsibilities behind a toggle", () => {
     render(<Journey roles={[role({ id: "a", title: "Designer" })]} />);
 
     const button = screen.getByRole("button", { name: /Designer/ });
     expect(button).toHaveAttribute("aria-expanded", "false");
-    expect(screen.queryByText("Shipped the thing")).not.toBeInTheDocument();
+    expect(screen.queryByText("Led the redesign")).not.toBeInTheDocument();
 
     fireEvent.click(button);
     expect(button).toHaveAttribute("aria-expanded", "true");
     expect(button).toHaveAttribute("aria-controls", "journey-panel-a");
+    expect(within(screen.getByRole("list", { name: "Highlights" })).getByText("Led the redesign")).toBeInTheDocument();
+    expect(screen.getByRole("list", { name: "Tools" })).toHaveTextContent("CATIA V5Creo");
+    expect(screen.queryByText("Shipped the thing")).not.toBeInTheDocument();
+
+    const more = screen.getByRole("button", { name: /Show all 2 responsibilities/ });
+    fireEvent.click(more);
+    expect(more).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getByText("A longer summary of the role.")).toBeInTheDocument();
     expect(screen.getByText("Shipped the thing")).toBeInTheDocument();
-    expect(screen.getByText(/CATIA V5 · Creo/)).toBeInTheDocument();
+    expect(screen.getByText("Wrote the docs")).toBeInTheDocument();
   });
 
   it("rounds a header's top corners only while the row above is open", () => {
@@ -81,6 +93,6 @@ describe("Journey", () => {
     fireEvent.click(button);
 
     expect(button).toHaveAttribute("aria-expanded", "false");
-    await waitFor(() => expect(screen.queryByText("Shipped the thing")).not.toBeInTheDocument());
+    await waitFor(() => expect(screen.queryByText("Led the redesign")).not.toBeInTheDocument());
   });
 });

@@ -28,7 +28,7 @@ const TopNav = () => {
   return (
     <nav
       aria-label="Main"
-      className={`${pageColumn} z-40 flex flex-wrap items-center justify-between gap-2.5 rounded-2xl border border-border bg-surface py-2 pr-2 pl-5 transition-shadow duration-200 sm:sticky sm:top-5 ${
+      className={`${pageColumn} z-40 flex flex-wrap items-center justify-between gap-2.5 rounded-2xl border border-border bg-surface py-2 pr-2 pl-5 transition-shadow duration-200 sm:sticky sm:top-6 ${
         scrolled ? "sm:shadow-nav" : ""
       }`}
     >

@@ -11,7 +11,11 @@ export type ExperienceRole = Readonly<{
   startDate: string;
   /** `null` = current role */
   endDate: string | null;
-  /** Short paragraph shown before the responsibilities */
+  /** One line under the title, readable without opening the role */
+  headline: string;
+  /** 3–4 short points shown first when the role is opened */
+  highlights: readonly string[];
+  /** Short paragraph shown with the full responsibilities */
   roleOverview?: string;
   responsibilities: readonly string[];
   achievements: readonly string[];
@@ -46,6 +50,13 @@ const rolesRaw = [
     location: "Munich, Germany",
     startDate: "2026-01",
     endDate: null,
+    headline: "Owns an automotive AI/ML product from scratch as PM, Product Designer and Scrum Master.",
+    highlights: [
+      "Leads a team of 7 developers across the USA, Germany and India",
+      "Runs customer discovery with clients in China, Japan, Germany and the USA, in English and German",
+      "Turns customer needs into product vision, roadmap, PRDs and KPIs",
+      "Builds early prototypes with AI tools to test new product ideas",
+    ],
     roleOverview:
       "Product Manager for automotive AI/ML and digital initiatives at Humanetics, leading a 7-developer team across the USA, Germany and India. Roadmaps, PRDs, Agile delivery and executive-ready insights.",
     responsibilities: productFocusAreas.flatMap((area) => area.items),
@@ -83,6 +94,13 @@ const rolesRaw = [
     location: "Munich, Germany",
     startDate: "2023-07",
     endDate: "2026-01",
+    headline: "Ergonomics studies and digital mock-ups of car interiors for major carmakers.",
+    highlights: [
+      "Ran RAMSIS ergonomics studies on reach, visibility, comfort and accessibility",
+      "Built full-scale digital mock-ups in CATIA V5 for about five OEM projects a year",
+      "Contributed to the ergonomics of the BMW “Neue Klasse” platform",
+      "Worked fully in German with OEM engineering teams and customers",
+    ],
     roleOverview:
       "Human factors and ergonomics engineer: RAMSIS-led interior studies, CATIA V5 surfacing for full-scale digital mock-ups, and OEM delivery from concept through prototyping (about five major programs per year), including BMW Neue Klasse. Worked fully in German in an international automotive environment.",
     responsibilities: [
@@ -120,6 +138,12 @@ const rolesRaw = [
     location: "Lintgen, Luxembourg",
     startDate: "2021-04",
     endDate: "2023-07",
+    headline: "3D design and production drawings for industrial valves.",
+    highlights: [
+      "Designed 3D models and manufacturing drawings for industrial valves in CATIA V5",
+      "Covered both standard catalogue products and customer-specific designs",
+      "Kept PLM data and technical documentation consistent, in English and French",
+    ],
     roleOverview:
       "Technical Designer specialized in 3D mechanical design of industrial valves using CATIA V5, delivering precise technical documentation and production-ready designs for standard catalogue products and custom customer solutions.",
     responsibilities: [
@@ -148,6 +172,12 @@ const rolesRaw = [
     location: "Montargis, France",
     startDate: "2018-01",
     endDate: "2021-04",
+    headline: "Automotive and aerospace R&D: thermal management and composite parts.",
+    highlights: [
+      "Designed thermal management solutions in Creo with thermal engineers",
+      "Prototyped and assembled concept demonstrators for automotive applications",
+      "Designed composite aircraft parts and supported patent development",
+    ],
     roleOverview:
       "Automotive and aerospace R&D, specializing in thermal management solutions and composite part design, developing innovative products from concept to prototype.",
     responsibilities: [
@@ -185,6 +215,12 @@ const rolesRaw = [
     location: "Rueil-Malmaison, France",
     startDate: "2017-04",
     endDate: "2017-12",
+    headline: "A parametric CAD model that sped up combustion engine design.",
+    highlights: [
+      "Built a fully parametric CATIA V5 model of a 4-valve engine's upper section",
+      "Let engineers adjust chamber volume, valve position, intake angle and camshaft placement",
+      "Shortened development time from concept to testing",
+    ],
     roleOverview:
       "Developed a parametric CATIA V5 model for the upper section of a 4-valve direct injection combustion engine, letting engineers rapidly configure and prototype engine architectures and significantly reducing development time from concept to testing.",
     responsibilities: [
