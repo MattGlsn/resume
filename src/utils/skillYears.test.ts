@@ -2,6 +2,7 @@ import { describe, expect, it, vi, afterEach } from "vitest";
 import {
   currentYearMonth,
   formatSkillYears,
+  formatSkillYearsShort,
   skillYearsBetween,
 } from "./skillYears";
 
@@ -53,5 +54,13 @@ describe("currentYearMonth", () => {
     vi.setSystemTime(new Date("2024-03-07"));
     expect(currentYearMonth()).toBe("2024-03");
     vi.useRealTimers();
+  });
+});
+
+describe("formatSkillYearsShort", () => {
+  it("drops decimal noise and uses a short unit", () => {
+    expect(formatSkillYearsShort(6)).toBe("6 y");
+    expect(formatSkillYearsShort(1.4)).toBe("1.4 y");
+    expect(formatSkillYearsShort(0.5)).toBe("0.5 y");
   });
 });

@@ -1,6 +1,6 @@
 /**
- * Spoken languages for the Languages section (RPM-17).
- * Levels use the European CEFR scale (A1–C2). The meter uses step 1–6 for relative display only.
+ * Spoken languages for the Languages card in the hero (RPM-17).
+ * Levels use the European CEFR scale (A1–C2).
  */
 
 export const CEFR_LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"] as const;
@@ -17,22 +17,16 @@ export const cefrDescriptors: Record<CefrLevel, string> = {
   C2: "Mastery or proficiency",
 };
 
-export function cefrStep(level: CefrLevel): number {
-  return CEFR_LEVELS.indexOf(level) + 1;
-}
-
-export const cefrStepMax = CEFR_LEVELS.length;
-
 export type Language = Readonly<{
   id: string;
   name: string;
   cefrLevel: CefrLevel;
-  /** When set, shown instead of `cefrLevel` after “CEFR ” (meter still uses `cefrLevel`). */
+  /** When set, shown instead of `cefrLevel` in the level badge. */
   cefrLevelDisplay?: string;
-  /** Short proficiency line (left column under the language name). */
+  /** Short word appended to the badge after a dot (e.g. "native"). */
+  levelNote?: string;
+  /** Proficiency in words, read by screen readers with the level. */
   notes?: string;
-  certification?: string;
-  context?: string;
 }>;
 
 const languagesRaw = [
@@ -40,6 +34,7 @@ const languagesRaw = [
     id: "fr",
     name: "French",
     cefrLevel: "C2",
+    levelNote: "native",
     notes: "Native / bilingual",
   },
   {
@@ -58,3 +53,9 @@ const languagesRaw = [
 ] as const satisfies readonly Language[];
 
 export const languages: readonly Language[] = languagesRaw;
+
+/** Badge text, e.g. "C2 · native" or "C1/B2". */
+export function languageBadge(language: Language): string {
+  const level = language.cefrLevelDisplay ?? language.cefrLevel;
+  return language.levelNote ? `${level} · ${language.levelNote}` : level;
+}

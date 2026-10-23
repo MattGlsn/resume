@@ -12,6 +12,8 @@ export type ContactProfile = Readonly<{
   location: string;
   /** When set, a tel: link is shown (omit or leave unset to hide the phone line). */
   phone?: string;
+  /** Path under `public/` of the downloadable resume */
+  resumePdfPath: string;
   /** Resume version label shown at the bottom of the footer (bump on each content update). */
   resumeVersion: string;
   resumeDate: string;
@@ -26,6 +28,7 @@ export const contactProfile: ContactProfile = {
   githubLabel: "Open Matthieu Glaisner's GitHub profile in a new tab",
   location: "Munich, Germany",
   phone: "+49 176 80042448",
-  resumeVersion: "v1.6",
-  resumeDate: "19 October 2026",
+  resumePdfPath: "/Matthieu_Glaisner_Resume.pdf",
+  resumeVersion: "v2.0",
+  resumeDate: "23 October 2026",
 };

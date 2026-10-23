@@ -1,33 +1,37 @@
 ---
-description: Design guidelines — typography (Roboto) and primary brand color (#6A7CBD) for UI work
+description: Design guidelines — typography (Onest + DM Mono) and primary brand color (#2F6FE4) for UI work
 globs: "**/*.{tsx,css,html}"
 alwaysApply: false
 ---
 
 # Design guidelines
 
+The look follows the "Personal website (modern)" design: flat white cards on a cool grey page, dark "ink" cards for emphasis, one blue accent.
+
 ## Typography
 
-- Use **Roboto** as the primary typeface for the app (body, UI labels, headings unless a separate display font is explicitly requested).
-- Load Roboto in a standard way for this stack, for example Google Fonts via `index.html`, or `@import` / `@font-face` in CSS—pick one consistent approach for the repo.
-- In Tailwind/CSS, wire Roboto through `font-family` (e.g. `font-family: "Roboto", system-ui, sans-serif` or Tailwind `@theme`/config equivalent) instead of unrelated webfonts.
+- Use **Onest** as the primary typeface (body, UI labels, headings).
+- Use **DM Mono** for small uppercase labels (section numbers like `01 · PRODUCT MANAGEMENT`), dates, year counts, and tool lists.
+- Both load from Google Fonts in `index.html` and are wired through `--font-sans` / `--font-mono` in `src/index.css`.
 
 ## Color
 
-- **Primary brand color:** `#6A7CBD` (slate blue).
-- Use it for primary actions, key links, focused states, and strong brand accents—not for large background fields unless contrast with text is verified (WCAG).
-- Pair with neutrals for text and surfaces; avoid introducing a second competing “primary” without an explicit product reason.
+- **Primary brand color:** `#2F6FE4` (blue), token `primary`. Use it for primary actions, the featured skills card, accent marks (the dot after a headline, arrows), and focus rings.
+- Soft accent surfaces use `primary-soft` (`#EEF3FF`) with `primary-strong` (`#1A4FB8`) text.
+- Dark emphasis cards use `ink` (`#0B1220`) with `ink-muted` / `ink-accent` text.
+- Page `background` is `#F4F5F7`; cards are `surface` white with a `border` (`#E4E6EA`) and 16px radius; controls and chips use a 10px radius.
+- Use the tokens in `src/index.css` rather than raw hex values; avoid introducing a second competing accent.
 
 ## Examples
 
 ```css
 /* Primary token */
---color-primary: #6A7CBD;
+--color-primary: #2f6fe4;
 ```
 
 ```tsx
-// Prefer semantic usage (class names / tokens), not one-off magic values scattered everywhere
-// e.g. primary button / link color → #6A7CBD or mapped token
+// Prefer tokens and the shared class strings in `src/components/styles.ts`
+<div className={`${surfaceCard} p-7`}>…</div>
 ```
 
-When adding new components, default to Roboto and the primary color for interactive emphasis so the UI stays consistent.
+When adding new components, default to Onest, the shared card styles, and the primary color for interactive emphasis so the UI stays consistent.

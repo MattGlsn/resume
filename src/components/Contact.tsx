@@ -1,11 +1,20 @@
-import { FiGithub, FiLinkedin } from "react-icons/fi";
+import { FiArrowUpRight, FiDownload, FiGithub, FiLinkedin } from "react-icons/fi";
 import { contactProfile } from "../content/contact";
+import { publicUrl } from "../utils/publicUrl";
+import { eyebrow } from "./styles";
 
-const iconSocialButtonClasses =
-  "inline-flex size-11 shrink-0 items-center justify-center rounded-lg border border-background/35 bg-background/10 text-background shadow-sm backdrop-blur-sm transition-[color,background-color,border-color,transform,box-shadow] duration-200 ease-out hover:-translate-y-px hover:bg-background/18 hover:shadow-md active:translate-y-0 active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-[color-mix(in_srgb,var(--color-foreground)_88%,var(--color-hero-from)))]";
+const inkFocusRing =
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-highlight focus-visible:ring-offset-2 focus-visible:ring-offset-ink";
 
-const footerLinkClasses =
-  "rounded-sm font-medium text-background underline decoration-background/50 underline-offset-4 transition-colors hover:decoration-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-[color-mix(in_srgb,var(--color-foreground)_88%,var(--color-hero-from)))]";
+/** Size and type shared by every contact button, so the email button and the row below match. */
+const buttonBase = `inline-flex min-h-12 items-center justify-center gap-2 rounded-[10px] text-[15px] font-semibold no-underline ${inkFocusRing}`;
+
+const outlineButtonClasses = `${buttonBase} border border-white/25 text-white transition-colors duration-200 hover:bg-white/10`;
+
+/** Icon beside a label */
+const labelIcon = "size-4";
+/** Icon alone in a square button */
+const soloIcon = "size-[18px]";
 
 function buildMailtoHref(email: string, subject: string): string {
   return `mailto:${email}?subject=${encodeURIComponent(subject)}`;
@@ -20,64 +29,67 @@ function toTelHref(display: string): string {
 const Contact = () => {
   const mailtoHref = buildMailtoHref(contactProfile.email, contactProfile.mailtoSubject);
   const phone = contactProfile.phone?.trim();
-  const showPhone = Boolean(phone);
 
   return (
-    <div className="space-y-8">
-      <h2
-        className="text-xl font-semibold tracking-tight sm:text-2xl"
-        id="contact-heading"
-      >
-        Contact
-      </h2>
-
-      <div className="flex w-full flex-col flex-nowrap gap-10 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
-        <dl className="order-1 grid w-full min-w-0 grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-3 text-sm text-background/85 sm:order-none sm:max-w-lg sm:grid-cols-[minmax(0,7.5rem)_1fr] sm:gap-x-6 sm:text-base">
-          <dt className="shrink-0 font-medium text-background/90">Email</dt>
-          <dd className="min-w-0 text-end sm:text-start">
-            <a className={footerLinkClasses} href={mailtoHref}>
-              {contactProfile.email}
-            </a>
-          </dd>
-          {showPhone && phone ? (
-            <>
-              <dt className="shrink-0 font-medium text-background/90">Phone</dt>
-              <dd className="min-w-0 text-end sm:text-start">
-                <a className={footerLinkClasses} href={toTelHref(phone)}>
-                  {phone}
-                </a>
-              </dd>
-            </>
-          ) : null}
-          <dt className="shrink-0 font-medium text-background/90">Location</dt>
-          <dd className="min-w-0 text-end sm:text-start">{contactProfile.location}</dd>
-        </dl>
-
-        <div className="order-2 flex w-full shrink-0 flex-wrap items-center justify-center gap-3 sm:order-none sm:w-auto sm:justify-end">
-          <a
-            aria-label={contactProfile.linkedInLabel}
-            className={iconSocialButtonClasses}
-            href={contactProfile.linkedInUrl}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <FiLinkedin aria-hidden className="h-6 w-6" strokeWidth={1.75} />
-          </a>
-          <a
-            aria-label={contactProfile.githubLabel}
-            className={iconSocialButtonClasses}
-            href={contactProfile.githubUrl}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <FiGithub aria-hidden className="h-6 w-6" strokeWidth={1.75} />
-          </a>
-        </div>
+    <div className="ink-glow-bottom-left flex flex-col gap-9 rounded-2xl bg-ink px-6 py-12 text-white sm:px-14 sm:py-16">
+      <div className="flex flex-col gap-3.5">
+        <span className={`${eyebrow} text-ink-accent`}>04 · Contact</span>
+        <h2
+          className="text-4xl leading-none font-semibold tracking-[-0.04em] sm:text-5xl lg:text-[64px]"
+          id="contact-heading"
+        >
+          Shaping the future with AI?
+          <br />
+          <span className="text-primary">Let’s talk.</span>
+        </h2>
       </div>
 
-      <p className="border-t border-background/15 pt-6 text-center text-xs text-background/70 sm:text-end">
-        Resume {contactProfile.resumeVersion} · {contactProfile.resumeDate}
-      </p>
+      <a
+        className={`${buttonBase} max-w-full flex-wrap self-start bg-white px-5 py-2 [overflow-wrap:anywhere] text-foreground transition-transform duration-200 hover:-translate-y-px`}
+        href={mailtoHref}
+      >
+        {contactProfile.email}
+        <FiArrowUpRight aria-hidden className={labelIcon} strokeWidth={2.2} />
+      </a>
+
+      <div className="flex flex-wrap gap-2.5">
+        <a
+          aria-label={contactProfile.linkedInLabel}
+          className={`${outlineButtonClasses} size-12`}
+          href={contactProfile.linkedInUrl}
+          rel="noopener noreferrer"
+          target="_blank"
+          title="LinkedIn"
+        >
+          <FiLinkedin aria-hidden className={soloIcon} strokeWidth={2} />
+        </a>
+        <a
+          aria-label={contactProfile.githubLabel}
+          className={`${outlineButtonClasses} size-12`}
+          href={contactProfile.githubUrl}
+          rel="noopener noreferrer"
+          target="_blank"
+          title="GitHub"
+        >
+          <FiGithub aria-hidden className={soloIcon} strokeWidth={2} />
+        </a>
+        <a
+          className={`${outlineButtonClasses} px-5`}
+          download
+          href={publicUrl(contactProfile.resumePdfPath)}
+        >
+          <FiDownload aria-hidden className={labelIcon} strokeWidth={2.2} />
+          Download resume
+        </a>
+        {phone ? (
+          <a
+            className={`inline-flex min-h-12 items-center rounded-[10px] px-2 text-[15px] text-ink-muted no-underline hover:text-white ${inkFocusRing}`}
+            href={toTelHref(phone)}
+          >
+            {phone}
+          </a>
+        ) : null}
+      </div>
     </div>
   );
 };

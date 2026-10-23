@@ -3,28 +3,51 @@ import type { ReactNode } from "react";
 export const heroProfile = {
   fullName: "Matthieu Glaisner",
   professionalTitle: "Product Manager",
+  /** Second, muted line of the hero headline */
+  tagline: "Engineer at heart.",
+  availability: "Open to PM roles in Toulouse",
+  summary:
+    "I lead AI-driven product development in the automotive industry, with a background in engineering, ergonomics, and technical design.",
 } as const;
 
-function highlight(children: ReactNode) {
-  return <strong className="font-semibold text-foreground">{children}</strong>;
-}
+export type HeroStat = Readonly<{ value: string; label: string }>;
 
-/** Inline hero bio — edit wording here; use `highlight(…)` for emphasized phrases. */
-export function HeroSummary() {
-  return (
-    <>
-      {highlight("Product Manager")} with a background in{" "}
-      {highlight("engineering, ergonomics, and technical design")}, focused on{" "}
-      {highlight("AI-driven product development")} in the {highlight("automotive industry")}. Experienced in{" "}
-      {highlight("customer discovery")}, {highlight("cross-functional collaboration")}, and{" "}
-      {highlight("rapid prototyping")} using {highlight("AI tools")} to translate business needs into actionable
-      product initiatives. {highlight("Autonomous, curious, and solution-oriented")}, with proven ability to work
-      effectively with international stakeholders across {highlight("Europe, Asia, and the USA")}.
-      <br />
-      Currently seeking opportunities in {highlight("Toulouse, France")}, to contribute to innovative product teams
-      where {highlight("AI, technology, and business strategy")} intersect, with a strong interest in building impactful
-      digital products, driving innovation, and shaping the future of {highlight("mobility")} and{" "}
-      {highlight("intelligent systems")}.
-    </>
-  );
-}
+/** Dark hero card about the current role (title, company and start date come from `experience.ts`). */
+export const currentRoleHighlight: Readonly<{ summary: string; stats: readonly HeroStat[] }> = {
+  summary: "Owning an automotive AI/ML product from zero as PM, Product Designer and Scrum Master.",
+  stats: [
+    { value: "7", label: "devs · USA, DE, IN" },
+    { value: "4", label: "market regions" },
+  ],
+};
+
+export type HeroFact = Readonly<{
+  id: string;
+  label: string;
+  title: ReactNode;
+  /** Optional smaller line under the title */
+  detail?: string;
+}>;
+
+/** Fact cards under the hero, next to the Languages card. */
+export const heroFacts: readonly HeroFact[] = [
+  {
+    id: "clients",
+    label: "Clients across",
+    title: (
+      <>
+        Europe, Asia <span className="text-faint">&amp;</span> the USA
+      </>
+    ),
+  },
+  {
+    id: "based-in",
+    label: "Based in",
+    title: (
+      <>
+        Munich <span className="text-primary">→</span> Toulouse
+      </>
+    ),
+    detail: "Seeking opportunities in Toulouse, France",
+  },
+];

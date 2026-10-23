@@ -3,46 +3,54 @@ import { describe, expect, it, vi, afterEach } from "vitest";
 import Skills from "./Skills";
 import type { Skill } from "../content/skills";
 
-const fixtureSkill: Skill = {
-  id: "fixture-jira",
-  name: "Fixture skill",
-  startDate: "2020-01",
-  endDate: "2021-12",
-  icon: "jira",
-  categoryId: "product-management",
-};
+const fixtureSkills: readonly Skill[] = [
+  {
+    id: "fixture-pm",
+    name: "Fixture skill",
+    startDate: "2020-01",
+    endDate: "2021-12",
+    categoryId: "product-management",
+  },
+  {
+    id: "fixture-cad",
+    name: "Fixture CAD",
+    startDate: "2018-01",
+    endDate: "2021-12",
+    categoryId: "mechanical-engineer",
+  },
+];
 
 describe("Skills", () => {
   afterEach(() => {
     vi.useRealTimers();
   });
 
-  it("renders skill name and years without proficiency or tool", () => {
-    vi.useFakeTimers();
-    vi.setSystemTime(new Date("2026-01-01"));
-
-    render(<Skills skills={[fixtureSkill]} />);
+  it("renders categories and compact years per skill", () => {
+    render(<Skills skills={fixtureSkills} />);
 
     expect(screen.getByRole("heading", { name: "Product management", level: 3 })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Fixture skill", level: 4 })).toBeInTheDocument();
-    expect(screen.getByLabelText("2 years of experience")).toBeInTheDocument();
-    expect(screen.queryByText("Proficient")).not.toBeInTheDocument();
-    expect(screen.queryByText("Expert")).not.toBeInTheDocument();
-    expect(screen.queryByText("UI")).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Mechanical engineering", level: 3 })).toBeInTheDocument();
+    expect(screen.getByText("CORE")).toBeInTheDocument();
+    expect(screen.getByLabelText("2 years of experience")).toHaveTextContent("2 y");
+    expect(screen.getByLabelText("4 years of experience")).toHaveTextContent("4 y");
   });
 
-  it("exposes a progress bar for relative experience", () => {
-    render(<Skills skills={[fixtureSkill]} />);
+  it("scales every bar against the longest skill", () => {
+    render(<Skills skills={fixtureSkills} />);
+
+    expect(screen.getByText(/a full bar is 4 years/)).toBeInTheDocument();
 
     const region = screen.getByRole("region", { name: "Skills" });
-    const bar = within(region).getByRole("progressbar");
-    expect(bar).toHaveAttribute("aria-valuenow", "2");
+    const [pm, cad] = within(region).getAllByRole("progressbar");
+    expect(pm).toHaveAttribute("aria-valuenow", "2");
+    expect(pm).toHaveAttribute("aria-valuemax", "4");
+    expect(pm.firstElementChild).toHaveStyle({ width: "50%" });
+    expect(cad.firstElementChild).toHaveStyle({ width: "100%" });
   });
 
-  it("does not render horizontal carousel controls", () => {
-    render(<Skills skills={[fixtureSkill]} />);
+  it("omits categories without skills", () => {
+    render(<Skills skills={fixtureSkills} />);
 
-    expect(screen.queryByRole("button", { name: "Show previous skills" })).not.toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: "Show next skills" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Human factors" })).not.toBeInTheDocument();
   });
 });

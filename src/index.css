@@ -1,31 +1,52 @@
 @import "tailwindcss";
 
-/* Tokens follow `.cursor/rules/design-guidelines.mdc` (Roboto, primary #6A7CBD) */
+/* Tokens follow `.cursor/rules/design-guidelines.mdc` (Onest + DM Mono, primary #2F6FE4) */
 @theme {
   --font-sans:
-    "Roboto", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Onest", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji";
+  --font-mono: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  --color-background: #f4f2ee;
-  --color-foreground: #141414;
-  --color-muted: #6f6a63;
-  --color-muted-foreground: #57524a;
+  --color-background: #f4f5f7;
+  --color-foreground: #0b0d12;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f7f8fa;
+  --color-chip: #f1f3f6;
+  --color-track: #eef0f3;
 
-  --color-border: #e2ddd4;
-  --color-ring: #6a7cbd;
+  --color-border: #e4e6ea;
+  --color-border-subtle: #eceef1;
+  --color-ring: #2f6fe4;
 
-  --color-primary: #6a7cbd;
+  /* Text greys, darkest to lightest */
+  --color-body: #2a2e36;
+  --color-muted-foreground: #3e434d;
+  --color-heading-muted: #4a505a;
+  --color-muted: #4b505a;
+  --color-subtle: #6b707a;
+  --color-faint: #9aa0aa;
+
+  --color-primary: #2f6fe4;
   --color-primary-foreground: #ffffff;
-  --color-primary-hover: #596bb0;
+  --color-primary-hover: #2560cf;
+  --color-primary-soft: #eef3ff;
+  --color-primary-strong: #1a4fb8;
+  --color-link: #1f5fd6;
 
-  --color-secondary: #fffefc;
-  --color-secondary-foreground: #171717;
-  --color-secondary-border: #d4cfc4;
+  /* Dark "ink" cards (current role, contact) */
+  --color-ink: #0b1220;
+  --color-ink-border: #1f2b44;
+  --color-ink-muted: #c3cee3;
+  --color-ink-accent: #a9c6ff;
+  --color-ink-highlight: #8fb4ff;
 
-  --color-accent-foreground: #6a7cbd;
+  --color-success: #16a34a;
+  --color-success-soft: #e9f9ef;
+  --color-success-strong: #0f6a36;
 
-  --color-hero-from: #efeae2;
-  --color-hero-to: #f7f4ef;
+  --shadow-float: 0 22px 48px -24px rgb(23 23 23 / 0.12);
+  /* Sticky top bar once the page scrolls: a tight contact shadow plus a wide soft one */
+  --shadow-nav: 0 2px 6px rgb(11 13 18 / 0.06), 0 16px 36px -10px rgb(11 13 18 / 0.22);
 }
 
 @layer base {
@@ -50,23 +71,38 @@
   }
 }
 
-/* Editorial hero: warm gradient + fine primary-tinted grid */
 @layer components {
-  .hero-editorial-surface {
-    background-color: var(--color-hero-to);
-    background-image:
-      repeating-linear-gradient(
-        90deg,
-        rgb(106 124 189 / 0.055) 0 1px,
-        transparent 1px 1.5rem
-      ),
-      repeating-linear-gradient(
-        0deg,
-        rgb(106 124 189 / 0.055) 0 1px,
-        transparent 1px 1.5rem
-      ),
-      linear-gradient(180deg, var(--color-hero-from) 0%, var(--color-hero-to) 100%);
-    background-size: 1.5rem 1.5rem, 1.5rem 1.5rem, 100% 100%;
+  /* Ink cards: blue glow from one corner */
+  .ink-glow-top-right {
+    background-image: radial-gradient(circle at 100% 0%, rgb(47 111 228 / 0.32) 0, rgb(47 111 228 / 0) 55%);
+  }
+
+  .ink-glow-bottom-left {
+    background-image: radial-gradient(circle at 0% 100%, rgb(47 111 228 / 0.28) 0, rgb(47 111 228 / 0) 50%);
+  }
+
+  /* Soft round glow; `--glow-alpha` sets its strength at the center */
+  .backdrop-glow {
+    background-image: radial-gradient(
+      closest-side,
+      rgb(120 128 145 / var(--glow-alpha)) 0%,
+      rgb(120 128 145 / calc(var(--glow-alpha) * 0.5)) 45%,
+      rgb(120 128 145 / 0) 100%
+    );
+  }
+
+  /*
+   * Journey row header. Its divider lines and the shade it casts on open details (below when it is open,
+   * above when the row above is open) are drawn as shadows, so they follow its rounded corners: a border
+   * thins out at the curve, and a straight shade on the details would cut across it. Each layer is always
+   * present and only its color changes, so the shadow transitions smoothly; set the colors per state.
+   */
+  .journey-tab {
+    box-shadow:
+      0 -1px 0 0 var(--tab-top-line, transparent),
+      0 1px 0 0 var(--tab-bottom-line, transparent),
+      0 10px 16px -10px var(--tab-shade-down, transparent),
+      0 -10px 16px -10px var(--tab-shade-up, transparent);
   }
 
   .animate-section-in {
