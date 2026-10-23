@@ -1,86 +1,64 @@
 import Contact from "./components/Contact";
-import Experience from "./components/Experience";
 import Hero from "./components/Hero";
-import Languages from "./components/Languages";
-import SideNav from "./components/SideNav";
+import Journey from "./components/Journey";
+import ProductRole from "./components/ProductRole";
 import Skills from "./components/Skills";
-import { shellShift } from "./components/layoutShift";
+import TopNav from "./components/TopNav";
+import { pageColumn } from "./components/styles";
+import { contactProfile } from "./content/contact";
+import { heroProfile } from "./content/hero";
 
 const skipLinkClasses =
   "sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2";
 
-const sectionShell = `mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 ${shellShift}`;
+// `scroll-mt` keeps anchored sections clear of the sticky top bar.
+const sectionShell = `${pageColumn} animate-section-in scroll-mt-6 pt-16 pb-6 sm:scroll-mt-24 sm:pt-[72px]`;
 
-const footerShell =
-  "mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-14 lg:px-8 lg:py-16";
+/**
+ * Large soft grey glows behind the page. Drawn as radial gradients: a `blur()` filter this wide
+ * is too slow to paint while scrolling.
+ */
+const BackdropGlow = () => (
+  <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+    <div className="backdrop-glow absolute -top-[400px] left-[calc(15%-200px)] size-[1120px] [--glow-alpha:0.14]" />
+    <div className="backdrop-glow absolute top-[calc(42%-200px)] -right-[460px] size-[1080px] [--glow-alpha:0.11]" />
+    <div className="backdrop-glow absolute -bottom-[440px] left-[calc(5%-200px)] size-[1120px] [--glow-alpha:0.12]" />
+  </div>
+);
 
 const App = () => {
   return (
-    <div className="flex min-h-dvh flex-col bg-background font-sans text-foreground antialiased">
+    // `overflow-clip`, not `overflow-hidden`: hidden makes a scroll container, which stops the top bar from sticking.
+    <div className="relative isolate min-h-dvh overflow-clip bg-background px-4 pt-4 font-sans text-foreground antialiased sm:px-5 sm:pt-5">
       <a className={skipLinkClasses} href="#main-content">
         Skip to main content
       </a>
-      <div className="flex flex-1 flex-col">
-        <Hero />
-        <main className="relative flex flex-1 flex-col" id="main-content" tabIndex={-1}>
-          <SideNav />
-          <section
-            aria-labelledby="experience-heading"
-            className="animate-section-in scroll-mt-20 border-b border-border bg-[color-mix(in_srgb,var(--color-secondary)_65%,transparent)]"
-            id="experience"
-            style={{ animationDelay: "0ms" }}
-          >
-            <div className={sectionShell}>
-              <Experience />
-            </div>
-          </section>
-          <section
-            aria-labelledby="skills-heading"
-            className="animate-section-in scroll-mt-20 border-b border-border"
-            id="skills"
-            style={{ animationDelay: "70ms" }}
-          >
-            <div className={sectionShell}>
-              <h2
-                className="text-2xl font-semibold tracking-tight text-foreground"
-                id="skills-heading"
-              >
-                Skills
-              </h2>
-              <p className="mt-3 text-pretty text-sm text-muted-foreground">
-                Each skill shows how many years of professional experience you have with it. Progress bars use one
-                shared scale across all categories, so you can compare bar length from one group to another.
-              </p>
-              <Skills />
-            </div>
-          </section>
-          <section
-            aria-labelledby="languages-heading"
-            className="animate-section-in scroll-mt-20 border-b border-border bg-[color-mix(in_srgb,var(--color-secondary)_40%,transparent)]"
-            id="languages"
-            style={{ animationDelay: "140ms" }}
-          >
-            <div className={sectionShell}>
-              <h2
-                className="text-2xl font-semibold tracking-tight text-foreground"
-                id="languages-heading"
-              >
-                Languages
-              </h2>
-              <Languages />
-            </div>
-          </section>
-        </main>
-      </div>
-      <footer
-        aria-labelledby="contact-heading"
-        className="animate-section-in mt-auto scroll-mt-20 bg-[color-mix(in_srgb,var(--color-foreground)_88%,var(--color-hero-from)))] text-background shadow-[inset_0_1px_0_rgb(255_252_248_/0.08)]"
-        id="contact"
-        style={{ animationDelay: "210ms" }}
-      >
-        <div className={footerShell}>
+      <BackdropGlow />
+      <TopNav />
+      <Hero />
+      <main id="main-content" tabIndex={-1}>
+        <section aria-labelledby="pm-heading" className={sectionShell} id="pm">
+          <ProductRole />
+        </section>
+        <section aria-labelledby="journey-heading" className={sectionShell} id="journey" style={{ animationDelay: "70ms" }}>
+          <Journey />
+        </section>
+        <section aria-labelledby="skills-heading" className={sectionShell} id="skills" style={{ animationDelay: "140ms" }}>
+          <Skills />
+        </section>
+        <section aria-labelledby="contact-heading" className={sectionShell} id="contact" style={{ animationDelay: "210ms" }}>
           <Contact />
-        </div>
+        </section>
+      </main>
+      <footer
+        className={`${pageColumn} flex flex-wrap justify-between gap-3 pt-6 pb-8 text-sm text-[#5b606a]`}
+      >
+        <span>
+          {new Date().getFullYear()} {heroProfile.fullName} · {contactProfile.location}
+        </span>
+        <span className="font-mono text-[13px]">
+          Resume {contactProfile.resumeVersion} · {contactProfile.resumeDate}
+        </span>
       </footer>
     </div>
   );

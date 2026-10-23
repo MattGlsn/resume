@@ -8,13 +8,14 @@ function expectedMailtoHref(): string {
 }
 
 describe("Contact", () => {
-  it("renders heading, mailto controls, social links, phone, and location", () => {
+  it("renders heading, mailto button, social links, resume, and phone", () => {
     render(<Contact />);
 
-    const href = expectedMailtoHref();
-
-    expect(screen.getByText("Email")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: contactProfile.email })).toHaveAttribute("href", href);
+    expect(screen.getByRole("heading", { level: 2, name: "Shaping the future with AI?Let’s talk." })).toHaveAttribute(
+      "id",
+      "contact-heading",
+    );
+    expect(screen.getByRole("link", { name: contactProfile.email })).toHaveAttribute("href", expectedMailtoHref());
 
     const linkedIn = screen.getByRole("link", { name: contactProfile.linkedInLabel });
     expect(linkedIn).toHaveAttribute("href", contactProfile.linkedInUrl);
@@ -30,11 +31,12 @@ describe("Contact", () => {
       expect.arrayContaining(["noopener", "noreferrer"]),
     );
 
-    expect(screen.getByText(contactProfile.location)).toBeInTheDocument();
-    expect(screen.getByText(`Resume ${contactProfile.resumeVersion} · ${contactProfile.resumeDate}`)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Download resume" })).toHaveAttribute(
+      "href",
+      contactProfile.resumePdfPath,
+    );
 
     if (contactProfile.phone) {
-      expect(screen.getByText("Phone")).toBeInTheDocument();
       const tel = screen.getByRole("link", { name: contactProfile.phone });
       expect(tel).toHaveAttribute("href", "tel:+4917680042448");
     }

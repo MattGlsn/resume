@@ -1,31 +1,21 @@
-/** Month-precision ISO dates (YYYY-MM) for sorting and formatting. */
+import { productFocusAreas } from "./productRole";
 
-export type ExperienceLink = Readonly<{
-  label: string;
-  href: string;
-}>;
+/** Month-precision ISO dates (YYYY-MM) for sorting and formatting. */
 
 export type ExperienceRole = Readonly<{
   /** Stable id for lists / tests */
   id: string;
   title: string;
   company: string;
-  /** Public URL under `public/logos/` */
-  companyLogoSrc: string;
-  /** Optional extra classes on the company logo `<img>` (e.g. padded mark assets). */
-  companyLogoImgClassName?: string;
-  /** Shown when no explicit company link is needed */
   location: string;
   startDate: string;
   /** `null` = current role */
   endDate: string | null;
-  /** Optional short paragraph above Responsibilities when expanded */
+  /** Short paragraph shown before the responsibilities */
   roleOverview?: string;
   responsibilities: readonly string[];
   achievements: readonly string[];
   technologies: readonly string[];
-  companyUrl?: string;
-  links?: readonly ExperienceLink[];
 }>;
 
 /** Newest-first (standard resume chronology). */
@@ -53,31 +43,12 @@ const rolesRaw = [
     id: "pm-humanetics",
     title: "Product Manager",
     company: "Humanetics",
-    companyLogoSrc: "/logos/humanetics.png",
     location: "Munich, Germany",
     startDate: "2026-01",
     endDate: null,
     roleOverview:
-      "Product Manager for automotive AI/ML and digital initiatives—owning a product built from scratch, acting as PM, Product Designer (with Claude Design), and Scrum Master for a 7-developer team distributed across the USA, Germany, and India. Discovery with OEMs across China, Japan, Germany, and the USA in English and German; roadmaps, PRDs, Agile delivery, and executive-ready insights. French (native); English and German at professional working proficiency.",
-    responsibilities: [
-      "Lead a product started from scratch—from initial discovery and vision through PRDs, design, and delivery—as the single owner across product management, product design, and Agile facilitation",
-      "Serve as Product Manager, Product Designer (using Claude Design for UX concepts, mockups, and prototypes), and Scrum Master, combining all three roles to keep decisions and delivery tightly connected",
-      "Lead and coordinate a globally distributed development team of 7 developers across the USA, Germany, and India, aligning priorities and handoffs across time zones",
-      "Facilitate Scrum ceremonies (sprint planning, daily stand-ups, reviews, retrospectives) and remove blockers to maintain a predictable delivery cadence for the distributed team",
-      "Conduct customer discovery interviews with international clients (China, Japan, Germany, USA) in English and German to better understand customer needs, market expectations, and product opportunities",
-      "Define product vision and contribute to roadmap prioritization for new products based on customer feedback, business value, and strategic objectives",
-      "Contribute to the development of business plans for new initiatives, particularly around AI/ML integration and digital transformation opportunities",
-      "Translate customer and business requirements into structured Product Requirement Documents (PRDs) to align stakeholders and guide development teams",
-      "Manage and prioritize product backlogs in alignment with roadmap milestones, delivery timelines, and business priorities using Agile/SCRUM methodologies",
-      "Provide frequent updates to upper management on product progress, risks, and priorities to keep leadership aligned and informed",
-      "Define, create, and maintain KPIs to track product performance and delivery, and use them to guide prioritization and decision-making",
-      "Support executive decision-making by preparing reports, risk assessments, and strategic insights on ongoing projects and innovation initiatives",
-      "Anticipate project risks, identify dependencies early, and propose mitigation strategies to ensure smooth execution and delivery",
-      "Work closely with cross-functional teams (engineering, sales, management, and product teams) to support product development, alignment, and execution",
-      "Facilitate communication across departments to ensure efficient coordination of initiatives and stakeholder alignment",
-      "Develop early prototypes using AI tools (Claude, Claude Code, Claude Design, VS Code, GitLab) to explore, validate, and iterate on new product ideas and AI-driven concepts",
-      "Support Agile project management workflows using Jira and Confluence for sprint planning, documentation, backlog management, and team collaboration",
-    ],
+      "Product Manager for automotive AI/ML and digital initiatives at Humanetics, leading a 7-developer team across the USA, Germany and India. Roadmaps, PRDs, Agile delivery and executive-ready insights.",
+    responsibilities: productFocusAreas.flatMap((area) => area.items),
     achievements: [
       "Zero-to-One Product Launch",
       "Product Design",
@@ -107,14 +78,13 @@ const rolesRaw = [
   },
   {
     id: "app-eng-humanetics",
-    title: "Application Engineer — Human Factors & Ergonomics",
+    title: "Application Engineer, Human Factors & Ergonomics",
     company: "Humanetics",
-    companyLogoSrc: "/logos/humanetics.png",
     location: "Munich, Germany",
     startDate: "2023-07",
     endDate: "2026-01",
     roleOverview:
-      "Human factors and ergonomics engineer—RAMSIS-led interior studies, CATIA V5 surfacing for full-scale digital mock-ups, and OEM delivery from concept through prototyping (~five major programs per year), including BMW Neue Klasse. Worked fully in German in an international automotive environment (meetings, presentations, documentation).",
+      "Human factors and ergonomics engineer: RAMSIS-led interior studies, CATIA V5 surfacing for full-scale digital mock-ups, and OEM delivery from concept through prototyping (about five major programs per year), including BMW Neue Klasse. Worked fully in German in an international automotive environment.",
     responsibilities: [
       "Performed ergonomics analyses using RAMSIS to support interior concept development with a strong focus on user experience, including reachability, visibility, comfort, accessibility, and driver/passenger positioning",
       "Contributed to both concept and prototyping phases across approximately five projects per year for major OEM customers",
@@ -147,12 +117,11 @@ const rolesRaw = [
     id: "technical-designer-rotarex",
     title: "Technical Designer",
     company: "ROTAREX",
-    companyLogoSrc: "/logos/rotarex.png",
     location: "Lintgen, Luxembourg",
     startDate: "2021-04",
     endDate: "2023-07",
     roleOverview:
-      "Technical Designer specialized in 3D mechanical design of industrial valves using CATIA V5. Worked in collaboration with senior engineers to deliver precise technical documentation and production-ready designs for both standard catalogue products and custom customer solutions.",
+      "Technical Designer specialized in 3D mechanical design of industrial valves using CATIA V5, delivering precise technical documentation and production-ready designs for standard catalogue products and custom customer solutions.",
     responsibilities: [
       "Created and updated 3D models and technical drawings for industrial valves",
       "Ensured accuracy, quality, and compliance of manufacturing drawings used directly in production",
@@ -176,13 +145,11 @@ const rolesRaw = [
     id: "cad-designer-hutchinson",
     title: "CAD Designer",
     company: "Hutchinson",
-    companyLogoSrc: "/logos/hutchinson.png",
-    companyLogoImgClassName: "scale-110",
     location: "Montargis, France",
     startDate: "2018-01",
     endDate: "2021-04",
     roleOverview:
-      "Technical Designer with experience in automotive and aerospace R&D, specializing in thermal management solutions and composite part design. Worked closely with engineering teams to develop innovative products from concept to prototype while ensuring compliance with technical and customer requirements.",
+      "Automotive and aerospace R&D, specializing in thermal management solutions and composite part design, developing innovative products from concept to prototype.",
     responsibilities: [
       "Designed thermal management solutions in Creo in collaboration with thermal engineers",
       "Ensured designs met thermal, mechanical, and manufacturing requirements",
@@ -215,12 +182,11 @@ const rolesRaw = [
     id: "cad-intern-ifpen",
     title: "CAD Design Intern",
     company: "IFP Energies nouvelles",
-    companyLogoSrc: "/logos/ifp-energies-nouvelles.png",
     location: "Rueil-Malmaison, France",
     startDate: "2017-04",
     endDate: "2017-12",
     roleOverview:
-      "Developed a parametric CATIA V5 model for the upper section of a 4-valve direct injection combustion engine. The tool enabled engineers to rapidly configure and prototype different engine architectures, significantly reducing development time from concept to testing.",
+      "Developed a parametric CATIA V5 model for the upper section of a 4-valve direct injection combustion engine, letting engineers rapidly configure and prototype engine architectures and significantly reducing development time from concept to testing.",
     responsibilities: [
       "Designed and implemented a fully parametric 3D model of the engine upper assembly",
       "Created configurable parameters for combustion chamber volume, valve positioning, intake duct angle, and camshaft placement",

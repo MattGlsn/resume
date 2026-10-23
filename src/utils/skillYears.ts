@@ -45,3 +45,9 @@ export function formatSkillYears(years: number): string {
   const label = Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1);
   return `${label} years`;
 }
+
+/** Compact label for skill bars, e.g. "6 y" or "1.4 y". */
+export function formatSkillYearsShort(years: number): string {
+  const rounded = Math.round(years * 10) / 10;
+  return `${rounded} y`;
+}

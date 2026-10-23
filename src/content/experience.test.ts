@@ -16,7 +16,6 @@ function role(
     id,
     title: "Role",
     company: "Co",
-    companyLogoSrc: "/logos/humanetics.png",
     location: "X",
     startDate,
     endDate,
