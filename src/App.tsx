@@ -29,7 +29,7 @@ const BackdropGlow = () => (
 const App = () => {
   return (
     // `overflow-clip`, not `overflow-hidden`: hidden makes a scroll container, which stops the top bar from sticking.
-    <div className="relative isolate min-h-dvh overflow-clip bg-background px-4 pt-4 font-sans text-foreground antialiased sm:px-5 sm:pt-5">
+    <div className="relative isolate min-h-dvh overflow-clip bg-background px-4 pt-4 font-sans text-foreground antialiased sm:px-8 sm:pt-6 lg:px-12">
       <a className={skipLinkClasses} href="#main-content">
         Skip to main content
       </a>

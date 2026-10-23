@@ -1,5 +1,6 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
+import { FiCheck, FiChevronDown } from "react-icons/fi";
 import type { ExperienceRole } from "../content/experience";
 import { experienceRolesSorted } from "../content/experience";
 import { formatEmploymentYears } from "../utils/experienceFormat";
@@ -10,6 +11,16 @@ type JourneyProps = Readonly<{
 }>;
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
+
+/** Height and fade run together, for the role panel and its full details. */
+function expandTransition(reduceMotion: boolean) {
+  return reduceMotion
+    ? { duration: 0 }
+    : { height: { duration: 0.38, ease: easeOut }, opacity: { duration: 0.24, ease: "linear" as const } };
+}
+
+/** On wide rows the panel lines up under the title column (row padding + date column + gap). */
+const panelInset = "px-5 sm:px-7 lg:pl-[202px]";
 
 type JourneyRowProps = Readonly<{
   role: ExperienceRole;
@@ -38,14 +49,66 @@ function tabClasses({ isOpen, followsOpen, isFirst }: Pick<JourneyRowProps, "isO
   return classes.join(" ");
 }
 
+/** The long summary and every responsibility, behind a toggle so the highlights stay the first read. */
+const FullDetails = ({ role }: Readonly<{ role: ExperienceRole }>) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const reduceMotion = useReducedMotion() ?? false;
+  const detailsId = `journey-details-${role.id}`;
+
+  if (role.responsibilities.length === 0 && !role.roleOverview) return null;
+
+  return (
+    <div className="flex flex-col">
+      <button
+        aria-controls={detailsId}
+        aria-expanded={isOpen}
+        className="inline-flex min-h-11 cursor-pointer items-center gap-1.5 self-start rounded-md text-sm font-semibold text-link hover:text-primary-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        onClick={() => setIsOpen((open) => !open)}
+        type="button"
+      >
+        {isOpen ? "Hide full responsibilities" : `Show all ${role.responsibilities.length} responsibilities`}
+        <motion.span
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          aria-hidden
+          className="inline-flex"
+          initial={false}
+          transition={reduceMotion ? { duration: 0 } : { duration: 0.3, ease: easeOut }}
+        >
+          <FiChevronDown className="size-4" strokeWidth={2.4} />
+        </motion.span>
+      </button>
+      <AnimatePresence initial={false}>
+        {isOpen ? (
+          <motion.div
+            animate={{ height: "auto", opacity: 1 }}
+            className="overflow-hidden"
+            exit={{ height: 0, opacity: 0 }}
+            id={detailsId}
+            initial={{ height: 0, opacity: 0 }}
+            transition={expandTransition(reduceMotion)}
+          >
+            <div className="flex flex-col gap-3 pt-2">
+              {role.roleOverview ? (
+                <p className="text-[15px] leading-[1.65] text-body">{role.roleOverview}</p>
+              ) : null}
+              {role.responsibilities.length > 0 ? (
+                <ul className="flex list-disc flex-col gap-1.5 pl-[18px] text-[14.5px] leading-relaxed text-muted-foreground">
+                  {role.responsibilities.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              ) : null}
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+    </div>
+  );
+};
+
 const JourneyRow = ({ role, isOpen, followsOpen, isFirst, onToggle }: JourneyRowProps) => {
   const reduceMotion = useReducedMotion() ?? false;
   const panelId = `journey-panel-${role.id}`;
-
-  // Height and fade run together; the content also rises slightly as it appears.
-  const panelTransition = reduceMotion
-    ? { duration: 0 }
-    : { height: { duration: 0.38, ease: easeOut }, opacity: { duration: 0.24, ease: "linear" as const } };
 
   return (
     // The tint shows through around the header's rounded corners and behind the details.
@@ -64,7 +127,11 @@ const JourneyRow = ({ role, isOpen, followsOpen, isFirst, onToggle }: JourneyRow
           <span className="flex-[0_0_150px] font-mono text-[13px] text-subtle">
             {formatEmploymentYears(role.startDate, role.endDate)}
           </span>
-          <span className="min-w-0 flex-[999_1_320px] text-xl font-bold tracking-[-0.01em]">{role.title}</span>
+          {/* Title plus a one-line headline, so the path reads without opening any role. */}
+          <span className="flex min-w-0 flex-[999_1_320px] flex-col gap-1">
+            <span className="text-xl font-bold tracking-[-0.01em]">{role.title}</span>
+            <span className="text-[15px] leading-snug font-normal text-muted">{role.headline}</span>
+          </span>
           <span className="flex-[1_1_200px] text-[15px] text-muted">
             {role.company} · {role.location}
           </span>
@@ -90,31 +157,35 @@ const JourneyRow = ({ role, isOpen, followsOpen, isFirst, onToggle }: JourneyRow
             id={panelId}
             initial={{ height: 0, opacity: 0 }}
             key="panel"
-            transition={panelTransition}
+            transition={expandTransition(reduceMotion)}
           >
             <motion.div
               animate={{ y: 0 }}
-              className="flex flex-col gap-3.5 px-5 pt-6 pb-7 sm:px-7"
+              className={`flex max-w-[960px] flex-col gap-5 pt-6 pb-6 ${panelInset}`}
               exit={{ y: reduceMotion ? 0 : -6 }}
               initial={{ y: reduceMotion ? 0 : -10 }}
               transition={reduceMotion ? { duration: 0 } : { duration: 0.38, ease: easeOut }}
             >
-              {role.roleOverview ? (
-                <p className="text-[15.5px] leading-[1.65] text-body">{role.roleOverview}</p>
-              ) : null}
-              {role.responsibilities.length > 0 ? (
-                <ul className="flex list-disc flex-col gap-1.5 pl-[18px] text-[14.5px] leading-relaxed text-muted-foreground">
-                  {role.responsibilities.map((item) => (
-                    <li key={item}>{item}</li>
+              {role.highlights.length > 0 ? (
+                <ul aria-label="Highlights" className="flex list-none flex-col gap-2.5 p-0">
+                  {role.highlights.map((item) => (
+                    <li className="flex gap-3 text-base leading-relaxed text-body" key={item}>
+                      <FiCheck aria-hidden className="mt-1 size-[18px] shrink-0 text-link" strokeWidth={2.6} />
+                      <span>{item}</span>
+                    </li>
                   ))}
                 </ul>
               ) : null}
               {role.technologies.length > 0 ? (
-                <p className="font-mono text-xs text-subtle">
-                  <span className="sr-only">Tools: </span>
-                  {role.technologies.join(" · ")}
-                </p>
+                <ul aria-label="Tools" className="flex list-none flex-wrap gap-2 p-0">
+                  {role.technologies.map((tool) => (
+                    <li className="rounded-[10px] border border-border bg-surface px-3 py-1.5 text-sm" key={tool}>
+                      {tool}
+                    </li>
+                  ))}
+                </ul>
               ) : null}
+              <FullDetails role={role} />
             </motion.div>
           </motion.div>
         ) : null}

@@ -17,6 +17,8 @@ function role(
     title: "Role",
     company: "Co",
     location: "X",
+    headline: "Headline",
+    highlights: [],
     startDate,
     endDate,
     responsibilities: [],
